@@ -3,11 +3,11 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="Лендинги, сайты и Telegram-боты для бизнеса в Казахстане. Открытые цены от 40 000 ₸, расчёт стоимости онлайн, запуск от 3 дней.">
+<meta name="description" content="Сайты для бизнеса, которые помогают получать заявки. Лендинги, многостраничные сайты, онлайн-запись и CRM в Казахстане. Цены от 40 000 ₸.">
 <meta name="theme-color" content="#0A1315">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Сайты от Nurbolat">
-<meta property="og:description" content="Лендинги, сайты и Telegram-боты для бизнеса в Казахстане. Цены открытые, расчёт за минуту.">
+<meta property="og:description" content="Сайты для бизнеса, которые помогают получать заявки. Лендинги, многостраничные сайты, онлайн-запись и CRM.">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230A1315'/%3E%3Cpath d='M18 20h28M18 30h28M32 30v18' stroke='%2339C7DA' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
 <title>Сайты от Nurbolat</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -51,7 +51,7 @@ fieldset{border:0;min-width:0}
 
 /* ---------- type ---------- */
 h1,h2,.num{font-family:var(--display)}
-h1{font-weight:600;font-size:clamp(1.9rem,4.6vw,3.3rem);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
+h1{font-weight:600;font-size:clamp(1.65rem,3.9vw,2.7rem);line-height:1.1;letter-spacing:-.02em;text-wrap:balance}
 h2{font-weight:500;font-size:clamp(1.4rem,3vw,2.1rem);line-height:1.2;letter-spacing:-.015em;text-wrap:balance}
 h3{font:600 1.05rem/1.35 var(--body)}
 .lead{color:var(--muted);max-width:56ch;font-size:1.06rem}
@@ -177,7 +177,7 @@ legend{padding:0;margin-bottom:8px;color:var(--muted);font-size:.9rem}
 .gets-name{font:500 1.25rem/1.25 var(--display);letter-spacing:-.01em}
 .gets ul{display:grid;gap:11px}
 .gets li{position:relative;padding-left:26px;line-height:1.45;font-size:.98rem;animation:build .5s var(--ease) both;animation-delay:calc(var(--i)*45ms)}
-.gets li::before{content:"";position:absolute;left:2px;top:.42em;width:11px;height:6px;border:solid var(--accent);border-width:0 0 2px 2px;transform:rotate(-45deg)}
+.gets li::before,.tariff li::before{content:"";position:absolute;left:2px;top:.42em;width:11px;height:6px;border:solid var(--accent);border-width:0 0 2px 2px;transform:rotate(-45deg)}
 .gets-fit{padding-top:16px;border-top:1px solid var(--line);color:var(--muted);font-size:.93rem;line-height:1.5}
 
 .sum{position:sticky;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:10;margin-top:36px;display:flex;flex-wrap:wrap;align-items:center;gap:14px 28px;padding:16px 18px 16px 22px;border:1px solid color-mix(in srgb,var(--accent) 45%,var(--line));border-radius:14px;background:color-mix(in srgb,var(--raised) 94%,transparent);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);box-shadow:0 24px 50px -24px #000}
@@ -258,6 +258,54 @@ legend{padding:0;margin-bottom:8px;color:var(--muted);font-size:.9rem}
 .sf-route b{position:absolute;top:50%;left:6px;width:8px;height:8px;margin:-4px 0 0 -4px;border-radius:50%;background:var(--c);animation:travel 4.5s ease-in-out infinite}
 .works-note{margin-top:32px;color:var(--muted);font-size:.95rem;max-width:62ch}
 
+/* ---------- language switch ---------- */
+.lang{display:flex;flex:none;gap:2px;padding:2px;border:1px solid var(--line);border-radius:9px}
+.lang button{min-width:34px;height:32px;padding:0 8px;border:0;border-radius:7px;background:transparent;color:var(--muted);font:600 .8rem/1 var(--body);cursor:pointer;transition:color .2s,background-color .2s}
+.lang button:hover{color:var(--fg)}
+.lang button[aria-pressed="true"]{background:var(--raised);color:var(--accent)}
+@media (max-width:520px){.top .wrap{gap:10px}.lang button{min-width:30px;padding:0 6px}}
+/* Unbounded has no Kazakh letters, so Kazakh headings use the body face */
+:root[lang="kk"]{--display:'Onest',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif}
+:root[lang="kk"] h1,:root[lang="kk"] h2,:root[lang="kk"] .sub,:root[lang="kk"] .tariff h3,:root[lang="kk"] .gets-name{font-weight:600;letter-spacing:-.02em}
+:root[lang="kk"] h1{font-size:clamp(1.8rem,4.3vw,3rem)}
+
+/* ---------- tariffs ---------- */
+.sub{font:500 clamp(1.1rem,2vw,1.35rem)/1.25 var(--display);letter-spacing:-.01em;text-wrap:balance}
+.sub-head{display:grid;gap:10px;margin-bottom:clamp(22px,4vw,32px)}
+.tariffs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-bottom:clamp(52px,8vw,88px)}
+.tariff{display:flex;flex-direction:column;gap:18px;min-width:0;padding:clamp(20px,3vw,28px);border:1px solid var(--line);border-radius:14px;background:var(--surface)}
+.tariff.is-featured{border-color:color-mix(in srgb,var(--accent) 55%,var(--line));background:var(--raised)}
+.tariff-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:8px 10px;min-height:28px}
+.tariff h3{font:500 1.2rem/1.2 var(--display);letter-spacing:-.01em}
+.tariff-price{color:var(--gold);font-size:1.4rem;line-height:1.2}
+.tariff ul{display:grid;gap:10px;flex:1;align-content:start}
+.tariff li{position:relative;padding-left:26px;line-height:1.45;font-size:.98rem}
+@media (max-width:860px){.tariffs{grid-template-columns:minmax(0,1fr)}}
+
+/* ---------- portfolio groups and demo previews ---------- */
+.group{display:grid;gap:clamp(20px,3vw,28px)}
+.group + .group{margin-top:clamp(44px,7vw,72px)}
+.group-head{display:grid;gap:8px}
+.group-head p{color:var(--muted);font-size:.95rem;max-width:62ch}
+.works.two{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:560px){.works.two{grid-template-columns:minmax(0,1fr)}}
+.work-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px 18px;margin-top:8px}
+.textlink{color:var(--accent);font-size:.95rem;font-weight:500;text-decoration:none;border-bottom:1px solid transparent;transition:border-color .2s}
+.textlink:hover{border-color:currentColor}
+.demo-shot{position:relative;display:flex;flex-direction:column;gap:0;padding:0;aspect-ratio:4/3;background:var(--pb);color:var(--pf);text-decoration:none}
+.d-bar{display:flex;align-items:center;padding:10px 14px;border-bottom:1px solid color-mix(in srgb,var(--pf) 12%,transparent);font-size:.74rem;line-height:1}
+.d-bar b{font-weight:700;letter-spacing:-.01em}
+.d-body{flex:1;min-height:0;display:grid;grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:12px;align-items:center;padding:14px}
+.d-copy{display:grid;gap:10px;justify-items:start;min-width:0}
+.d-copy strong{font:700 clamp(.9rem,1.35vw,1.08rem)/1.2 var(--body);letter-spacing:-.015em;text-wrap:balance}
+.d-copy em{font-style:normal;font-size:.68rem;font-weight:600;line-height:1;padding:7px 10px;border-radius:6px;background:var(--pa);color:var(--pb)}
+.d-pic{position:relative;align-self:stretch;min-height:64px;overflow:hidden;border-radius:10px;background:radial-gradient(circle at 70% 25%,color-mix(in srgb,var(--pa) 55%,var(--ps)),var(--ps) 72%)}
+.d-pic::after{content:"";position:absolute;right:-18%;bottom:-30%;width:82%;aspect-ratio:1;border-radius:50%;background:color-mix(in srgb,var(--pa) 75%,transparent)}
+.d-chips{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:0 14px 14px}
+.d-chips i{position:relative;height:26px;border-radius:6px;background:var(--ps)}
+.d-chips i::after{content:"";position:absolute;left:8px;right:42%;top:50%;height:4px;margin-top:-2px;border-radius:2px;background:color-mix(in srgb,var(--pf) 30%,transparent)}
+.d-badge{position:absolute;top:7px;right:8px;padding:5px 9px;border-radius:999px;background:var(--bg);color:var(--fg);font-size:.7rem;font-weight:600;line-height:1}
+
 /* ---------- faq ---------- */
 .faq{display:grid;max-width:820px;border-top:1px solid var(--line)}
 .faq details{border-bottom:1px solid var(--line)}
@@ -307,15 +355,20 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 <body>
 <header class="top">
   <div class="wrap">
-    <a class="brand" href="#top"><b>Nurbolat</b><span>сайты и боты для бизнеса</span></a>
-    <nav class="nav" aria-label="Разделы">
-      <a href="#prices">Цены</a>
-      <a href="#process">Как работаю</a>
-      <a href="#portfolio">Портфолио</a>
-      <a href="#faq">Вопросы</a>
-      <a href="#contact">Контакты</a>
+    <a class="brand" href="#top"><b>Nurbolat</b><span data-i18n="brand_sub">сайты для бизнеса</span></a>
+    <nav class="nav" aria-label="Разделы" data-i18n-aria="nav_aria">
+      <a href="#prices" data-i18n="nav_prices">Цены</a>
+      <a href="#process" data-i18n="nav_process">Как работаю</a>
+      <a href="#portfolio" data-i18n="nav_portfolio">Портфолио</a>
+      <a href="#faq" data-i18n="nav_faq">Вопросы</a>
+      <a href="#contact" data-i18n="nav_contact">Контакты</a>
     </nav>
-    <a class="btn btn-primary btn-sm" href="https://wa.me/77471541449" target="_blank" rel="noopener">WhatsApp</a>
+    <div class="lang" role="group" aria-label="Язык" data-i18n-aria="lang_aria">
+      <button type="button" data-lang="ru" aria-pressed="true">RU</button>
+      <button type="button" data-lang="kz" aria-pressed="false">KZ</button>
+      <button type="button" data-lang="en" aria-pressed="false">EN</button>
+    </div>
+    <a class="btn btn-primary btn-sm" data-wa="general" href="https://wa.me/77471541449" target="_blank" rel="noopener">WhatsApp</a>
   </div>
 </header>
 
@@ -323,13 +376,13 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   <section class="hero">
     <div class="wrap">
       <div class="hero-copy">
-        <h1 class="load">Сайты, которые приводят клиентов</h1>
-        <p class="lead load" style="--i:1">Делаю лендинги, многостраничные сайты и Telegram-ботов для бизнеса в Казахстане: с формой заявки, кнопкой WhatsApp и подключением CRM. Цены открытые, расчёт занимает минуту.</p>
+        <h1 class="load" data-i18n="hero_h1">Сайт для вашего бизнеса, который принимает заявки 24/7</h1>
+        <p class="lead load" style="--i:1" data-i18n="hero_lead">Лендинги, многостраничные сайты, онлайн-запись и CRM для бизнеса в Казахстане</p>
         <div class="hero-cta load" style="--i:2">
-          <a class="btn btn-primary" href="#prices">Рассчитать стоимость</a>
-          <a class="btn btn-ghost" href="https://wa.me/77471541449" target="_blank" rel="noopener">Написать в WhatsApp</a>
+          <a class="btn btn-primary" href="#prices" data-i18n="hero_cta">Посмотреть варианты</a>
+          <a class="btn btn-ghost" data-wa="general" href="https://wa.me/77471541449" target="_blank" rel="noopener" data-i18n="hero_wa">Написать в WhatsApp</a>
         </div>
-        <p class="hero-facts load" style="--i:3">Лендинг <b>от 40 000 ₸</b>. Запуск от 3 дней. Казахский, русский и английский.</p>
+        <p class="hero-facts load" style="--i:3" data-i18n-html="hero_facts">Лендинг <b>от 40 000 ₸</b>. Запуск от 3 дней. Казахский, русский и английский.</p>
       </div>
 
       <div class="stage load" style="--i:2" aria-hidden="true">
@@ -341,7 +394,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
               <div class="m-h b" style="--i:1;width:78%"></div>
               <div class="m-h b" style="--i:2;width:52%"></div>
               <div class="m-p b" style="--i:3;width:64%"></div>
-              <div class="m-btn b" style="--i:4">Записаться</div>
+              <div class="m-btn b" style="--i:4" data-i18n="mock_btn">Записаться</div>
             </div>
             <div class="m-cards">
               <div class="b" style="--i:5"><i></i><u></u><b></b></div>
@@ -351,59 +404,63 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
           </div>
           <div class="toast" id="toast">
             <span class="toast-ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-6 4V5Z"/></svg></span>
-            <div><strong>Новая заявка с сайта</strong><span id="toastText">Айгерим: чистка зубов, завтра в 15:00</span></div>
+            <div><strong data-i18n="toast_title">Новая заявка с сайта</strong><span id="toastText">Айгерим: чистка зубов, завтра в 15:00</span></div>
           </div>
         </div>
       </div>
     </div>
   </section>
 
-  <div class="niches" aria-label="Для каких ниш делаю сайты">
-    <div class="track" id="track">
-      <ul>
-        <li>Стоматологии</li><li>Клиники</li><li>Автошколы</li><li>Ремонт квартир</li><li>Мебель на заказ</li><li>Учебные центры</li><li>Карго</li><li>Тойханы</li><li>СТО и детейлинг</li><li>Юристы и бухгалтеры</li><li>Турагентства</li>
-      </ul>
-    </div>
+  <div class="niches" aria-label="Для каких ниш делаю сайты" data-i18n-aria="niches_aria">
+    <div class="track" id="track"></div>
   </div>
 
   <section id="prices">
     <div class="wrap">
       <div class="sec-head reveal">
-        <h2>Цены</h2>
-        <p class="lead">Выберите, что нужно, и отметьте, что добавить. Итог считается сразу, его можно отправить мне в WhatsApp одной кнопкой.</p>
+        <h2 data-i18n="prices_h2">Цены</h2>
+        <p class="lead" data-i18n="tariffs_lead">Три готовых пакета. Цены указаны «от»: точная сумма зависит от объёма работы.</p>
       </div>
+      <div class="reveal"><div class="tariffs stagger" id="tariffs"></div></div>
 
-      <div class="pricing reveal">
-        <fieldset class="packs">
-          <legend>Что делаем</legend>
-          <div class="rows" id="packs"></div>
-        </fieldset>
-
-        <aside class="gets" aria-live="polite">
-          <div>
-            <p class="gets-title">Что вы получите</p>
-            <p class="gets-name" id="getsName"></p>
-          </div>
-          <ul id="getsList"></ul>
-          <p class="gets-fit" id="getsFit"></p>
-        </aside>
-
-        <div class="addons">
-          <fieldset>
-            <legend>Дополнительно</legend>
-            <div class="rows" id="addons"></div>
-          </fieldset>
-          <fieldset class="support">
-            <legend>После запуска</legend>
-            <div class="rows" id="support"></div>
-          </fieldset>
+      <div class="calc" id="calc">
+        <div class="sub-head reveal">
+          <h3 class="sub" data-i18n="calc_h3">Калькулятор стоимости</h3>
+          <p class="lead" data-i18n="calc_lead">Выберите, что нужно, и отметьте, что добавить. Итог считается сразу, его можно отправить мне в WhatsApp одной кнопкой.</p>
         </div>
-      </div>
 
-      <div class="sum" id="sum">
-        <div class="sum-what"><b id="sumWhat"></b><span id="sumDays"></span></div>
-        <div class="sum-total"><span class="num" id="sumTotal"></span><small id="sumMonthly"></small></div>
-        <a class="btn btn-primary" id="sumSend" href="https://wa.me/77471541449" target="_blank" rel="noopener">Отправить расчёт в WhatsApp</a>
+        <div class="pricing reveal">
+          <fieldset class="packs">
+            <legend data-i18n="legend_what">Что делаем</legend>
+            <div class="rows" id="packs"></div>
+          </fieldset>
+
+          <aside class="gets" aria-live="polite">
+            <div>
+              <p class="gets-title" data-i18n="gets_title">Что вы получите</p>
+              <p class="gets-name" id="getsName"></p>
+            </div>
+            <ul id="getsList"></ul>
+            <p class="gets-fit" id="getsFit"></p>
+          </aside>
+
+          <div class="addons">
+            <fieldset>
+              <legend data-i18n="legend_addons">Дополнительно</legend>
+              <div class="rows" id="addons"></div>
+            </fieldset>
+            <fieldset class="support">
+              <legend data-i18n="legend_after">После запуска</legend>
+              <div class="rows" id="support"></div>
+            </fieldset>
+          </div>
+        </div>
+
+        <div class="sum" id="sum">
+          <div class="sum-what"><b id="sumWhat"></b><span id="sumDays"></span></div>
+          <div class="sum-total"><span class="num" id="sumTotal"></span><small id="sumMonthly"></small></div>
+          <a class="btn btn-primary" id="sumSend" href="https://wa.me/77471541449" target="_blank" rel="noopener" data-i18n="sum_send">Отправить расчёт в WhatsApp</a>
+        </div>
       </div>
     </div>
   </section>
@@ -411,17 +468,17 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   <section id="basics">
     <div class="wrap">
       <div class="sec-head reveal">
-        <h2>Что входит в любой сайт</h2>
-        <p class="lead">Это есть в каждом пакете и в цену уже включено.</p>
+        <h2 data-i18n="basics_h2">Что входит в любой сайт</h2>
+        <p class="lead" data-i18n="basics_lead">Это есть в каждом пакете и в цену уже включено.</p>
       </div>
       <div class="reveal">
         <ul class="basics stagger">
-          <li><h3>Удобно с телефона</h3><p>Большинство клиентов заходят с телефона, поэтому сайт сначала собирается под маленький экран.</p></li>
-          <li><h3>Заявки в мессенджер</h3><p>Форма и кнопка WhatsApp. Заявка приходит вам в Telegram или на почту за несколько секунд.</p></li>
-          <li><h3>Три языка</h3><p>Казахский, русский и английский с переключателем. Перевод уже входит в цену.</p></li>
-          <li><h3>Домен и хостинг</h3><p>Помогаю выбрать, оформляю на вас и подключаю. Сайт принадлежит вам, а не мне.</p></li>
-          <li><h3>Поиск и карты</h3><p>Базовая настройка для Google и Яндекса, ссылки на 2GIS и карты с вашим адресом.</p></li>
-          <li><h3>14 дней правок</h3><p>После запуска две недели бесплатно исправляю всё, что вы заметите.</p></li>
+          <li><h3 data-i18n="b1t">Удобно с телефона</h3><p data-i18n="b1d">Большинство клиентов заходят с телефона, поэтому сайт сначала собирается под маленький экран.</p></li>
+          <li><h3 data-i18n="b2t">Заявки в мессенджер</h3><p data-i18n="b2d">Форма и кнопка WhatsApp. Заявка приходит вам в Telegram или на почту за несколько секунд.</p></li>
+          <li><h3 data-i18n="b3t">Три языка</h3><p data-i18n="b3d">Казахский, русский и английский с переключателем. Перевод уже входит в цену.</p></li>
+          <li><h3 data-i18n="b4t">Домен и хостинг</h3><p data-i18n="b4d">Помогаю выбрать, оформляю на вас и подключаю. Сайт принадлежит вам, а не мне.</p></li>
+          <li><h3 data-i18n="b5t">Поиск и карты</h3><p data-i18n="b5d">Базовая настройка для Google и Яндекса, ссылки на 2GIS и карты с вашим адресом.</p></li>
+          <li><h3 data-i18n="b6t">14 дней правок</h3><p data-i18n="b6d">После запуска две недели бесплатно исправляю всё, что вы заметите.</p></li>
         </ul>
       </div>
     </div>
@@ -430,16 +487,16 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   <section id="process">
     <div class="wrap">
       <div class="sec-head reveal">
-        <h2>Как идёт работа</h2>
-        <p class="lead">Пять шагов от первого сообщения до работающего сайта.</p>
+        <h2 data-i18n="process_h2">Как идёт работа</h2>
+        <p class="lead" data-i18n="process_lead">Пять шагов от первого сообщения до работающего сайта.</p>
       </div>
       <div class="reveal">
         <ol class="steps stagger">
-          <li><h3>Знакомство</h3><p>Полчаса в WhatsApp или по звонку. Разбираюсь, чем вы занимаетесь и откуда приходят клиенты.</p></li>
-          <li><h3>План и цена</h3><p>Присылаю структуру сайта, точную цену и срок. После согласования предоплата 50%.</p></li>
-          <li><h3>Дизайн</h3><p>Показываю первый экран и общий стиль. Правим, пока вам не понравится.</p></li>
-          <li><h3>Сборка</h3><p>Собираю сайт, подключаю заявки, домен и хостинг. Вы следите по ссылке.</p></li>
-          <li><h3>Запуск</h3><p>Сайт в интернете. Вторая половина оплаты, 14 дней правок и поддержка по желанию.</p></li>
+          <li><h3 data-i18n="s1t">Знакомство</h3><p data-i18n="s1d">Полчаса в WhatsApp или по звонку. Разбираюсь, чем вы занимаетесь и откуда приходят клиенты.</p></li>
+          <li><h3 data-i18n="s2t">План и цена</h3><p data-i18n="s2d">Присылаю структуру сайта, точную цену и срок. После согласования предоплата 50%.</p></li>
+          <li><h3 data-i18n="s3t">Дизайн</h3><p data-i18n="s3d">Показываю первый экран и общий стиль. Правим, пока вам не понравится.</p></li>
+          <li><h3 data-i18n="s4t">Сборка</h3><p data-i18n="s4d">Собираю сайт, подключаю заявки, домен и хостинг. Вы следите по ссылке.</p></li>
+          <li><h3 data-i18n="s5t">Запуск</h3><p data-i18n="s5d">Сайт в интернете. Вторая половина оплаты, 14 дней правок и поддержка по желанию.</p></li>
         </ol>
       </div>
     </div>
@@ -448,87 +505,69 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   <section id="portfolio">
     <div class="wrap">
       <div class="sec-head reveal">
-        <h2>Портфолио</h2>
-        <p class="lead">Свои проекты и готовые структуры под ниши. Структуру можно взять за основу, тогда сайт запускается быстрее.</p>
+        <h2 data-i18n="portfolio_h2">Портфолио</h2>
+        <p class="lead" data-i18n="portfolio_lead">Собственные проекты и демонстрации для разных ниш. Демо можно открыть и посмотреть, как будет выглядеть ваш сайт.</p>
       </div>
-      <div class="reveal">
-        <div class="works stagger">
+
+      <div class="group reveal">
+        <div class="group-head">
+          <h3 class="sub" data-i18n="demos_h3">Демонстрации для бизнеса</h3>
+          <p data-i18n="demos_note">Это демонстрационные шаблоны, а не сайты реальных клиентов. Названия и цены в них условные.</p>
+        </div>
+        <div class="works stagger" id="demos"></div>
+      </div>
+
+      <div class="group reveal">
+        <div class="group-head"><h3 class="sub" data-i18n="own_h3">Собственные проекты</h3></div>
+        <div class="works two stagger">
           <figure class="work">
             <div class="shot shot-a" aria-hidden="true">
               <div class="sa-list"><div><i></i><span><b></b><u></u></span></div><div><i></i><span><b></b><u></u></span></div><div><i></i><span><b></b><u></u></span></div></div>
               <div class="sa-grid"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
             </div>
-            <figcaption><span class="tag own">Свой проект</span><h3>Онлайн-запись для салонов и барбершопов</h3><p>Каталог салонов Шымкента, выбор мастера и времени, русский и казахский. React, Vite, Tailwind.</p></figcaption>
+            <figcaption><span class="tag own" data-i18n="tag_own">Свой проект</span><h3 data-i18n="own1_t">Онлайн-запись для салонов и барбершопов</h3><p data-i18n="own1_d">Каталог салонов Шымкента, выбор мастера и времени, русский и казахский. React, Vite, Tailwind.</p></figcaption>
           </figure>
           <figure class="work">
             <div class="shot" style="--c:#8FD06B" aria-hidden="true">
               <div class="s-head w60"></div><div class="s-line w40"></div>
               <div class="sb-desks"><i></i><i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i></i></div>
             </div>
-            <figcaption><span class="tag own">Свой проект</span><h3>Shymkent Hub</h3><p>Лендинг IT-коворкинга: бронирование рабочих мест, афиша событий, три языка.</p></figcaption>
-          </figure>
-          <figure class="work">
-            <div class="shot" style="--c:#6FB6FF" aria-hidden="true">
-              <div class="sc-top"><div><div class="s-head w80"></div><div class="s-line w60"></div><div class="s-btn"></div></div><div class="sc-photo"></div></div>
-              <div class="s-rows"><div><b></b><u></u><i></i></div><div><b></b><u></u><i></i></div></div>
-            </div>
-            <figcaption><span class="tag">Структура под нишу</span><h3>Стоматология</h3><p>Услуги с ценами, врачи, отзывы и запись на приём в WhatsApp.</p></figcaption>
-          </figure>
-          <figure class="work">
-            <div class="shot" style="--c:#F3C544" aria-hidden="true">
-              <div class="s-head w50"></div>
-              <div class="sd-cats"><span>A</span><span class="on">B</span><span>C</span></div>
-              <div class="s-line w70"></div>
-            </div>
-            <figcaption><span class="tag">Структура под нишу</span><h3>Автошкола</h3><p>Категории, цены, расписание групп и заявка на обучение.</p></figcaption>
-          </figure>
-          <figure class="work">
-            <div class="shot" style="--c:#E59A6B" aria-hidden="true">
-              <div class="se-gal"><i></i><i></i><i></i><i></i><i></i></div>
-              <div class="s-btn"></div>
-            </div>
-            <figcaption><span class="tag">Структура под нишу</span><h3>Мебель на заказ</h3><p>Галерея работ, расчёт стоимости по ответам на вопросы, заявка на замер.</p></figcaption>
-          </figure>
-          <figure class="work">
-            <div class="shot" style="--c:#B79CFF" aria-hidden="true">
-              <div class="sf-route"><i></i><b></b><i></i></div>
-              <div class="s-rows"><div><b></b><u></u><i></i></div><div><b></b><u></u><i></i></div><div><b></b><u></u><i></i></div></div>
-            </div>
-            <figcaption><span class="tag">Структура под нишу</span><h3>Карго и доставка</h3><p>Тарифы, калькулятор доставки и заявка на расчёт груза.</p></figcaption>
+            <figcaption><span class="tag own" data-i18n="tag_own">Свой проект</span><h3>Shymkent Hub</h3><p data-i18n="own2_d">Лендинг IT-коворкинга: бронирование рабочих мест, афиша событий, три языка.</p></figcaption>
           </figure>
         </div>
       </div>
-      <p class="works-note reveal">Вашей ниши нет в списке? Напишите, чем занимаетесь, и я пришлю структуру сайта под ваш бизнес до оплаты.</p>
+
+      <p class="works-note reveal" data-i18n="works_note">Вашей ниши нет в списке? Напишите, чем занимаетесь, и я пришлю структуру сайта под ваш бизнес до оплаты.</p>
     </div>
   </section>
 
   <section id="faq">
     <div class="wrap">
-      <div class="sec-head reveal"><h2>Частые вопросы</h2></div>
+      <div class="sec-head reveal"><h2 data-i18n="faq_h2">Частые вопросы</h2></div>
       <div class="faq reveal">
         <details open>
-          <summary>Сколько стоят домен и хостинг?</summary>
-          <p>Они оплачиваются отдельно, раз в год, и оформляются на вас. Так сайт остаётся вашим, даже если мы перестанем работать вместе. Точную сумму назову до начала работы.</p>
+          <summary data-i18n="q1">Сколько стоят домен и хостинг?</summary>
+          <p data-i18n="a1">Они оплачиваются отдельно, раз в год, и оформляются на вас. Так сайт остаётся вашим, даже если мы перестанем работать вместе. Точную сумму назову до начала работы.</p>
         </details>
         <details>
-          <summary>Нужно ли платить за CRM?</summary>
-          <p>Мне вы платите только за подключение. Подписку на CRM вы оплачиваете сервису напрямую. У Bitrix24 есть бесплатный тариф, с него можно начать.</p>
+          <summary data-i18n="q2">Нужно ли платить за CRM?</summary>
+          <p data-i18n="a2">Мне вы платите только за подключение. Подписку на CRM вы оплачиваете сервису напрямую. У Bitrix24 есть бесплатный тариф, с него можно начать.</p>
         </details>
         <details>
-          <summary>Как проходит оплата?</summary>
-          <p>Половина перед началом работы, половина после запуска сайта. Перевод на Kaspi.</p>
+          <summary data-i18n="q3">Как проходит оплата?</summary>
+          <p data-i18n="a3">Половина перед началом работы, половина после запуска сайта. Перевод на Kaspi.</p>
         </details>
         <details>
-          <summary>Что нужно от меня?</summary>
-          <p>Логотип, фотографии, список услуг с ценами и контакты. Если текстов нет, напишу их сам, это отдельная опция в расчёте.</p>
+          <summary data-i18n="q4">Что нужно от меня?</summary>
+          <p data-i18n="a4">Логотип, фотографии, список услуг с ценами и контакты. Если текстов нет, напишу их сам, это отдельная опция в расчёте.</p>
         </details>
         <details>
-          <summary>Можно ли потом менять цены и тексты на сайте?</summary>
-          <p>Да. Первые 14 дней правки бесплатные. Дальше можно взять поддержку: вы пишете, что изменить, и я делаю это в течение дня.</p>
+          <summary data-i18n="q5">Можно ли потом менять цены и тексты на сайте?</summary>
+          <p data-i18n="a5">Да. Первые 14 дней правки бесплатные. Дальше можно взять поддержку: вы пишете, что изменить, и я делаю это в течение дня.</p>
         </details>
         <details>
-          <summary>Вы работаете с другими городами?</summary>
-          <p>Да, удалённо по всему Казахстану. Всё обсуждаем в WhatsApp, Telegram или по звонку.</p>
+          <summary data-i18n="q6">Вы работаете с другими городами?</summary>
+          <p data-i18n="a6">Да, удалённо по всему Казахстану. Всё обсуждаем в WhatsApp, Telegram или по звонку.</p>
         </details>
       </div>
     </div>
@@ -537,17 +576,17 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
   <section id="contact">
     <div class="wrap contact">
       <div class="contact-copy reveal">
-        <h2>Напишите, обсудим ваш сайт</h2>
-        <p class="lead">Первый разговор и расчёт бесплатные. Расскажите, чем занимаетесь, и я предложу, какой сайт вам подойдёт.</p>
-        <p class="about"><b>Nurbolat</b>, frontend и backend разработчик, два года в коммерческой разработке. Работаю без менеджеров и посредников: вы общаетесь напрямую с тем, кто делает сайт.</p>
+        <h2 data-i18n="contact_h2">Напишите, обсудим ваш сайт</h2>
+        <p class="lead" data-i18n="contact_lead">Первый разговор и расчёт бесплатные. Расскажите, чем занимаетесь, и я предложу, какой сайт вам подойдёт.</p>
+        <p class="about" data-i18n-html="about"><b>Nurbolat</b>, frontend и backend разработчик, два года в коммерческой разработке. Работаю без менеджеров и посредников: вы общаетесь напрямую с тем, кто делает сайт.</p>
       </div>
       <ul class="links reveal">
         <li>
-          <a class="link" href="https://wa.me/77471541449" target="_blank" rel="noopener">
+          <a class="link" data-wa="general" href="https://wa.me/77471541449" target="_blank" rel="noopener">
             <span class="ic"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h16v11H10l-6 4V5Z"/></svg></span>
             <small>WhatsApp</small><strong id="phone">+7 747 154 14 49</strong>
           </a>
-          <button class="copy" id="copyPhone" type="button">Скопировать</button>
+          <button class="copy" id="copyPhone" type="button" data-i18n="copy">Скопировать</button>
         </li>
         <li>
           <a class="link" href="https://t.me/nurrrvsx" target="_blank" rel="noopener">
@@ -567,211 +606,652 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 </main>
 
 <footer>
-  <div class="wrap"><span>© 2026 Nurbolat. Сайты и боты для бизнеса в Казахстане.</span><span>Цены на странице предварительные, точную сумму называю после разговора.</span></div>
+  <div class="wrap"><span data-i18n="footer_l">© 2026 Nurbolat. Сайты для бизнеса, которые помогают получать заявки.</span><span data-i18n="footer_r">Цены на странице предварительные, точную сумму называю после разговора.</span></div>
 </footer>
+<script>
+/* ====== ПЕРЕВОДЫ: все тексты сайта на трёх языках ======
+   Меняйте текст прямо здесь. Ключи одинаковые во всех языках.
+   {price}, {a}, {w} и подобные вставки заменяются автоматически. */
+var translations = {
+  ru: {
+    title: 'Сайты от Nurbolat',
+    brand_sub: 'сайты для бизнеса',
+    nav_aria: 'Разделы', lang_aria: 'Язык',
+    nav_prices: 'Цены', nav_process: 'Как работаю', nav_portfolio: 'Портфолио', nav_faq: 'Вопросы', nav_contact: 'Контакты',
+    hero_h1: 'Сайт для вашего бизнеса, который принимает заявки 24/7',
+    hero_lead: 'Лендинги, многостраничные сайты, онлайн-запись и CRM для бизнеса в Казахстане',
+    hero_cta: 'Посмотреть варианты', hero_wa: 'Написать в WhatsApp',
+    hero_facts: 'Лендинг <b>{price}</b>. Запуск от 3 дней. Казахский, русский и английский.',
+    mock_btn: 'Записаться', toast_title: 'Новая заявка с сайта',
+    leads: ['Айгерим: чистка зубов, завтра в 15:00', 'Данияр: тест-драйв в субботу', 'Мадина: ремонт кухни, замер в субботу', 'Ерлан: расчёт доставки из Гуанчжоу'],
+    niches_aria: 'Для каких ниш делаю сайты',
+    niches: ['Стоматологии', 'Клиники', 'Автосалоны', 'Ремонт и строительство', 'Мебель на заказ', 'Учебные центры', 'Салоны красоты', 'Карго', 'Автошколы', 'Тойханы', 'СТО и детейлинг', 'Юристы и бухгалтеры', 'Турагентства'],
+    prices_h2: 'Цены',
+    tariffs_lead: 'Три готовых пакета. Цены указаны «от»: точная сумма зависит от объёма работы.',
+    tariff_tag: 'Рекомендую', tariff_btn: 'Выбрать тариф',
+    tariffs: {
+      start: { name: 'Старт', items: ['Лендинг', 'Адаптивная версия', 'WhatsApp', 'Форма заявки', 'Базовая настройка'] },
+      business: { name: 'Бизнес', items: ['Многостраничный сайт', 'WhatsApp', 'Форма заявки', '3 языка', 'Карты', 'Каталог или услуги', 'Домен и хостинг'] },
+      pro: { name: 'Pro', items: ['Всё из тарифа «Бизнес»', 'CRM', 'Онлайн-запись', 'Расширенная автоматизация', 'Индивидуальный функционал'] }
+    },
+    calc_h3: 'Калькулятор стоимости',
+    calc_lead: 'Выберите, что нужно, и отметьте, что добавить. Итог считается сразу, его можно отправить мне в WhatsApp одной кнопкой.',
+    legend_what: 'Что делаем', gets_title: 'Что вы получите', legend_addons: 'Дополнительно', legend_after: 'После запуска',
+    sum_send: 'Отправить расчёт в WhatsApp',
+    from: 'от {p} ₸', included: 'уже входит', per_mo: '{p} ₸ / мес', monthly: '+ {p} ₸ в месяц',
+    term: 'Срок {d}', days: ['день', 'дня', 'дней'], days_gen: ['дня', 'дней', 'дней'], days_from: 'от {a} {w}',
+    sum_what: '{pack} и {n} {w}', opts: ['опция', 'опции', 'опций'],
+    packs: {
+      landing: { name: 'Лендинг', note: 'Одна страница на трёх языках',
+        gets: ['Одна страница до 7 блоков: услуги, цены, отзывы, контакты', 'Три языка: казахский, русский, английский', 'Дизайн под ваш логотип и цвета', 'Форма заявки и кнопка WhatsApp', 'Заявки приходят в Telegram или на почту', 'Карта и ссылка на 2GIS', 'Подключение домена и хостинга', '14 дней бесплатных правок'],
+        fit: 'Подходит для запуска рекламы, одной услуги или акции. Цена зависит от числа блоков.' },
+      multi: { name: 'Многостраничный сайт', note: 'До 8 страниц: услуги, цены, о компании',
+        gets: ['До 8 страниц: главная, услуги, цены, о компании, контакты', 'Отдельная страница под каждую услугу', 'Три языка: казахский, русский, английский', 'Всё, что входит в лендинг', 'Раздел новостей или статей', 'Настройка каждой страницы под поиск', '14 дней бесплатных правок'],
+        fit: 'Подходит клиникам, учебным центрам и производству, когда услуг много. Цена зависит от числа страниц.' },
+      crm: { name: 'Сайт с CRM', note: 'Многостраничный сайт и Bitrix24 или amoCRM',
+        gets: ['Многостраничный сайт до 8 страниц', 'Подключение Bitrix24 или amoCRM', 'Каждая заявка сразу попадает в CRM', 'Уведомление менеджеру о новой заявке', 'Воронка под ваши этапы продаж', 'Час обучения для сотрудников', '14 дней бесплатных правок'],
+        fit: 'Подходит, если заявки принимают администраторы или менеджеры. Подписку на CRM вы оплачиваете сервису напрямую.' },
+      shop: { name: 'Интернет-магазин', note: 'Каталог, корзина, заказ и оплата',
+        gets: ['Каталог с категориями и поиском', 'Карточки товаров с фото и ценами', 'Корзина и оформление заказа', 'Онлайн-оплата', 'Заказы приходят в Telegram или на почту', 'Админка для товаров и цен', '14 дней бесплатных правок'],
+        fit: 'Подходит магазинам до 200 товаров. Больший каталог обсуждаем отдельно.' },
+      bot: { name: 'Telegram-бот', note: 'Меню, ответы на вопросы, заявки',
+        gets: ['Меню с вашими услугами и ценами', 'Ответы на частые вопросы', 'Приём заявок с уведомлением вам', 'Рассылка по подписчикам бота', 'Русский и казахский', 'Запуск на сервере', '14 дней бесплатных правок'],
+        fit: 'Подходит, если клиенты пишут вам в Telegram с одними и теми же вопросами. Сервер для бота оплачивается отдельно.' },
+      botpro: { name: 'Бот с записью или магазином', note: 'Запись на время или каталог с заказом',
+        gets: ['Запись на услугу с выбором дня и времени', 'Или каталог товаров с корзиной и заказом', 'Напоминания клиентам о записи', 'Заявки и заказы приходят вам в Telegram', 'Управление услугами и ценами прямо в боте', 'Рассылка по базе клиентов', '14 дней бесплатных правок'],
+        fit: 'Подходит салонам, клиникам, доставке и небольшим магазинам. Сервер для бота оплачивается отдельно.' },
+      custom: { name: 'Индивидуальный проект', note: 'Своя админка, личный кабинет, веб-сервис',
+        gets: ['Своя админка с заявками и статусами', 'Личный кабинет клиента', 'Онлайн-запись с выбором времени', 'Доступы для сотрудников', 'Сервер и база данных', 'Месяц сопровождения после запуска'],
+        fit: 'Подходит, когда готовые сервисы не закрывают задачу. Точная цена и срок после обсуждения.' }
+    },
+    addons: {
+      crm: ['Подключение CRM', 'Bitrix24 или amoCRM, заявки попадают в воронку'],
+      tgbot: ['Telegram-бот для заявок', 'Заявки с сайта и ответы клиентам в Telegram'],
+      booking: ['Онлайн-запись', 'Клиент сам выбирает услугу, день и время'],
+      quiz: ['Квиз или калькулятор цены', 'Клиент отвечает на вопросы и оставляет заявку'],
+      pay: ['Онлайн-оплата', 'Клиент оплачивает услугу или заказ сразу'],
+      ai: ['ИИ-помощник', 'Отвечает клиентам по вашим услугам и ценам. Сервис ИИ оплачивается отдельно'],
+      copy: ['Тексты под ключ', 'Напишу тексты под вашу нишу, если своих нет'],
+      seo: ['SEO-настройка', 'Подбор запросов и настройка страниц под поиск'],
+      maps: ['Карточки в 2GIS и Google Картах', 'Оформлю или обновлю карточки вашей компании']
+    },
+    support: ['Поддержка', 'Правки в течение дня, обновления, контроль работы'],
+    basics_h2: 'Что входит в любой сайт', basics_lead: 'Это есть в каждом пакете и в цену уже включено.',
+    b1t: 'Удобно с телефона', b1d: 'Большинство клиентов заходят с телефона, поэтому сайт сначала собирается под маленький экран.',
+    b2t: 'Заявки в мессенджер', b2d: 'Форма и кнопка WhatsApp. Заявка приходит вам в Telegram или на почту за несколько секунд.',
+    b3t: 'Три языка', b3d: 'Казахский, русский и английский с переключателем. Перевод уже входит в цену.',
+    b4t: 'Домен и хостинг', b4d: 'Помогаю выбрать, оформляю на вас и подключаю. Сайт принадлежит вам, а не мне.',
+    b5t: 'Поиск и карты', b5d: 'Базовая настройка для Google и Яндекса, ссылки на 2GIS и карты с вашим адресом.',
+    b6t: '14 дней правок', b6d: 'После запуска две недели бесплатно исправляю всё, что вы заметите.',
+    process_h2: 'Как идёт работа', process_lead: 'Пять шагов от первого сообщения до работающего сайта.',
+    s1t: 'Знакомство', s1d: 'Полчаса в WhatsApp или по звонку. Разбираюсь, чем вы занимаетесь и откуда приходят клиенты.',
+    s2t: 'План и цена', s2d: 'Присылаю структуру сайта, точную цену и срок. После согласования предоплата 50%.',
+    s3t: 'Дизайн', s3d: 'Показываю первый экран и общий стиль. Правим, пока вам не понравится.',
+    s4t: 'Сборка', s4d: 'Собираю сайт, подключаю заявки, домен и хостинг. Вы следите по ссылке.',
+    s5t: 'Запуск', s5d: 'Сайт в интернете. Вторая половина оплаты, 14 дней правок и поддержка по желанию.',
+    portfolio_h2: 'Портфолио',
+    portfolio_lead: 'Собственные проекты и демонстрации для разных ниш. Демо можно открыть и посмотреть, как будет выглядеть ваш сайт.',
+    own_h3: 'Собственные проекты', demos_h3: 'Демонстрации для бизнеса',
+    demos_note: 'Это демонстрационные шаблоны, а не сайты реальных клиентов. Названия и цены в них условные.',
+    tag_own: 'Свой проект', tag_demo: 'Демо', demo_open: 'Открыть демо', demo_want: 'Хочу такой сайт',
+    own1_t: 'Онлайн-запись для салонов и барбершопов', own1_d: 'Каталог салонов Шымкента, выбор мастера и времени, русский и казахский. React, Vite, Tailwind.',
+    own2_d: 'Лендинг IT-коворкинга: бронирование рабочих мест, афиша событий, три языка.',
+    demos: {
+      dental: { name: 'Стоматология', desc: 'Услуги с ценами, врачи и запись на приём в WhatsApp.', h: 'Здоровая улыбка без боли', cta: 'Записаться', wa: 'стоматологии' },
+      auto: { name: 'Автосалон', desc: 'Каталог автомобилей, условия кредита и запись на тест-драйв.', h: 'Новые авто в наличии', cta: 'Тест-драйв', wa: 'автосалона' },
+      build: { name: 'Ремонт и строительство', desc: 'Виды работ с ценами за м², примеры объектов и заявка на замер.', h: 'Ремонт под ключ с гарантией', cta: 'Заказать замер', wa: 'компании по ремонту и строительству' },
+      edu: { name: 'Учебный центр', desc: 'Курсы с ценами, расписание групп и запись на пробный урок.', h: 'Английский и подготовка к ЕНТ', cta: 'Пробный урок', wa: 'учебного центра' },
+      beauty: { name: 'Салон красоты', desc: 'Услуги и мастера, прайс и онлайн-запись на удобное время.', h: 'Красота в удобное время', cta: 'Записаться', wa: 'салона красоты' },
+      cargo: { name: 'Карго и доставка', desc: 'Тарифы за кг, калькулятор доставки и заявка на расчёт груза.', h: 'Доставка из Китая от 7 дней', cta: 'Рассчитать', wa: 'карго и доставки' }
+    },
+    works_note: 'Вашей ниши нет в списке? Напишите, чем занимаетесь, и я пришлю структуру сайта под ваш бизнес до оплаты.',
+    faq_h2: 'Частые вопросы',
+    q1: 'Сколько стоят домен и хостинг?', a1: 'Они оплачиваются отдельно, раз в год, и оформляются на вас. Так сайт остаётся вашим, даже если мы перестанем работать вместе. Точную сумму назову до начала работы.',
+    q2: 'Нужно ли платить за CRM?', a2: 'Мне вы платите только за подключение. Подписку на CRM вы оплачиваете сервису напрямую. У Bitrix24 есть бесплатный тариф, с него можно начать.',
+    q3: 'Как проходит оплата?', a3: 'Половина перед началом работы, половина после запуска сайта. Перевод на Kaspi.',
+    q4: 'Что нужно от меня?', a4: 'Логотип, фотографии, список услуг с ценами и контакты. Если текстов нет, напишу их сам, это отдельная опция в расчёте.',
+    q5: 'Можно ли потом менять цены и тексты на сайте?', a5: 'Да. Первые 14 дней правки бесплатные. Дальше можно взять поддержку: вы пишете, что изменить, и я делаю это в течение дня.',
+    q6: 'Вы работаете с другими городами?', a6: 'Да, удалённо по всему Казахстану. Всё обсуждаем в WhatsApp, Telegram или по звонку.',
+    contact_h2: 'Напишите, обсудим ваш сайт',
+    contact_lead: 'Первый разговор и расчёт бесплатные. Расскажите, чем занимаетесь, и я предложу, какой сайт вам подойдёт.',
+    about: '<b>Nurbolat</b>, frontend и backend разработчик, два года в коммерческой разработке. Работаю без менеджеров и посредников: вы общаетесь напрямую с тем, кто делает сайт.',
+    copy: 'Скопировать', copied: 'Скопировано', selected: 'Выделено',
+    footer_l: '© 2026 Nurbolat. Сайты для бизнеса, которые помогают получать заявки.',
+    footer_r: 'Цены на странице предварительные, точную сумму называю после разговора.'
+  },
 
+  kz: {
+    title: 'Nurbolat сайттары',
+    brand_sub: 'бизнеске арналған сайттар',
+    nav_aria: 'Бөлімдер', lang_aria: 'Тіл',
+    nav_prices: 'Бағалар', nav_process: 'Жұмыс барысы', nav_portfolio: 'Портфолио', nav_faq: 'Сұрақтар', nav_contact: 'Байланыс',
+    hero_h1: 'Бизнесіңізге арналған, өтінімдерді тәулік бойы қабылдайтын сайт',
+    hero_lead: 'Қазақстандағы бизнеске арналған лендингтер, көпбетті сайттар, онлайн-жазылу және CRM',
+    hero_cta: 'Нұсқаларды көру', hero_wa: 'WhatsApp-қа жазу',
+    hero_facts: 'Лендинг <b>{price}</b>. Іске қосу 3 күннен бастап. Қазақ, орыс және ағылшын тілдерінде.',
+    mock_btn: 'Жазылу', toast_title: 'Сайттан жаңа өтінім',
+    leads: ['Айгерім: тіс тазалау, ертең сағат 15:00', 'Данияр: сенбіде тест-драйв', 'Мадина: ас үй жөндеуі, сенбіде өлшеу', 'Ерлан: Гуанчжоудан жеткізу есебі'],
+    niches_aria: 'Қандай салаларға сайт жасаймын',
+    niches: ['Стоматологиялар', 'Клиникалар', 'Автосалондар', 'Жөндеу және құрылыс', 'Тапсырыспен жиһаз', 'Оқу орталықтары', 'Сұлулық салондары', 'Карго', 'Автомектептер', 'Тойханалар', 'СТО және детейлинг', 'Заңгерлер мен бухгалтерлер', 'Туристік агенттіктер'],
+    prices_h2: 'Бағалар',
+    tariffs_lead: 'Үш дайын пакет. Бағалар «бастап» деп көрсетілген: нақты сома жұмыс көлеміне байланысты.',
+    tariff_tag: 'Ұсынамын', tariff_btn: 'Тарифті таңдау',
+    tariffs: {
+      start: { name: 'Старт', items: ['Лендинг', 'Бейімделген нұсқа', 'WhatsApp', 'Өтінім формасы', 'Базалық баптау'] },
+      business: { name: 'Бизнес', items: ['Көпбетті сайт', 'WhatsApp', 'Өтінім формасы', '3 тіл', 'Карталар', 'Каталог немесе қызметтер', 'Домен және хостинг'] },
+      pro: { name: 'Pro', items: ['«Бизнес» тарифіндегінің бәрі', 'CRM', 'Онлайн-жазылу', 'Кеңейтілген автоматтандыру', 'Жеке функционал'] }
+    },
+    calc_h3: 'Құн калькуляторы',
+    calc_lead: 'Қажетін таңдап, қосымша қызметтерді белгілеңіз. Қорытынды сома бірден есептеледі, оны бір батырмамен WhatsApp-қа жібере аласыз.',
+    legend_what: 'Не жасаймыз', gets_title: 'Не аласыз', legend_addons: 'Қосымша', legend_after: 'Іске қосқаннан кейін',
+    sum_send: 'Есепті WhatsApp-қа жіберу',
+    from: '{p} ₸ бастап', included: 'қамтылған', per_mo: '{p} ₸ / ай', monthly: '+ айына {p} ₸',
+    term: 'Мерзімі: {d}', days: ['күн'], days_gen: ['күннен'], days_from: '{a} {w} бастап',
+    sum_what: '{pack} және {n} {w}', opts: ['қосымша қызмет'],
+    packs: {
+      landing: { name: 'Лендинг', note: 'Үш тілдегі бір беттік сайт',
+        gets: ['7 блокқа дейінгі бір бет: қызметтер, бағалар, пікірлер, байланыс', 'Үш тіл: қазақ, орыс, ағылшын', 'Логотипіңіз бен түстеріңізге сай дизайн', 'Өтінім формасы және WhatsApp батырмасы', 'Өтінімдер Telegram-ға немесе поштаға келеді', 'Карта және 2GIS сілтемесі', 'Домен мен хостингті қосу', '14 күн тегін түзету'],
+        fit: 'Жарнама іске қосуға, бір қызметке немесе акцияға қолайлы. Бағасы блоктар санына байланысты.' },
+      multi: { name: 'Көпбетті сайт', note: '8 бетке дейін: қызметтер, бағалар, компания туралы',
+        gets: ['8 бетке дейін: басты бет, қызметтер, бағалар, компания туралы, байланыс', 'Әр қызметке жеке бет', 'Үш тіл: қазақ, орыс, ағылшын', 'Лендингке кіретіннің бәрі', 'Жаңалықтар немесе мақалалар бөлімі', 'Әр бетті іздеу жүйелеріне баптау', '14 күн тегін түзету'],
+        fit: 'Қызметі көп клиникаларға, оқу орталықтарына және өндіріске қолайлы. Бағасы беттер санына байланысты.' },
+      crm: { name: 'CRM қосылған сайт', note: 'Көпбетті сайт және Bitrix24 немесе amoCRM',
+        gets: ['8 бетке дейінгі көпбетті сайт', 'Bitrix24 немесе amoCRM қосу', 'Әр өтінім бірден CRM-ге түседі', 'Менеджерге жаңа өтінім туралы хабарлама', 'Сату кезеңдеріңізге сай воронка', 'Қызметкерлерге бір сағаттық оқыту', '14 күн тегін түзету'],
+        fit: 'Өтінімдерді әкімшілер немесе менеджерлер қабылдайтын болса қолайлы. CRM жазылымын сервиске тікелей өзіңіз төлейсіз.' },
+      shop: { name: 'Интернет-дүкен', note: 'Каталог, себет, тапсырыс және төлем',
+        gets: ['Санаттары мен іздеуі бар каталог', 'Фотосы мен бағасы бар тауар карточкалары', 'Себет және тапсырыс рәсімдеу', 'Онлайн-төлем', 'Тапсырыстар Telegram-ға немесе поштаға келеді', 'Тауарлар мен бағаларды басқаратын әкімшілік панель', '14 күн тегін түзету'],
+        fit: '200 тауарға дейінгі дүкендерге қолайлы. Үлкенірек каталогты бөлек талқылаймыз.' },
+      bot: { name: 'Telegram-бот', note: 'Мәзір, сұрақтарға жауап, өтінімдер',
+        gets: ['Қызметтеріңіз бен бағаларыңыз көрсетілген мәзір', 'Жиі қойылатын сұрақтарға жауап', 'Өтінім қабылдау және сізге хабарлама', 'Бот жазылушыларына хабар тарату', 'Қазақ және орыс тілдері', 'Серверде іске қосу', '14 күн тегін түзету'],
+        fit: 'Клиенттер Telegram-да бірдей сұрақтарды қайта-қайта қоятын болса қолайлы. Ботқа арналған сервер бөлек төленеді.' },
+      botpro: { name: 'Жазылу немесе дүкені бар бот', note: 'Уақытқа жазылу немесе тапсырыс беретін каталог',
+        gets: ['Күн мен уақытты таңдап, қызметке жазылу', 'Немесе себеті мен тапсырысы бар тауар каталогы', 'Клиенттерге жазылу туралы еске салу', 'Өтінімдер мен тапсырыстар сізге Telegram-ға келеді', 'Қызметтер мен бағаларды боттың ішінен басқару', 'Клиенттер базасына хабар тарату', '14 күн тегін түзету'],
+        fit: 'Салондарға, клиникаларға, жеткізу қызметтеріне және шағын дүкендерге қолайлы. Ботқа арналған сервер бөлек төленеді.' },
+      custom: { name: 'Жеке жоба', note: 'Жеке әкімшілік панель, жеке кабинет, веб-сервис',
+        gets: ['Өтінімдер мен статустары бар жеке әкімшілік панель', 'Клиенттің жеке кабинеті', 'Уақыт таңдайтын онлайн-жазылу', 'Қызметкерлерге арналған рұқсаттар', 'Сервер және дерекқор', 'Іске қосқаннан кейін бір ай қолдау'],
+        fit: 'Дайын сервистер міндетті шеше алмағанда қолайлы. Нақты баға мен мерзім талқылаудан кейін белгіленеді.' }
+    },
+    addons: {
+      crm: ['CRM қосу', 'Bitrix24 немесе amoCRM, өтінімдер воронкаға түседі'],
+      tgbot: ['Өтінімдерге арналған Telegram-бот', 'Сайттан келген өтінімдер және клиенттерге Telegram-да жауап'],
+      booking: ['Онлайн-жазылу', 'Клиент қызметті, күн мен уақытты өзі таңдайды'],
+      quiz: ['Квиз немесе баға калькуляторы', 'Клиент сұрақтарға жауап беріп, өтінім қалдырады'],
+      pay: ['Онлайн-төлем', 'Клиент қызметті немесе тапсырысты бірден төлейді'],
+      ai: ['ЖИ-көмекші', 'Клиенттерге қызметтеріңіз бен бағаларыңыз бойынша жауап береді. ЖИ сервисі бөлек төленеді'],
+      copy: ['Дайын мәтіндер', 'Өз мәтініңіз болмаса, салаңызға сай мәтін жазып беремін'],
+      seo: ['SEO-баптау', 'Сұраныстарды іріктеу және беттерді іздеу жүйелеріне баптау'],
+      maps: ['2GIS және Google Карталардағы карточкалар', 'Компанияңыздың карточкаларын рәсімдеймін немесе жаңартамын']
+    },
+    support: ['Қолдау', 'Бір күн ішінде түзету, жаңартулар, жұмысын бақылау'],
+    basics_h2: 'Кез келген сайтқа не кіреді', basics_lead: 'Бұл әр пакетте бар және бағаға кіреді.',
+    b1t: 'Телефоннан ыңғайлы', b1d: 'Клиенттердің көбі сайтқа телефоннан кіреді, сондықтан сайт алдымен шағын экранға арнап жасалады.',
+    b2t: 'Өтінімдер мессенджерге', b2d: 'Форма және WhatsApp батырмасы. Өтінім бірнеше секундта Telegram-ға немесе поштаңызға келеді.',
+    b3t: 'Үш тіл', b3d: 'Ауыстырғышы бар қазақ, орыс және ағылшын тілдері. Аударма бағаға кіреді.',
+    b4t: 'Домен және хостинг', b4d: 'Таңдауға көмектесемін, сіздің атыңызға рәсімдеп, қосып беремін. Сайт маған емес, сізге тиесілі.',
+    b5t: 'Іздеу және карталар', b5d: 'Google мен Яндекске арналған базалық баптау, 2GIS сілтемесі және мекенжайыңыз көрсетілген карта.',
+    b6t: '14 күн түзету', b6d: 'Іске қосқаннан кейін екі апта бойы байқаған қателеріңізді тегін түзетемін.',
+    process_h2: 'Жұмыс қалай жүреді', process_lead: 'Алғашқы хабарламадан жұмыс істеп тұрған сайтқа дейін бес қадам.',
+    s1t: 'Танысу', s1d: 'WhatsApp-та немесе қоңырау арқылы жарты сағат. Немен айналысатыныңызды және клиенттер қайдан келетінін анықтаймын.',
+    s2t: 'Жоспар және баға', s2d: 'Сайт құрылымын, нақты бағаны және мерзімді жіберемін. Келіскеннен кейін 50% алдын ала төлем.',
+    s3t: 'Дизайн', s3d: 'Бірінші экран мен жалпы стильді көрсетемін. Сізге ұнағанша түзетеміз.',
+    s4t: 'Жинақтау', s4d: 'Сайтты жинап, өтінімдерді, домен мен хостингті қосамын. Сіз сілтеме арқылы бақылап отырасыз.',
+    s5t: 'Іске қосу', s5d: 'Сайт интернетте. Төлемнің екінші жартысы, 14 күн түзету және қалауыңыз бойынша қолдау.',
+    portfolio_h2: 'Портфолио',
+    portfolio_lead: 'Жеке жобалар және әртүрлі салаларға арналған демонстрациялар. Демоны ашып, сайтыңыздың қалай көрінетінін көре аласыз.',
+    own_h3: 'Жеке жобалар', demos_h3: 'Бизнеске арналған демонстрациялар',
+    demos_note: 'Бұл нақты клиенттердің сайттары емес, демонстрациялық үлгілер. Олардағы атаулар мен бағалар шартты.',
+    tag_own: 'Жеке жоба', tag_demo: 'Демо', demo_open: 'Демоны ашу', demo_want: 'Осындай сайт керек',
+    own1_t: 'Салондар мен барбершоптарға арналған онлайн-жазылу', own1_d: 'Шымкент салондарының каталогы, шебер мен уақытты таңдау, қазақ және орыс тілдері. React, Vite, Tailwind.',
+    own2_d: 'IT-коворкингтің лендингі: жұмыс орындарын брондау, іс-шаралар афишасы, үш тіл.',
+    demos: {
+      dental: { name: 'Стоматология', desc: 'Бағалары көрсетілген қызметтер, дәрігерлер және WhatsApp арқылы қабылдауға жазылу.', h: 'Ауыртпай емдейтін стоматология', cta: 'Жазылу', wa: 'стоматологияға' },
+      auto: { name: 'Автосалон', desc: 'Автокөліктер каталогы, несие шарттары және тест-драйвқа жазылу.', h: 'Жаңа көліктер қолда бар', cta: 'Тест-драйв', wa: 'автосалонға' },
+      build: { name: 'Жөндеу және құрылыс', desc: 'Шаршы метр бағасымен жұмыс түрлері, нысан үлгілері және өлшеуге өтінім.', h: 'Кепілдігі бар толық жөндеу', cta: 'Өлшеуге тапсырыс', wa: 'жөндеу және құрылыс компаниясына' },
+      edu: { name: 'Оқу орталығы', desc: 'Бағалары көрсетілген курстар, топтар кестесі және сынақ сабағына жазылу.', h: 'Ағылшын тілі және ҰБТ-ға дайындық', cta: 'Сынақ сабағы', wa: 'оқу орталығына' },
+      beauty: { name: 'Сұлулық салоны', desc: 'Қызметтер мен шеберлер, прайс және ыңғайлы уақытқа онлайн-жазылу.', h: 'Ыңғайлы уақытта сұлулық', cta: 'Жазылу', wa: 'сұлулық салонына' },
+      cargo: { name: 'Карго және жеткізу', desc: 'Килограмм бағасы, жеткізу калькуляторы және жүкті есептеуге өтінім.', h: 'Қытайдан 7 күннен бастап жеткізу', cta: 'Есептеу', wa: 'карго және жеткізу қызметіне' }
+    },
+    works_note: 'Сіздің салаңыз тізімде жоқ па? Немен айналысатыныңызды жазыңыз, төлемге дейін бизнесіңізге сай сайт құрылымын жіберемін.',
+    faq_h2: 'Жиі қойылатын сұрақтар',
+    q1: 'Домен мен хостинг қанша тұрады?', a1: 'Олар бөлек, жылына бір рет төленеді және сіздің атыңызға рәсімделеді. Осылайша бірге жұмыс істеуді тоқтатсақ та, сайт сізде қалады. Нақты соманы жұмыс басталмай тұрып айтамын.',
+    q2: 'CRM үшін төлеу керек пе?', a2: 'Маған тек қосу жұмысы үшін төлейсіз. CRM жазылымын сервиске тікелей өзіңіз төлейсіз. Bitrix24-те тегін тариф бар, содан бастауға болады.',
+    q3: 'Төлем қалай жүргізіледі?', a3: 'Жартысы жұмыс басталар алдында, жартысы сайт іске қосылғаннан кейін. Kaspi арқылы аударым.',
+    q4: 'Менен не қажет?', a4: 'Логотип, фотосуреттер, бағалары көрсетілген қызметтер тізімі және байланыс деректері. Мәтін болмаса, өзім жазып беремін, бұл есептегі бөлек опция.',
+    q5: 'Кейін сайттағы бағалар мен мәтіндерді өзгертуге бола ма?', a5: 'Иә. Алғашқы 14 күнде түзету тегін. Одан кейін қолдау қызметін алуға болады: нені өзгерту керегін жазасыз, мен бір күн ішінде орындаймын.',
+    q6: 'Басқа қалалармен жұмыс істейсіз бе?', a6: 'Иә, бүкіл Қазақстан бойынша қашықтан жұмыс істеймін. Барлығын WhatsApp, Telegram немесе қоңырау арқылы талқылаймыз.',
+    contact_h2: 'Жазыңыз, сайтыңызды талқылайық',
+    contact_lead: 'Алғашқы әңгіме мен есеп тегін. Немен айналысатыныңызды айтыңыз, сізге қандай сайт сәйкес келетінін ұсынамын.',
+    about: '<b>Nurbolat</b>, frontend және backend әзірлеуші, коммерциялық әзірлеуде екі жыл тәжірибем бар. Менеджерлер мен делдалдарсыз жұмыс істеймін: сайтты жасайтын адаммен тікелей сөйлесесіз.',
+    copy: 'Көшіру', copied: 'Көшірілді', selected: 'Белгіленді',
+    footer_l: '© 2026 Nurbolat. Өтінім алуға көмектесетін бизнеске арналған сайттар.',
+    footer_r: 'Беттегі бағалар алдын ала көрсетілген, нақты соманы әңгімеден кейін айтамын.'
+  },
+
+  en: {
+    title: 'Websites by Nurbolat',
+    brand_sub: 'websites for business',
+    nav_aria: 'Sections', lang_aria: 'Language',
+    nav_prices: 'Pricing', nav_process: 'Process', nav_portfolio: 'Portfolio', nav_faq: 'FAQ', nav_contact: 'Contact',
+    hero_h1: 'A website for your business that takes enquiries 24/7',
+    hero_lead: 'Landing pages, multi-page websites, online booking and CRM for businesses in Kazakhstan',
+    hero_cta: 'View options', hero_wa: 'Message on WhatsApp',
+    hero_facts: 'Landing page <b>{price}</b>. Launch in as little as 3 days. Kazakh, Russian and English.',
+    mock_btn: 'Book now', toast_title: 'New enquiry from the website',
+    leads: ['Aigerim: teeth cleaning, tomorrow at 3 pm', 'Daniyar: test drive on Saturday', 'Madina: kitchen renovation, site visit on Saturday', 'Yerlan: shipping quote from Guangzhou'],
+    niches_aria: 'Industries I build websites for',
+    niches: ['Dental clinics', 'Medical clinics', 'Car dealerships', 'Renovation and construction', 'Custom furniture', 'Training centres', 'Beauty salons', 'Cargo', 'Driving schools', 'Banquet halls', 'Auto service and detailing', 'Lawyers and accountants', 'Travel agencies'],
+    prices_h2: 'Pricing',
+    tariffs_lead: 'Three ready-made packages. Prices are “from”: the exact amount depends on the scope of work.',
+    tariff_tag: 'Recommended', tariff_btn: 'Choose package',
+    tariffs: {
+      start: { name: 'Start', items: ['Landing page', 'Mobile-friendly layout', 'WhatsApp', 'Enquiry form', 'Basic setup'] },
+      business: { name: 'Business', items: ['Multi-page website', 'WhatsApp', 'Enquiry form', '3 languages', 'Maps', 'Catalogue or services', 'Domain and hosting'] },
+      pro: { name: 'Pro', items: ['Everything in Business', 'CRM', 'Online booking', 'Advanced automation', 'Custom features'] }
+    },
+    calc_h3: 'Price calculator',
+    calc_lead: 'Pick what you need and tick the extras. The total updates instantly, and you can send it to me on WhatsApp in one tap.',
+    legend_what: 'What we build', gets_title: 'What you get', legend_addons: 'Extras', legend_after: 'After launch',
+    sum_send: 'Send estimate on WhatsApp',
+    from: 'from {p} ₸', included: 'included', per_mo: '{p} ₸ / mo', monthly: '+ {p} ₸ per month',
+    term: 'Timeline: {d}', days: ['day', 'days'], days_gen: ['day', 'days'], days_from: 'from {a} {w}',
+    sum_what: '{pack} + {n} {w}', opts: ['extra', 'extras'],
+    packs: {
+      landing: { name: 'Landing page', note: 'One page in three languages',
+        gets: ['One page with up to 7 sections: services, prices, reviews, contacts', 'Three languages: Kazakh, Russian, English', 'Design matched to your logo and colours', 'Enquiry form and WhatsApp button', 'Enquiries arrive in Telegram or by email', 'Map and 2GIS link', 'Domain and hosting setup', '14 days of free revisions'],
+        fit: 'A good fit for an ad campaign, a single service or a promotion. The price depends on the number of sections.' },
+      multi: { name: 'Multi-page website', note: 'Up to 8 pages: services, prices, about',
+        gets: ['Up to 8 pages: home, services, prices, about, contacts', 'A separate page for each service', 'Three languages: Kazakh, Russian, English', 'Everything in the landing page', 'News or articles section', 'Search setup for every page', '14 days of free revisions'],
+        fit: 'A good fit for clinics, training centres and manufacturers with many services. The price depends on the number of pages.' },
+      crm: { name: 'Website with CRM', note: 'Multi-page website plus Bitrix24 or amoCRM',
+        gets: ['Multi-page website, up to 8 pages', 'Bitrix24 or amoCRM integration', 'Every enquiry goes straight into the CRM', 'Manager notification for each new enquiry', 'Pipeline matched to your sales stages', 'One hour of staff training', '14 days of free revisions'],
+        fit: 'A good fit if administrators or managers handle enquiries. You pay the CRM subscription directly to the provider.' },
+      shop: { name: 'Online store', note: 'Catalogue, cart, checkout and payment',
+        gets: ['Catalogue with categories and search', 'Product pages with photos and prices', 'Cart and checkout', 'Online payment', 'Orders arrive in Telegram or by email', 'Admin panel for products and prices', '14 days of free revisions'],
+        fit: 'A good fit for stores with up to 200 products. Larger catalogues are discussed separately.' },
+      bot: { name: 'Telegram bot', note: 'Menu, answers to questions, enquiries',
+        gets: ['Menu with your services and prices', 'Answers to frequent questions', 'Enquiry intake with a notification to you', 'Broadcasts to bot subscribers', 'Russian and Kazakh', 'Server launch', '14 days of free revisions'],
+        fit: 'A good fit if clients keep asking you the same questions in Telegram. The bot server is paid separately.' },
+      botpro: { name: 'Bot with booking or store', note: 'Time-slot booking or a catalogue with ordering',
+        gets: ['Service booking with a choice of day and time', 'Or a product catalogue with cart and ordering', 'Booking reminders for clients', 'Enquiries and orders arrive in your Telegram', 'Manage services and prices inside the bot', 'Broadcasts to your client base', '14 days of free revisions'],
+        fit: 'A good fit for salons, clinics, delivery services and small stores. The bot server is paid separately.' },
+      custom: { name: 'Custom project', note: 'Your own admin panel, client account, web service',
+        gets: ['Your own admin panel with enquiries and statuses', 'Client account area', 'Online booking with time selection', 'Staff access levels', 'Server and database', 'One month of support after launch'],
+        fit: 'A good fit when off-the-shelf services cannot do the job. Exact price and timeline after we talk.' }
+    },
+    addons: {
+      crm: ['CRM integration', 'Bitrix24 or amoCRM, enquiries go into the pipeline'],
+      tgbot: ['Telegram bot for enquiries', 'Website enquiries and replies to clients in Telegram'],
+      booking: ['Online booking', 'Clients pick the service, day and time themselves'],
+      quiz: ['Quiz or price calculator', 'Clients answer a few questions and leave an enquiry'],
+      pay: ['Online payment', 'Clients pay for a service or order right away'],
+      ai: ['AI assistant', 'Answers clients about your services and prices. The AI service is paid separately'],
+      copy: ['Copywriting', 'I write the texts for your industry if you have none'],
+      seo: ['SEO setup', 'Keyword selection and page setup for search'],
+      maps: ['2GIS and Google Maps listings', 'I set up or update your company listings']
+    },
+    support: ['Support', 'Same-day edits, updates, uptime checks'],
+    basics_h2: 'Included in every website', basics_lead: 'Every package includes this at no extra cost.',
+    b1t: 'Works well on phones', b1d: 'Most clients visit from a phone, so the site is built for small screens first.',
+    b2t: 'Enquiries to your messenger', b2d: 'A form and a WhatsApp button. Each enquiry reaches your Telegram or email within seconds.',
+    b3t: 'Three languages', b3d: 'Kazakh, Russian and English with a switcher. Translation is included in the price.',
+    b4t: 'Domain and hosting', b4d: 'I help you choose, register them in your name and connect everything. The site belongs to you, not to me.',
+    b5t: 'Search and maps', b5d: 'Basic setup for Google and Yandex, a 2GIS link and a map with your address.',
+    b6t: '14 days of revisions', b6d: 'For two weeks after launch I fix anything you notice, free of charge.',
+    process_h2: 'How the work goes', process_lead: 'Five steps from the first message to a live website.',
+    s1t: 'Intro call', s1d: 'Half an hour on WhatsApp or a call. I learn what you do and where your clients come from.',
+    s2t: 'Plan and price', s2d: 'I send the site structure, the exact price and the timeline. After approval, a 50% deposit.',
+    s3t: 'Design', s3d: 'I show the first screen and the overall style. We refine it until you are happy.',
+    s4t: 'Build', s4d: 'I build the site and connect enquiries, the domain and hosting. You follow progress via a link.',
+    s5t: 'Launch', s5d: 'The site is live. The second half of the payment, 14 days of revisions and optional support.',
+    portfolio_h2: 'Portfolio',
+    portfolio_lead: 'My own projects and demos for different industries. Open a demo to see how your website could look.',
+    own_h3: 'My own projects', demos_h3: 'Demos for business',
+    demos_note: 'These are demo templates, not real client websites. The names and prices in them are placeholders.',
+    tag_own: 'Own project', tag_demo: 'Demo', demo_open: 'Open demo', demo_want: 'I want a site like this',
+    own1_t: 'Online booking for salons and barbershops', own1_d: 'A catalogue of Shymkent salons with a choice of specialist and time, in Russian and Kazakh. React, Vite, Tailwind.',
+    own2_d: 'A landing page for an IT coworking space: desk booking, event listings, three languages.',
+    demos: {
+      dental: { name: 'Dental clinic', desc: 'Services with prices, doctors and appointment booking via WhatsApp.', h: 'A healthy smile, pain-free', cta: 'Book now', wa: 'a dental clinic' },
+      auto: { name: 'Car dealership', desc: 'Car catalogue, financing terms and test-drive booking.', h: 'New cars in stock', cta: 'Test drive', wa: 'a car dealership' },
+      build: { name: 'Renovation and construction', desc: 'Types of work priced per m², example projects and a site-visit request.', h: 'Turnkey renovation with a warranty', cta: 'Request a visit', wa: 'a renovation and construction company' },
+      edu: { name: 'Training centre', desc: 'Courses with prices, group schedules and trial-lesson sign-up.', h: 'English and exam preparation', cta: 'Trial lesson', wa: 'a training centre' },
+      beauty: { name: 'Beauty salon', desc: 'Services and specialists, a price list and online booking for a convenient time.', h: 'Beauty at a time that suits you', cta: 'Book now', wa: 'a beauty salon' },
+      cargo: { name: 'Cargo and delivery', desc: 'Per-kg rates, a shipping calculator and a freight quote request.', h: 'Shipping from China from 7 days', cta: 'Get a quote', wa: 'a cargo and delivery company' }
+    },
+    works_note: 'Is your industry not on the list? Tell me what you do and I will send a site structure for your business before any payment.',
+    faq_h2: 'Frequently asked questions',
+    q1: 'How much do the domain and hosting cost?', a1: 'They are paid separately, once a year, and registered in your name. That way the site stays yours even if we stop working together. I will give you the exact amount before we start.',
+    q2: 'Do I have to pay for the CRM?', a2: 'You pay me only for the integration. The CRM subscription is paid directly to the provider. Bitrix24 has a free plan you can start with.',
+    q3: 'How does payment work?', a3: 'Half before work starts and half after the site goes live. By Kaspi transfer.',
+    q4: 'What do you need from me?', a4: 'A logo, photos, a list of services with prices and your contact details. If you have no texts, I can write them; it is a separate option in the estimate.',
+    q5: 'Can prices and texts be changed later?', a5: 'Yes. Revisions are free for the first 14 days. After that you can take the support plan: you tell me what to change and I do it within a day.',
+    q6: 'Do you work with other cities?', a6: 'Yes, I work remotely across Kazakhstan. We discuss everything on WhatsApp, Telegram or a call.',
+    contact_h2: 'Message me and we will discuss your website',
+    contact_lead: 'The first conversation and the estimate are free. Tell me what you do and I will suggest the right kind of website.',
+    about: '<b>Nurbolat</b>, frontend and backend developer with two years of commercial experience. I work without managers or middlemen: you talk directly to the person building your site.',
+    copy: 'Copy', copied: 'Copied', selected: 'Selected',
+    footer_l: '© 2026 Nurbolat. Websites for business that help you get enquiries.',
+    footer_r: 'Prices on this page are estimates; I confirm the exact amount after we talk.'
+  }
+};
+
+/* ====== СООБЩЕНИЯ WHATSAPP на трёх языках ======
+   {package}, {price}, {niche}, {service} и другие вставки подставляются автоматически. */
+var whatsappMessages = {
+  ru: {
+    general: 'Здравствуйте! Меня интересует сайт для бизнеса. Хотел бы узнать подробности.',
+    package: 'Здравствуйте! Меня интересует тариф "{package}" стоимостью от {price}. Хотел бы узнать подробности.',
+    packageNiche: 'Здравствуйте! Меня интересует сайт для {niche}. Я выбрал тариф "{package}", стоимость от {price}. Хотел бы узнать подробности.',
+    niche: 'Здравствуйте! Меня интересует сайт для {niche}. Хотел бы узнать подробности.',
+    calc: 'Здравствуйте! Хочу сделать заказ.\nЧто нужно: {service}{extras}{support}\nПредварительный расчёт: {total}{monthly}, срок {days}',
+    extras: '\nДополнительно: {list}', support: '\nПоддержка после запуска: да', monthly: ' + {p} ₸ в месяц'
+  },
+  kz: {
+    general: 'Сәлеметсіз бе! Мені бизнеске арналған сайт қызықтырады. Толығырақ ақпарат алғым келеді.',
+    package: 'Сәлеметсіз бе! Мені "{package}" тарифі қызықтырады. Бағасы {price} бастап. Толығырақ ақпарат алғым келеді.',
+    packageNiche: 'Сәлеметсіз бе! Мені {niche} арналған сайт қызықтырады. Мен "{package}" тарифін таңдадым, бағасы {price} бастап. Толығырақ ақпарат алғым келеді.',
+    niche: 'Сәлеметсіз бе! Мені {niche} арналған сайт қызықтырады. Толығырақ ақпарат алғым келеді.',
+    calc: 'Сәлеметсіз бе! Тапсырыс бергім келеді.\nНе керек: {service}{extras}{support}\nАлдын ала есеп: {total}{monthly}, мерзімі {days}',
+    extras: '\nҚосымша: {list}', support: '\nІске қосқаннан кейінгі қолдау: иә', monthly: ' + айына {p} ₸'
+  },
+  en: {
+    general: 'Hello! I’m interested in a website for my business. I would like to learn more.',
+    package: 'Hello! I’m interested in the "{package}" package starting from {price}. I would like to learn more.',
+    packageNiche: 'Hello! I’m interested in a website for {niche}. I selected the "{package}" package starting from {price}. I would like to learn more.',
+    niche: 'Hello! I’m interested in a website for {niche}. I would like to learn more.',
+    calc: 'Hello! I would like to place an order.\nWhat I need: {service}{extras}{support}\nEstimate: {total}{monthly}, timeline {days}',
+    extras: '\nExtras: {list}', support: '\nSupport after launch: yes', monthly: ' + {p} ₸ per month'
+  }
+};
+</script>
 <script>
 (function(){
   'use strict';
 
-  /* ====== ЦЕНЫ И УСЛУГИ: всё меняется здесь ======
+  /* ====== ЦЕНЫ: всё меняется здесь. Тексты лежат в translations выше ======
      price — цена «от», max — верхняя граница (если есть), days — срок в днях,
      open:true — срок «от N дней». У допуслуг: inside — в каких пакетах уже входит,
      not — в каких пакетах не показывать. */
   var WA = '77471541449';
 
+  var TARIFFS = [
+    { id:'start', price:40000 },
+    { id:'business', price:80000, featured:true },
+    { id:'pro', price:150000 }
+  ];
+
   var PACKS = [
-    { id:'landing', name:'Лендинг', price:40000, max:50000, days:[3,5],
-      note:'Одна страница на трёх языках',
-      gets:['Одна страница до 7 блоков: услуги, цены, отзывы, контакты','Три языка: казахский, русский, английский','Дизайн под ваш логотип и цвета','Форма заявки и кнопка WhatsApp','Заявки приходят в Telegram или на почту','Карта и ссылка на 2GIS','Подключение домена и хостинга','14 дней бесплатных правок'],
-      fit:'Подходит для запуска рекламы, одной услуги или акции. Цена зависит от числа блоков.' },
-    { id:'multi', name:'Многостраничный сайт', price:80000, max:150000, days:[7,14],
-      note:'До 8 страниц: услуги, цены, о компании',
-      gets:['До 8 страниц: главная, услуги, цены, о компании, контакты','Отдельная страница под каждую услугу','Три языка: казахский, русский, английский','Всё, что входит в лендинг','Раздел новостей или статей','Настройка каждой страницы под поиск','14 дней бесплатных правок'],
-      fit:'Подходит клиникам, учебным центрам и производству, когда услуг много. Цена зависит от числа страниц.' },
-    { id:'crm', name:'Сайт с CRM', price:200000, days:[10,18],
-      note:'Многостраничный сайт и Bitrix24 или amoCRM',
-      gets:['Многостраничный сайт до 8 страниц','Подключение Bitrix24 или amoCRM','Каждая заявка сразу попадает в CRM','Уведомление менеджеру о новой заявке','Воронка под ваши этапы продаж','Час обучения для сотрудников','14 дней бесплатных правок'],
-      fit:'Подходит, если заявки принимают администраторы или менеджеры. Подписку на CRM вы оплачиваете сервису напрямую.' },
-    { id:'shop', name:'Интернет-магазин', price:140000, days:[14,21],
-      note:'Каталог, корзина, заказ и оплата',
-      gets:['Каталог с категориями и поиском','Карточки товаров с фото и ценами','Корзина и оформление заказа','Онлайн-оплата','Заказы приходят в Telegram или на почту','Админка для товаров и цен','14 дней бесплатных правок'],
-      fit:'Подходит магазинам до 200 товаров. Больший каталог обсуждаем отдельно.' },
-    { id:'bot', name:'Telegram-бот', price:35000, days:[3,5],
-      note:'Меню, ответы на вопросы, заявки',
-      gets:['Меню с вашими услугами и ценами','Ответы на частые вопросы','Приём заявок с уведомлением вам','Рассылка по подписчикам бота','Русский и казахский','Запуск на сервере','14 дней бесплатных правок'],
-      fit:'Подходит, если клиенты пишут вам в Telegram с одними и теми же вопросами. Сервер для бота оплачивается отдельно.' },
-    { id:'botpro', name:'Бот с записью или магазином', price:90000, days:[7,12],
-      note:'Запись на время или каталог с заказом',
-      gets:['Запись на услугу с выбором дня и времени','Или каталог товаров с корзиной и заказом','Напоминания клиентам о записи','Заявки и заказы приходят вам в Telegram','Управление услугами и ценами прямо в боте','Рассылка по базе клиентов','14 дней бесплатных правок'],
-      fit:'Подходит салонам, клиникам, доставке и небольшим магазинам. Сервер для бота оплачивается отдельно.' },
-    { id:'custom', name:'Индивидуальный проект', price:350000, days:[21,42], open:true,
-      note:'Своя админка, личный кабинет, веб-сервис',
-      gets:['Своя админка с заявками и статусами','Личный кабинет клиента','Онлайн-запись с выбором времени','Доступы для сотрудников','Сервер и база данных','Месяц сопровождения после запуска'],
-      fit:'Подходит, когда готовые сервисы не закрывают задачу. Точная цена и срок после обсуждения.' }
+    { id:'landing', price:40000, max:50000, days:[3,5] },
+    { id:'multi', price:80000, max:150000, days:[7,14] },
+    { id:'crm', price:200000, days:[10,18] },
+    { id:'shop', price:140000, days:[14,21] },
+    { id:'bot', price:35000, days:[3,5] },
+    { id:'botpro', price:90000, days:[7,12] },
+    { id:'custom', price:350000, days:[21,42], open:true }
   ];
 
   var BOTS = ['bot','botpro'];
   var ADDONS = [
-    { id:'crm',     name:'Подключение CRM',           note:'Bitrix24 или amoCRM, заявки попадают в воронку', price:40000, days:2, inside:['crm','custom'] },
-    { id:'tgbot',   name:'Telegram-бот для заявок',   note:'Заявки с сайта и ответы клиентам в Telegram', price:30000, days:2, not:BOTS },
-    { id:'booking', name:'Онлайн-запись',             note:'Клиент сам выбирает услугу, день и время', price:35000, days:3, inside:['custom'], not:BOTS },
-    { id:'quiz',    name:'Квиз или калькулятор цены', note:'Клиент отвечает на вопросы и оставляет заявку', price:20000, days:2, not:BOTS },
-    { id:'pay',     name:'Онлайн-оплата',             note:'Клиент оплачивает услугу или заказ сразу', price:40000, days:2, inside:['shop'] },
-    { id:'ai',      name:'ИИ-помощник',               note:'Отвечает клиентам по вашим услугам и ценам. Сервис ИИ оплачивается отдельно', price:70000, days:4 },
-    { id:'copy',    name:'Тексты под ключ',           note:'Напишу тексты под вашу нишу, если своих нет', price:15000, days:1, not:BOTS },
-    { id:'seo',     name:'SEO-настройка',             note:'Подбор запросов и настройка страниц под поиск', price:30000, days:3, not:BOTS },
-    { id:'maps',    name:'Карточки в 2GIS и Google Картах', note:'Оформлю или обновлю карточки вашей компании', price:10000, days:1, not:BOTS }
+    { id:'crm', price:40000, days:2, inside:['crm','custom'] },
+    { id:'tgbot', price:30000, days:2, not:BOTS },
+    { id:'booking', price:35000, days:3, inside:['custom'], not:BOTS },
+    { id:'quiz', price:20000, days:2, not:BOTS },
+    { id:'pay', price:40000, days:2, inside:['shop'] },
+    { id:'ai', price:70000, days:4 },
+    { id:'copy', price:15000, days:1, not:BOTS },
+    { id:'seo', price:30000, days:3, not:BOTS },
+    { id:'maps', price:10000, days:1, not:BOTS }
   ];
 
-  var SUPPORT = { name:'Поддержка', note:'Правки в течение дня, обновления, контроль работы', price:10000 };
+  var SUPPORT = { price:10000 };
+
+  /* демо-страницы: brand — условное название, pb/pf/pa/ps — цвета превью */
+  var DEMOS = [
+    { id:'dental', brand:'Demo Dent', pb:'#F3FAFB', pf:'#0F2B33', pa:'#12A3B4', ps:'#D9EEF1' },
+    { id:'auto', brand:'Demo Auto', pb:'#101114', pf:'#F2F2F0', pa:'#E4572E', ps:'#1F2228' },
+    { id:'build', brand:'Demo Build', pb:'#F5F6F4', pf:'#1C2321', pa:'#D9731A', ps:'#E4E8E2' },
+    { id:'edu', brand:'Demo Academy', pb:'#FFFFFF', pf:'#1B1F3B', pa:'#5B5BD6', ps:'#ECEDFB' },
+    { id:'beauty', brand:'Demo Beauty', pb:'#FBF4F5', pf:'#2B1B22', pa:'#C2477A', ps:'#F1DFE5' },
+    { id:'cargo', brand:'Demo Cargo', pb:'#0D1B2A', pf:'#EAF1F7', pa:'#F2C230', ps:'#16293D' }
+  ];
   /* ====== конец настроек ====== */
 
   var doc = document, $ = function(id){ return doc.getElementById(id); };
+  var all = function(sel){ return [].slice.call(doc.querySelectorAll(sel)); };
   var calm = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-  var state = { pack:'landing', addons:{}, support:false };
+  var LANGS = { ru:'ru', kz:'kk', en:'en' };
+  var lang = 'ru';
+  var state = { pack:'landing', addons:{}, support:false, niche:'' };
 
-  var NB=String.fromCharCode(160);
-  function money(n){ return n.toLocaleString('ru-RU').replace(/\s/g,NB); }
-  function plain(t){ return t.split(NB).join(' '); }
-  function plural(n,a,b,c){ var d=n%10,h=n%100; return (d===1&&h!==11)?a:(d>=2&&d<=4&&(h<10||h>=20))?b:c; }
-  function esc(s){ return String(s).replace(/[&<>"]/g,function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
-  function pack(){ for(var i=0;i<PACKS.length;i++) if(PACKS[i].id===state.pack) return PACKS[i]; return PACKS[0]; }
-  function isInside(a){ return !!(a.inside && a.inside.indexOf(state.pack)>-1); }
-  function isOff(a){ return !!(a.not && a.not.indexOf(state.pack)>-1); }
-  function range(min,spread){ return spread ? money(min)+'–'+money(min+spread)+' ₸' : 'от '+money(min)+' ₸'; }
+  try { var saved = localStorage.getItem('lang'); if (LANGS[saved]) lang = saved; } catch(e){}
 
-  function row(type,name,id,value,title,note,price,checked){
-    return '<label class="row" for="'+id+'">'+
-      '<input type="'+type+'" name="'+name+'" id="'+id+'" value="'+value+'"'+(checked?' checked':'')+'>'+
-      '<span class="mark"></span><span class="row-name">'+esc(title)+'</span><span class="dots"></span>'+
-      '<span class="row-price num">'+price+'</span><span class="row-note">'+esc(note)+'</span></label>';
+  var NB = String.fromCharCode(160);
+  function T(){ return translations[lang]; }
+  function t(key){ var v = T()[key]; return v == null ? translations.ru[key] : v; }
+  function fmt(s, v){ return s.replace(/\{(\w+)\}/g, function(m, k){ return v[k] == null ? '' : v[k]; }); }
+  function money(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'en' ? ',' : NB); }
+  function plain(s){ return s.split(NB).join(' '); }
+  function from(n){ return fmt(t('from'), { p: money(n) }); }
+  function range(min, spread){ return spread ? money(min) + '–' + money(min + spread) + ' ₸' : from(min); }
+  function plural(n, f){
+    if (f.length === 1) return f[0];
+    if (f.length === 2) return n === 1 ? f[0] : f[1];
+    var d = n % 10, h = n % 100;
+    return (d === 1 && h !== 11) ? f[0] : (d >= 2 && d <= 4 && (h < 10 || h >= 20)) ? f[1] : f[2];
   }
-  function daysText(a,b,open){
-    if(open) return 'от '+a+' '+plural(a,'дня','дней','дней');
-    return a+'–'+b+' '+plural(b,'день','дня','дней');
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function find(list, id){ for (var i = 0; i < list.length; i++) if (list[i].id === id) return list[i]; return list[0]; }
+  function pack(){ return find(PACKS, state.pack); }
+  function isInside(a){ return !!(a.inside && a.inside.indexOf(state.pack) > -1); }
+  function isOff(a){ return !!(a.not && a.not.indexOf(state.pack) > -1); }
+  function daysText(a, b, open){
+    if (open) return fmt(t('days_from'), { a: a, w: plural(a, t('days_gen')) });
+    return a + '–' + b + ' ' + plural(b, t('days'));
   }
 
-  $('packs').innerHTML = PACKS.map(function(p){
-    return row('radio','pack','pack-'+p.id,p.id,p.name,p.note+'. Срок '+daysText(p.days[0],p.days[1],p.open)+'.',range(p.price,p.max?p.max-p.price:0),p.id===state.pack);
-  }).join('');
-  $('addons').innerHTML = ADDONS.map(function(a){
-    return row('checkbox','addon','addon-'+a.id,a.id,a.name,a.note,'+ '+money(a.price)+' ₸',false);
-  }).join('');
-  $('support').innerHTML = row('checkbox','support','support-on','1',SUPPORT.name,SUPPORT.note,money(SUPPORT.price)+' ₸ / мес',false);
-
-  var shown = 0, raf = 0;
-  function tween(to,spread){
-    var el=$('sumTotal'), from=shown, t0=0;
-    cancelAnimationFrame(raf);
-    if(calm || from===0){ shown=to; el.textContent=range(to,spread); return; }
-    function step(t){
-      if(!t0) t0=t;
-      var k=Math.min(1,(t-t0)/420), e=1-Math.pow(1-k,3);
-      shown=Math.round((from+(to-from)*e)/1000)*1000;
-      if(k===1) shown=to;
-      el.textContent=range(shown,spread);
-      if(k<1) raf=requestAnimationFrame(step);
+  /* ---------- WhatsApp: сообщение на текущем языке сайта ---------- */
+  function waUrl(msg){ return 'https://wa.me/' + WA + '?text=' + encodeURIComponent(msg); }
+  function waMessage(el){
+    var W = whatsappMessages[lang], kind = el.getAttribute('data-wa');
+    if (kind === 'package') {
+      var tf = find(TARIFFS, el.getAttribute('data-pack'));
+      var vars = { 'package': T().tariffs[tf.id].name, price: plain(money(tf.price)) + ' ₸', niche: state.niche ? T().demos[state.niche].wa : '' };
+      return fmt(state.niche ? W.packageNiche : W['package'], vars);
     }
-    raf=requestAnimationFrame(step);
+    if (kind === 'niche') return fmt(W.niche, { niche: T().demos[el.getAttribute('data-niche')].wa });
+    return W.general;
+  }
+  function refreshWa(){ all('[data-wa]').forEach(function(el){ el.href = waUrl(waMessage(el)); }); }
+
+  /* ---------- отрисовка блоков, которые зависят от языка ---------- */
+  function row(type, name, id, value, title, note, price, checked){
+    return '<label class="row" for="' + id + '">' +
+      '<input type="' + type + '" name="' + name + '" id="' + id + '" value="' + value + '"' + (checked ? ' checked' : '') + '>' +
+      '<span class="mark"></span><span class="row-name">' + esc(title) + '</span><span class="dots"></span>' +
+      '<span class="row-price num">' + price + '</span><span class="row-note">' + esc(note) + '</span></label>';
+  }
+
+  function renderTariffs(){
+    $('tariffs').innerHTML = TARIFFS.map(function(x, i){
+      var tx = T().tariffs[x.id];
+      return '<article class="tariff' + (x.featured ? ' is-featured' : '') + '" style="--n:' + i + '">' +
+        '<div class="tariff-top"><h3>' + esc(tx.name) + '</h3>' + (x.featured ? '<span class="tag own">' + esc(t('tariff_tag')) + '</span>' : '') + '</div>' +
+        '<p class="tariff-price num">' + from(x.price) + '</p>' +
+        '<ul>' + tx.items.map(function(it){ return '<li>' + esc(it) + '</li>'; }).join('') + '</ul>' +
+        '<a class="btn ' + (x.featured ? 'btn-primary' : 'btn-ghost') + '" data-wa="package" data-pack="' + x.id + '" href="https://wa.me/' + WA + '" target="_blank" rel="noopener">' + esc(t('tariff_btn')) + '</a>' +
+        '</article>';
+    }).join('');
+  }
+
+  function renderDemos(){
+    $('demos').innerHTML = DEMOS.map(function(d, i){
+      var tx = T().demos[d.id], href = 'demo.html#' + d.id + '-' + lang;
+      return '<figure class="work" style="--n:' + i + '">' +
+        '<a class="shot demo-shot" href="' + href + '" target="_blank" rel="noopener" aria-label="' + esc(t('demo_open') + ': ' + tx.name) + '" style="--pb:' + d.pb + ';--pf:' + d.pf + ';--pa:' + d.pa + ';--ps:' + d.ps + ';--c:' + d.pa + '">' +
+          '<span class="d-bar"><b>' + d.brand + '</b></span>' +
+          '<span class="d-body"><span class="d-copy"><strong>' + esc(tx.h) + '</strong><em>' + esc(tx.cta) + '</em></span><span class="d-pic"></span></span>' +
+          '<span class="d-chips"><i></i><i></i><i></i></span>' +
+          '<span class="d-badge">' + esc(t('tag_demo')) + '</span>' +
+        '</a>' +
+        '<figcaption><h3>' + esc(tx.name) + '</h3><p>' + esc(tx.desc) + '</p>' +
+          '<span class="work-actions"><a class="btn btn-ghost btn-sm" href="' + href + '" target="_blank" rel="noopener">' + esc(t('demo_open')) + '</a>' +
+          '<a class="textlink" data-wa="niche" data-niche="' + d.id + '" href="https://wa.me/' + WA + '" target="_blank" rel="noopener">' + esc(t('demo_want')) + '</a></span>' +
+        '</figcaption></figure>';
+    }).join('');
+  }
+
+  function renderNiches(){
+    var ul = '<ul>' + t('niches').map(function(n){ return '<li>' + esc(n) + '</li>'; }).join('') + '</ul>';
+    $('track').innerHTML = ul + ul.replace('<ul>', '<ul aria-hidden="true">');
+  }
+
+  function renderRows(){
+    var P = T().packs, A = T().addons, S = T().support;
+    $('packs').innerHTML = PACKS.map(function(p){
+      var term = fmt(t('term'), { d: daysText(p.days[0], p.days[1], p.open) });
+      return row('radio', 'pack', 'pack-' + p.id, p.id, P[p.id].name, P[p.id].note + '. ' + term + '.', range(p.price, p.max ? p.max - p.price : 0), p.id === state.pack);
+    }).join('');
+    $('addons').innerHTML = ADDONS.map(function(a){
+      return row('checkbox', 'addon', 'addon-' + a.id, a.id, A[a.id][0], A[a.id][1], '+ ' + money(a.price) + ' ₸', !!state.addons[a.id]);
+    }).join('');
+    $('support').innerHTML = row('checkbox', 'support', 'support-on', '1', S[0], S[1], fmt(t('per_mo'), { p: money(SUPPORT.price) }), state.support);
   }
 
   function renderGets(){
-    var p=pack();
-    $('getsName').textContent=p.name;
-    $('getsList').innerHTML=p.gets.map(function(g,i){ return '<li style="--i:'+i+'">'+esc(g)+'</li>'; }).join('');
-    $('getsFit').textContent=p.fit;
+    var tx = T().packs[state.pack];
+    $('getsName').textContent = tx.name;
+    $('getsList').innerHTML = tx.gets.map(function(g, i){ return '<li style="--i:' + i + '">' + esc(g) + '</li>'; }).join('');
+    $('getsFit').textContent = tx.fit;
   }
 
-  function update(){
-    var p=pack(), total=p.price, spread=p.max?p.max-p.price:0, dmin=p.days[0], dmax=p.days[1], picked=[];
+  var shown = 0, raf = 0;
+  function tween(to, spread, instant){
+    var el = $('sumTotal'), start = shown, t0 = 0;
+    cancelAnimationFrame(raf);
+    if (calm || instant || start === 0) { shown = to; el.textContent = range(to, spread); return; }
+    function step(ts){
+      if (!t0) t0 = ts;
+      var k = Math.min(1, (ts - t0) / 420), e = 1 - Math.pow(1 - k, 3);
+      shown = Math.round((start + (to - start) * e) / 1000) * 1000;
+      if (k === 1) shown = to;
+      el.textContent = range(shown, spread);
+      if (k < 1) raf = requestAnimationFrame(step);
+    }
+    raf = requestAnimationFrame(step);
+  }
+
+  function update(instant){
+    var p = pack(), tx = T().packs[p.id], A = T().addons, W = whatsappMessages[lang];
+    var total = p.price, spread = p.max ? p.max - p.price : 0, dmin = p.days[0], dmax = p.days[1], picked = [];
     ADDONS.forEach(function(a){
-      var input=$('addon-'+a.id), label=input.parentNode, priceEl=label.querySelector('.row-price');
-      var inside=isInside(a), off=isOff(a);
-      label.hidden=off;
-      label.classList.toggle('is-included',inside);
-      input.disabled=inside||off;
-      if(inside||off){ input.checked=false; delete state.addons[a.id]; }
-      if(inside){ priceEl.textContent='уже входит'; }
-      else { priceEl.textContent='+ '+money(a.price)+' ₸'; }
-      if(state.addons[a.id]){ total+=a.price; dmin+=a.days; dmax+=a.days; picked.push(a.name); }
+      var input = $('addon-' + a.id), label = input.parentNode, priceEl = label.querySelector('.row-price');
+      var inside = isInside(a), off = isOff(a);
+      label.hidden = off;
+      label.classList.toggle('is-included', inside);
+      input.disabled = inside || off;
+      if (inside || off) { input.checked = false; delete state.addons[a.id]; }
+      priceEl.textContent = inside ? t('included') : '+ ' + money(a.price) + ' ₸';
+      if (state.addons[a.id]) { total += a.price; dmin += a.days; dmax += a.days; picked.push(A[a.id][0]); }
     });
-    var n=picked.length;
-    var days=daysText(dmin,dmax,p.open);
-    $('sumWhat').textContent=p.name+(n?' и '+n+' '+plural(n,'опция','опции','опций'):'');
-    $('sumDays').textContent='Срок '+days;
-    $('sumMonthly').textContent=state.support?'+ '+money(SUPPORT.price)+' ₸ в месяц':'';
-    tween(total,spread);
+    var n = picked.length, days = daysText(dmin, dmax, p.open);
+    $('sumWhat').textContent = n ? fmt(t('sum_what'), { pack: tx.name, n: n, w: plural(n, t('opts')) }) : tx.name;
+    $('sumDays').textContent = fmt(t('term'), { d: days });
+    $('sumMonthly').textContent = state.support ? fmt(t('monthly'), { p: money(SUPPORT.price) }) : '';
+    tween(total, spread, instant);
 
-    var msg='Здравствуйте! Хочу сделать заказ.\nЧто нужно: '+p.name+
-      (n?'\nДополнительно: '+picked.join(', '):'')+
-      (state.support?'\nПоддержка после запуска: да':'')+
-      '\nПредварительный расчёт: '+plain(range(total,spread))+
-      (state.support?' + '+plain(money(SUPPORT.price))+' ₸ в месяц':'')+
-      ', срок '+days;
-    $('sumSend').href='https://wa.me/'+WA+'?text='+encodeURIComponent(msg);
+    var msg = fmt(W.calc, {
+      service: tx.name,
+      extras: n ? fmt(W.extras, { list: picked.join(', ') }) : '',
+      support: state.support ? W.support : '',
+      total: plain(range(total, spread)),
+      monthly: state.support ? fmt(W.monthly, { p: plain(money(SUPPORT.price)) }) : '',
+      days: days
+    });
+    $('sumSend').href = waUrl(msg);
   }
 
-  doc.addEventListener('change',function(e){
-    var t=e.target;
-    if(t.name==='pack'){ state.pack=t.value; renderGets(); }
-    else if(t.name==='addon'){ if(t.checked) state.addons[t.value]=true; else delete state.addons[t.value]; }
-    else if(t.name==='support'){ state.support=t.checked; }
+  /* ---------- переключение языка без перезагрузки ---------- */
+  var leadIndex = 0;
+  function applyLang(){
+    doc.documentElement.lang = LANGS[lang];
+    doc.title = t('title');
+    all('[data-i18n]').forEach(function(el){ el.textContent = t(el.getAttribute('data-i18n')); });
+    all('[data-i18n-html]').forEach(function(el){ el.innerHTML = fmt(t(el.getAttribute('data-i18n-html')), { price: from(PACKS[0].price) }); });
+    all('[data-i18n-aria]').forEach(function(el){ el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
+    all('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
+    $('toastText').textContent = t('leads')[leadIndex];
+    renderNiches(); renderTariffs(); renderDemos(); renderRows(); renderGets(); update(true); refreshWa();
+  }
+  function setLang(next){
+    if (!LANGS[next] || next === lang) return;
+    lang = next;
+    try { localStorage.setItem('lang', lang); } catch(e){}
+    applyLang();
+  }
+
+  doc.addEventListener('click', function(e){
+    var b = e.target.closest ? e.target.closest('[data-lang]') : null;
+    if (b) { setLang(b.getAttribute('data-lang')); return; }
+    var n = e.target.closest ? e.target.closest('[data-niche]') : null;
+    if (n) { state.niche = n.getAttribute('data-niche'); refreshWa(); }
+  });
+
+  doc.addEventListener('change', function(e){
+    var el = e.target;
+    if (el.name === 'pack') { state.pack = el.value; renderGets(); }
+    else if (el.name === 'addon') { if (el.checked) state.addons[el.value] = true; else delete state.addons[el.value]; }
+    else if (el.name === 'support') { state.support = el.checked; }
     else return;
     update();
   });
-  renderGets(); update();
+
+  applyLang();
 
   /* copy the phone number */
-  $('copyPhone').addEventListener('click',function(){
-    var btn=this, text='+'+WA;
-    function ok(){ btn.textContent='Скопировано'; setTimeout(function(){ btn.textContent='Скопировать'; },1800); }
+  $('copyPhone').addEventListener('click', function(){
+    var btn = this, text = '+' + WA;
+    function back(){ setTimeout(function(){ btn.textContent = t('copy'); }, 1800); }
+    function ok(){ btn.textContent = t('copied'); back(); }
     function fallback(){
-      var r=doc.createRange(); r.selectNodeContents($('phone'));
-      var s=window.getSelection(); s.removeAllRanges(); s.addRange(r);
-      btn.textContent='Выделено';
-      setTimeout(function(){ btn.textContent='Скопировать'; },1800);
+      var r = doc.createRange(); r.selectNodeContents($('phone'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      btn.textContent = t('selected'); back();
     }
-    if(navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok,fallback);
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(ok, fallback);
     else fallback();
   });
 
-  /* marquee: second copy for a seamless loop */
-  var track=$('track'), copy=track.firstElementChild.cloneNode(true);
-  copy.setAttribute('aria-hidden','true'); track.appendChild(copy);
-
   /* stagger index for grids */
-  [].forEach.call(doc.querySelectorAll('.stagger'),function(g){
-    [].forEach.call(g.children,function(c,i){ c.style.setProperty('--n',i); });
+  all('.stagger').forEach(function(g){
+    [].forEach.call(g.children, function(c, i){ c.style.setProperty('--n', i); });
   });
 
-  if(calm) return;
+  if (calm) return;
 
   /* sections rise once as they scroll into view; they are fully visible without this */
-  if('IntersectionObserver' in window){
-    var io=new IntersectionObserver(function(entries){
-      entries.forEach(function(en){ if(en.isIntersecting){ en.target.classList.add('in'); io.unobserve(en.target); } });
+  if ('IntersectionObserver' in window) {
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add('in'); io.unobserve(en.target); } });
     });
-    [].forEach.call(doc.querySelectorAll('.reveal'),function(el){
-      if(el.getBoundingClientRect().top > window.innerHeight) io.observe(el);
+    all('.reveal').forEach(function(el){
+      if (el.getBoundingClientRect().top > window.innerHeight) io.observe(el);
     });
   }
 
   /* hero: type the address, then cycle example leads */
-  var url=$('url'), span=url.firstElementChild, full=span.textContent, i=0;
-  span.textContent=''; url.classList.add('typing');
+  var url = $('url'), span = url.firstElementChild, full = span.textContent, i = 0;
+  span.textContent = ''; url.classList.add('typing');
   setTimeout(function type(){
-    span.textContent=full.slice(0,++i);
-    if(i<full.length) setTimeout(type,55); else setTimeout(function(){ url.classList.remove('typing'); },900);
-  },350);
+    span.textContent = full.slice(0, ++i);
+    if (i < full.length) setTimeout(type, 55); else setTimeout(function(){ url.classList.remove('typing'); }, 900);
+  }, 350);
 
-  var leads=['Айгерим: чистка зубов, завтра в 15:00','Данияр: категория B, вечерняя группа','Мадина: кухня на заказ, замер в субботу','Ерлан: расчёт доставки из Гуанчжоу'];
-  var toast=$('toast'), text=$('toastText'), k=0;
+  var toast = $('toast'), text = $('toastText');
   setInterval(function(){
-    if(doc.hidden) return;
+    if (doc.hidden) return;
     toast.classList.add('swap');
-    setTimeout(function(){ k=(k+1)%leads.length; text.textContent=leads[k]; toast.classList.remove('swap'); },380);
-  },4200);
+    setTimeout(function(){ leadIndex = (leadIndex + 1) % t('leads').length; text.textContent = t('leads')[leadIndex]; toast.classList.remove('swap'); }, 380);
+  }, 4200);
 })();
 </script>
 </body>
