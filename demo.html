@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Demo site</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600;700&display=swap">
+<style>
+/* Демо-шаблон: один файл, шесть ниш. Ниша и язык берутся из адреса: demo.html#dental-ru */
+:root{--bg:#F3FAFB;--fg:#0F2B33;--ac:#12A3B4;--soft:#D9EEF1;--muted:color-mix(in srgb,var(--fg) 64%,var(--bg));--line:color-mix(in srgb,var(--fg) 14%,var(--bg));--gut:clamp(16px,4vw,40px)}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font:400 17px/1.6 'Onest',system-ui,-apple-system,'Segoe UI',Roboto,sans-serif;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p,ul{margin:0;padding:0}ul{list-style:none}a{color:inherit}
+[hidden]{display:none!important}
+:focus-visible{outline:2px solid var(--ac);outline-offset:3px;border-radius:4px}
+.wrap{max-width:1080px;margin-inline:auto;padding-inline:var(--gut)}
+.demo-bar{background:#0A1315;color:#E9F1F1;font-size:.86rem;line-height:1.4}
+.demo-bar .wrap{display:flex;flex-wrap:wrap;align-items:center;gap:6px 18px;padding-block:9px}
+.demo-bar span{margin-right:auto}
+.demo-bar a{color:#39C7DA;font-weight:600;text-decoration:none;white-space:nowrap}
+.demo-bar a:hover{text-decoration:underline}
+header .wrap{display:flex;align-items:center;gap:20px;min-height:68px}
+.brand{font-weight:700;font-size:1.15rem;letter-spacing:-.02em;margin-right:auto;text-decoration:none}
+nav{display:flex;gap:22px}
+nav a{color:var(--muted);text-decoration:none;font-size:.95rem}
+nav a:hover{color:var(--fg)}
+.lang{display:flex;gap:2px;padding:2px;border:1px solid var(--line);border-radius:9px}
+.lang button{min-width:32px;height:30px;padding:0 7px;border:0;border-radius:7px;background:transparent;color:var(--muted);font:600 .78rem/1 inherit;cursor:pointer}
+.lang button[aria-pressed="true"]{background:var(--soft);color:var(--fg)}
+@media (max-width:720px){nav{display:none}}
+.btn{display:inline-flex;align-items:center;justify-content:center;min-height:50px;padding:0 24px;border:0;border-radius:12px;background:var(--ac);color:var(--bg);font:600 1rem/1 inherit;text-decoration:none;cursor:pointer;transition:transform .2s}
+.btn:hover{transform:translateY(-2px)}
+section{padding-block:clamp(44px,7vw,84px)}
+.hero{padding-block:clamp(28px,5vw,60px) clamp(44px,7vw,84px)}
+.hero .wrap{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:clamp(28px,5vw,64px);align-items:center}
+.hero-copy{display:grid;gap:20px;justify-items:start}
+h1{font-size:clamp(1.9rem,4.6vw,3.2rem);line-height:1.08;letter-spacing:-.03em;font-weight:700;text-wrap:balance}
+.hero p{color:var(--muted);font-size:1.08rem;max-width:46ch}
+.art{position:relative;aspect-ratio:5/4;max-width:100%;border-radius:24px;overflow:hidden;background:radial-gradient(circle at 72% 22%,color-mix(in srgb,var(--ac) 55%,var(--soft)),var(--soft) 68%)}
+.art::before{content:"";position:absolute;right:-14%;bottom:-26%;width:74%;aspect-ratio:1;border-radius:50%;background:color-mix(in srgb,var(--ac) 78%,transparent);animation:float 9s ease-in-out infinite}
+.art::after{content:"";position:absolute;left:10%;top:12%;width:26%;aspect-ratio:1;border-radius:50%;border:2px solid color-mix(in srgb,var(--fg) 22%,transparent)}
+.chip{position:absolute;left:7%;bottom:9%;z-index:1;display:grid;gap:2px;max-width:76%;padding:14px 16px;border-radius:14px;background:var(--bg);box-shadow:0 18px 40px -22px color-mix(in srgb,var(--fg) 60%,transparent)}
+.chip small{color:var(--muted);font-size:.82rem;line-height:1.3}
+.chip b{font-size:1.1rem;line-height:1.3;font-variant-numeric:tabular-nums}
+@media (max-width:820px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
+h2{font-size:clamp(1.4rem,3vw,2rem);line-height:1.2;letter-spacing:-.02em;font-weight:700;margin-bottom:clamp(20px,3vw,32px)}
+.band{background:var(--soft)}
+.prices{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 clamp(24px,5vw,64px)}
+.prices li{display:flex;align-items:baseline;gap:12px;padding-block:16px;border-bottom:1px solid var(--line)}
+.prices span{min-width:0;font-weight:500}
+.prices i{flex:1;min-width:12px;border-bottom:1px dotted var(--line);transform:translateY(-4px)}
+.prices b{white-space:nowrap;color:var(--ac);font-variant-numeric:tabular-nums}
+@media (max-width:720px){.prices{grid-template-columns:minmax(0,1fr)}}
+.why{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.why li{padding:22px;border-radius:16px;background:var(--soft);font-weight:600;line-height:1.35}
+.why li::before{content:"";display:block;width:28px;height:4px;border-radius:2px;background:var(--ac);margin-bottom:14px}
+@media (max-width:720px){.why{grid-template-columns:minmax(0,1fr)}}
+.form{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(24px,5vw,64px);align-items:start}
+.form p{color:var(--muted)}
+form{display:grid;gap:12px}
+label{display:grid;gap:6px;font-size:.9rem;color:var(--muted)}
+input{width:100%;height:50px;padding:0 14px;border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--fg);font:inherit}
+input:focus{outline:2px solid var(--ac);outline-offset:1px}
+.note{padding:14px 16px;border-radius:12px;background:var(--soft);color:var(--fg);font-size:.95rem}
+@media (max-width:720px){.form{grid-template-columns:minmax(0,1fr)}}
+footer{border-top:1px solid var(--line);padding-block:24px;color:var(--muted);font-size:.9rem}
+footer .wrap{display:flex;flex-wrap:wrap;gap:6px 24px;justify-content:space-between}
+@keyframes float{50%{transform:translate(-4%,-5%) scale(1.04)}}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="demo-bar"><div class="wrap"><span id="bar"></span><a id="want" href="https://wa.me/77471541449" target="_blank" rel="noopener"></a><a id="back" href="index.html#portfolio"></a></div></div>
+<header><div class="wrap">
+  <a class="brand" id="brand" href="#top"></a>
+  <nav><a href="#services" id="n1"></a><a href="#why" id="n2"></a><a href="#form" id="n3"></a></nav>
+  <div class="lang" role="group" id="lang"><button type="button" data-lang="ru">RU</button><button type="button" data-lang="kz">KZ</button><button type="button" data-lang="en">EN</button></div>
+</div></header>
+<main id="top">
+  <section class="hero"><div class="wrap">
+    <div class="hero-copy"><h1 id="h1"></h1><p id="sub"></p><a class="btn" href="#form" id="cta"></a></div>
+    <div class="art" aria-hidden="true"><div class="chip"><small id="chipName"></small><b id="chipPrice"></b></div></div>
+  </div></section>
+  <section class="band" id="services"><div class="wrap"><h2 id="sh"></h2><ul class="prices" id="prices"></ul></div></section>
+  <section id="why"><div class="wrap"><h2 id="wh"></h2><ul class="why" id="whyList"></ul></div></section>
+  <section class="band" id="form"><div class="wrap form">
+    <div><h2 id="fh"></h2><p id="fs"></p></div>
+    <form id="lead" novalidate>
+      <label for="fname"><span id="ln"></span><input id="fname" name="name" autocomplete="name"></label>
+      <label for="fphone"><span id="lp"></span><input id="fphone" name="phone" type="tel" inputmode="tel" autocomplete="tel" placeholder="+7 700 000 00 00"></label>
+      <button class="btn" type="submit" id="send"></button>
+      <p class="note" id="sent" role="status" hidden></p>
+    </form>
+  </div></section>
+</main>
+<footer><div class="wrap"><span id="foot"></span><span id="addr"></span></div></footer>
+
+<script>
+(function(){
+  'use strict';
+  var WA = '77471541449';
+
+  /* Общие тексты демо-страницы на трёх языках */
+  var UI = {
+    ru: { bar:'Это демо-сайт. Все названия и цены условные.', want:'Хочу такой сайт', back:'Все демо', n1:'Услуги', n2:'Почему мы', n3:'Контакты', sh:'Услуги и цены', wh:'Почему выбирают нас', fh:'Оставьте заявку', fs:'Перезвоним в течение 15 минут.', ln:'Ваше имя', lp:'Телефон', send:'Отправить заявку', sent:'Это демонстрация: заявка никуда не отправляется. На настоящем сайте она придёт вам в Telegram или WhatsApp.', foot:'Демонстрационный сайт. Разработка: Nurbolat.', addr:'г. Шымкент, адрес для примера', from:'от {p} ₸', free:'Бесплатно', u:{ m2:'за м²', kg:'за кг', mo:'в месяц' }, msg:'Здравствуйте! Меня интересует сайт для {niche}. Хотел бы узнать подробности.' },
+    kz: { bar:'Бұл демо-сайт. Барлық атаулар мен бағалар шартты.', want:'Осындай сайт керек', back:'Барлық демо', n1:'Қызметтер', n2:'Неге біз', n3:'Байланыс', sh:'Қызметтер мен бағалар', wh:'Неге бізді таңдайды', fh:'Өтінім қалдырыңыз', fs:'15 минут ішінде қайта қоңырау шаламыз.', ln:'Атыңыз', lp:'Телефон', send:'Өтінім жіберу', sent:'Бұл демонстрация: өтінім ешқайда жіберілмейді. Нақты сайтта ол сізге Telegram-ға немесе WhatsApp-қа келеді.', foot:'Демонстрациялық сайт. Әзірлеуші: Nurbolat.', addr:'Шымкент қ., мекенжай үлгі ретінде', from:'{p} ₸ бастап', free:'Тегін', pre:true, u:{ m2:'1 м² үшін', kg:'1 кг үшін', mo:'айына' }, msg:'Сәлеметсіз бе! Мені {niche} арналған сайт қызықтырады. Толығырақ ақпарат алғым келеді.' },
+    en: { bar:'This is a demo site. All names and prices are placeholders.', want:'I want a site like this', back:'All demos', n1:'Services', n2:'Why us', n3:'Contact', sh:'Services and prices', wh:'Why clients choose us', fh:'Leave a request', fs:'We will call you back within 15 minutes.', ln:'Your name', lp:'Phone', send:'Send request', sent:'This is a demo: the request is not sent anywhere. On a real site it would reach your Telegram or WhatsApp.', foot:'Demo website. Built by Nurbolat.', addr:'Shymkent, sample address', from:'from {p} ₸', free:'Free', u:{ m2:'per m²', kg:'per kg', mo:'per month' }, msg:'Hello! I’m interested in a website for {niche}. I would like to learn more.' }
+  };
+
+  /* Ниши: c — цвета [фон, текст, акцент, мягкий фон]; тексты идут в порядке [ru, kz, en];
+     s — услуги: [ru, kz, en, цена, единица] */
+  var N = {
+    dental: { brand:'Demo Dent', c:['#F3FAFB','#0F2B33','#12A3B4','#D9EEF1'],
+      wa:['стоматологии','стоматологияға','a dental clinic'],
+      h:['Здоровая улыбка без боли и очередей','Ауыртпай, кезексіз емдейтін стоматология','A healthy smile without pain or queues'],
+      p:['Лечение, имплантация и отбеливание. Запись онлайн на удобное время.','Емдеу, имплантация және ағарту. Ыңғайлы уақытқа онлайн жазылыңыз.','Treatment, implants and whitening. Book online at a time that suits you.'],
+      cta:['Записаться на приём','Қабылдауға жазылу','Book an appointment'],
+      s:[['Консультация и осмотр','Кеңес және тексеру','Consultation and check-up',0],['Лечение кариеса','Тісжегіні емдеу','Cavity treatment',12000],['Профессиональная чистка','Кәсіби тазалау','Professional cleaning',15000],['Имплантация','Имплантация','Implant placement',180000]],
+      w:[['Приём без очередей','Кезексіз қабылдау','No waiting in line'],['Современное оборудование','Заманауи жабдық','Modern equipment'],['Гарантия на лечение','Емге кепілдік','Treatment warranty']] },
+    auto: { brand:'Demo Auto', c:['#101114','#F2F2F0','#E4572E','#1F2228'],
+      wa:['автосалона','автосалонға','a car dealership'],
+      h:['Новые автомобили в наличии и под заказ','Жаңа автокөліктер қолда бар және тапсырыспен','New cars in stock and to order'],
+      p:['Кредит и рассрочка, трейд-ин, тест-драйв в день обращения.','Несие және бөліп төлеу, трейд-ин, өтініш берген күні тест-драйв.','Financing and instalments, trade-in, same-day test drive.'],
+      cta:['Записаться на тест-драйв','Тест-драйвқа жазылу','Book a test drive'],
+      s:[['Седан Comfort','Седан Comfort','Comfort sedan',8900000],['Кроссовер City','Кроссовер City','City crossover',12500000],['Внедорожник Trail','Жол талғамайтын Trail','Trail SUV',18900000],['Сервисное обслуживание','Сервистік қызмет көрсету','Scheduled service',35000]],
+      w:[['Официальная гарантия','Ресми кепілдік','Official warranty'],['Кредит от нескольких банков','Бірнеше банктен несие','Financing from several banks'],['Трейд-ин вашего авто','Көлігіңізді трейд-инге қабылдаймыз','Trade-in for your car']] },
+    build: { brand:'Demo Build', c:['#F5F6F4','#1C2321','#D9731A','#E4E8E2'],
+      wa:['компании по ремонту и строительству','жөндеу және құрылыс компаниясына','a renovation and construction company'],
+      h:['Ремонт квартир под ключ с гарантией','Кепілдігі бар пәтерді толық жөндеу','Turnkey apartment renovation with a warranty'],
+      p:['Смета до начала работ, фиксированная цена, сдача в срок по договору.','Жұмыс басталғанға дейін смета, тұрақты баға, шарт бойынша мерзімінде тапсыру.','An estimate before work starts, a fixed price and on-time handover under contract.'],
+      cta:['Вызвать замерщика','Өлшеушіні шақыру','Request a site visit'],
+      s:[['Косметический ремонт','Косметикалық жөндеу','Cosmetic renovation',15000,'m2'],['Капитальный ремонт','Күрделі жөндеу','Full renovation',35000,'m2'],['Дизайн-проект','Дизайн-жоба','Design project',8000,'m2'],['Натяжные потолки','Керме төбелер','Stretch ceilings',3500,'m2']],
+      w:[['Смета без скрытых доплат','Жасырын төлемсіз смета','No hidden extras in the estimate'],['Свои бригады','Өз бригадаларымыз','In-house crews'],['Гарантия 2 года','2 жыл кепілдік','2-year warranty']] },
+    edu: { brand:'Demo Academy', c:['#FFFFFF','#1B1F3B','#5B5BD6','#ECEDFB'],
+      wa:['учебного центра','оқу орталығына','a training centre'],
+      h:['Английский и подготовка к ЕНТ в малых группах','Шағын топтарда ағылшын тілі және ҰБТ-ға дайындық','English and exam preparation in small groups'],
+      p:['До 8 человек в группе, пробный урок бесплатно, занятия офлайн и онлайн.','Топта 8 адамға дейін, сынақ сабағы тегін, офлайн және онлайн сабақтар.','Up to 8 students per group, a free trial lesson, offline and online classes.'],
+      cta:['Записаться на пробный урок','Сынақ сабағына жазылу','Book a trial lesson'],
+      s:[['Английский для школьников','Оқушыларға арналған ағылшын тілі','English for school students',25000,'mo'],['Подготовка к IELTS','IELTS-ке дайындық','IELTS preparation',40000,'mo'],['Подготовка к ЕНТ','ҰБТ-ға дайындық','UNT exam preparation',35000,'mo'],['Математика','Математика','Mathematics',22000,'mo']],
+      w:[['Группы до 8 человек','8 адамға дейінгі топтар','Groups of up to 8'],['Преподаватели с опытом','Тәжірибелі оқытушылар','Experienced teachers'],['Отчёт для родителей каждый месяц','Ата-аналарға ай сайын есеп','Monthly progress report for parents']] },
+    beauty: { brand:'Demo Beauty', c:['#FBF4F5','#2B1B22','#C2477A','#F1DFE5'],
+      wa:['салона красоты','сұлулық салонына','a beauty salon'],
+      h:['Красота в удобное для вас время','Сізге ыңғайлы уақытта сұлулық','Beauty at a time that suits you'],
+      p:['Стрижки, окрашивание, маникюр и уход. Онлайн-запись к своему мастеру.','Шаш қию, бояу, маникюр және күтім. Өз шеберіңізге онлайн жазылыңыз.','Haircuts, colouring, manicure and care. Book online with your specialist.'],
+      cta:['Записаться онлайн','Онлайн жазылу','Book online'],
+      s:[['Женская стрижка','Әйелдер шаш қиюы','Women’s haircut',7000],['Окрашивание','Шаш бояу','Hair colouring',18000],['Маникюр с покрытием','Жабыны бар маникюр','Manicure with gel polish',6000],['Уход за лицом','Бет күтімі','Facial care',12000]],
+      w:[['Запись за 1 минуту','1 минутта жазылу','Book in 1 minute'],['Стерильные инструменты','Зарарсыздандырылған құралдар','Sterile tools'],['Мастера с опытом от 5 лет','5 жылдан астам тәжірибесі бар шеберлер','Specialists with 5+ years of experience']] },
+    cargo: { brand:'Demo Cargo', c:['#0D1B2A','#EAF1F7','#F2C230','#16293D'],
+      wa:['карго и доставки','карго және жеткізу қызметіне','a cargo and delivery company'],
+      h:['Доставка грузов из Китая от 7 дней','Қытайдан жүкті 7 күннен бастап жеткізу','Freight delivery from China from 7 days'],
+      p:['Авто, ж/д и авиа. Отслеживание груза и расчёт стоимости онлайн.','Авто, теміржол және әуе тасымалы. Жүкті бақылау және құнын онлайн есептеу.','Road, rail and air. Shipment tracking and online cost calculation.'],
+      cta:['Рассчитать доставку','Жеткізуді есептеу','Get a shipping quote'],
+      s:[['Авто, 12–18 дней','Авто, 12–18 күн','Road, 12–18 days',1800,'kg'],['Ж/д, 18–25 дней','Теміржол, 18–25 күн','Rail, 18–25 days',1200,'kg'],['Авиа, 7–10 дней','Әуе, 7–10 күн','Air, 7–10 days',4500,'kg'],['Выкуп товара','Тауарды сатып алу','Purchasing service',5000]],
+      w:[['Отслеживание по трек-номеру','Трек-нөмір бойынша бақылау','Tracking by number'],['Страхование груза','Жүкті сақтандыру','Cargo insurance'],['Склад в Гуанчжоу и Алматы','Гуанчжоу мен Алматыдағы қойма','Warehouses in Guangzhou and Almaty']] }
+  };
+
+  var CODES = { ru:'ru', kz:'kk', en:'en' }, IDX = { ru:0, kz:1, en:2 };
+  var doc = document, $ = function(id){ return doc.getElementById(id); };
+  var parts = (location.hash || '').replace('#', '').split('-');
+  var niche = N[parts[0]] ? parts[0] : 'dental';
+  var lang = CODES[parts[1]] ? parts[1] : '';
+  if (!lang) { try { lang = localStorage.getItem('lang'); } catch(e){} }
+  if (!CODES[lang]) lang = 'ru';
+
+  function money(n){ return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, lang === 'en' ? ',' : String.fromCharCode(160)); }
+  function esc(s){ return String(s).replace(/[&<>"]/g, function(c){ return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]; }); }
+  function price(row){
+    var u = UI[lang];
+    if (!row[3]) return u.free;
+    var f = u.from.replace('{p}', money(row[3]));
+    if (!row[4]) return f;
+    return u.pre ? u.u[row[4]] + ' ' + f : f + ' ' + u.u[row[4]];
+  }
+
+  function render(){
+    var d = N[niche], u = UI[lang], i = IDX[lang], root = doc.documentElement;
+    root.lang = CODES[lang];
+    ['--bg','--fg','--ac','--soft'].forEach(function(v, k){ root.style.setProperty(v, d.c[k]); });
+    doc.title = d.brand;
+    $('brand').textContent = d.brand;
+    ['bar','want','back','n1','n2','n3','sh','wh','fh','fs','ln','lp','send','foot','addr'].forEach(function(k){ $(k).textContent = u[k]; });
+    $('h1').textContent = d.h[i]; $('sub').textContent = d.p[i]; $('cta').textContent = d.cta[i];
+    $('chipName').textContent = d.s[1][i]; $('chipPrice').textContent = price(d.s[1]);
+    $('prices').innerHTML = d.s.map(function(r){ return '<li><span>' + esc(r[i]) + '</span><i></i><b>' + esc(price(r)) + '</b></li>'; }).join('');
+    $('whyList').innerHTML = d.w.map(function(r){ return '<li>' + esc(r[i]) + '</li>'; }).join('');
+    $('want').href = 'https://wa.me/' + WA + '?text=' + encodeURIComponent(u.msg.replace('{niche}', d.wa[i]));
+    $('sent').textContent = u.sent;
+    [].forEach.call(doc.querySelectorAll('#lang button'), function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
+    try { history.replaceState(null, '', '#' + niche + '-' + lang); } catch(e){}
+  }
+
+  $('lang').addEventListener('click', function(e){
+    var l = e.target.getAttribute('data-lang');
+    if (!CODES[l]) return;
+    lang = l;
+    try { localStorage.setItem('lang', l); } catch(err){}
+    render();
+  });
+  $('lead').addEventListener('submit', function(e){ e.preventDefault(); $('sent').hidden = false; });
+  window.addEventListener('hashchange', function(){
+    var p = location.hash.replace('#', '').split('-');
+    if (N[p[0]] && (p[0] !== niche || (CODES[p[1]] && p[1] !== lang))) { niche = p[0]; if (CODES[p[1]]) lang = p[1]; render(); }
+  });
+  render();
+})();
+</script>
+</body>
+</html>
