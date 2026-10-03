@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Demo Build</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* Ремонт и строительство: светлый «сметный» стиль, оранжевый акцент, прямые углы */
+:root{--bg:#F5F5F1;--fg:#1B2220;--ac:#D9601A;--ai:#fff;--sf:#E9EAE4;--cd:#FFFFFF;--ln:#D6D8D0;--mu:#5E6863;--hf:'Montserrat','Arial Black',sans-serif;--bf:'Onest',system-ui,sans-serif;--hw:800;--ht:-.03em;--r:4px}
+.pcard{padding:0;overflow:hidden}
+.pcard .ph{border-radius:0}
+.pcard>div:last-child{display:grid;gap:8px;padding:18px}
+.total{display:grid;gap:4px;padding:18px;border-radius:6px;background:var(--fg);color:var(--bg)}
+.total .mu{color:color-mix(in srgb,var(--bg) 70%,transparent)}
+.nmb{width:110px!important;min-height:40px!important}
+</style>
+</head>
+<body>
+<script src="kit.js"></script>
+<script>
+(function () {
+  'use strict';
+  var K = Kit, L = K.L, s = K.s, e = K.esc;
+
+  var S = {
+    services: ['Услуги и цены', 'Қызметтер мен бағалар', 'Services and prices'],
+    calc: ['Калькулятор', 'Калькулятор', 'Calculator'],
+    projects: ['Наши объекты', 'Нысандарымыз', 'Projects'],
+    visit: ['Вызвать замерщика', 'Өлшеушіні шақыру', 'Request a site visit'],
+    h1: ['Ремонт квартир под ключ с гарантией', 'Кепілдігі бар пәтерді толық жөндеу', 'Turnkey apartment renovation with a warranty'],
+    hp: ['Смета до начала работ, фиксированная цена в договоре и сдача в срок.', 'Жұмыс басталғанға дейін смета, шарттағы тұрақты баға және мерзімінде тапсыру.', 'An estimate before work starts, a fixed contract price and on-time handover.'],
+    toCalc: ['Рассчитать стоимость', 'Құнын есептеу', 'Estimate the cost'],
+    a1: ['Смета за один день', 'Бір күнде смета', 'Estimate in one day'], a1d: ['Замерщик приезжает бесплатно, смета готова на следующий день.', 'Өлшеуші тегін келеді, смета келесі күні дайын болады.', 'The site visit is free and the estimate is ready the next day.'],
+    a2: ['Цена не растёт', 'Баға өспейді', 'The price does not grow'], a2d: ['Стоимость работ фиксируется в договоре и не меняется по ходу ремонта.', 'Жұмыс құны шартта бекітіледі және жөндеу барысында өзгермейді.', 'The cost of work is fixed in the contract and stays the same.'],
+    a3: ['Гарантия 2 года', '2 жыл кепілдік', '2-year warranty'], a3d: ['На все виды работ. Недочёты устраняем за свой счёт.', 'Барлық жұмыс түрлеріне. Кемшіліктерді өз есебімізден жоямыз.', 'On all work. We fix defects at our own expense.'],
+    how: ['Как мы работаем', 'Қалай жұмыс істейміз', 'How we work'],
+    w1: ['Замер', 'Өлшеу', 'Site visit'], w1d: ['Приезжаем, измеряем, обсуждаем пожелания.', 'Келеміз, өлшейміз, тілектеріңізді талқылаймыз.', 'We visit, measure and discuss what you want.'],
+    w2: ['Смета и договор', 'Смета және шарт', 'Estimate and contract'], w2d: ['Фиксируем цену, сроки и этапы оплаты.', 'Бағаны, мерзімдерді және төлем кезеңдерін бекітеміз.', 'We fix the price, timeline and payment stages.'],
+    w3: ['Черновые работы', 'Дайындық жұмыстары', 'Rough work'], w3d: ['Демонтаж, электрика, сантехника, стяжка.', 'Бұзу, электр, сантехника, еден құю.', 'Demolition, wiring, plumbing, screed.'],
+    w4: ['Чистовая отделка', 'Таза әрлеу', 'Finishing'], w4d: ['Стены, полы, потолки, установка дверей.', 'Қабырғалар, едендер, төбелер, есіктерді орнату.', 'Walls, floors, ceilings, doors.'],
+    w5: ['Сдача объекта', 'Нысанды тапсыру', 'Handover'], w5d: ['Уборка, приёмка по акту, гарантийный талон.', 'Жинау, акт бойынша қабылдау, кепілдік талоны.', 'Cleaning, sign-off and the warranty card.'],
+    recent: ['Недавние объекты', 'Соңғы нысандар', 'Recent projects'], allP: ['Все объекты', 'Барлық нысандар', 'All projects'],
+    find: ['Поиск по работам', 'Жұмыс бойынша іздеу', 'Search works'], work: ['Работа', 'Жұмыс', 'Work'], unit: ['Ед.', 'Өлш.', 'Unit'], price: ['Цена', 'Бағасы', 'Price'],
+    noRows: ['Ничего не найдено', 'Ештеңе табылмады', 'Nothing found'],
+    sNote: ['Цены на работы без материалов. Точная стоимость считается после замера.', 'Бағалар материалсыз жұмыс үшін көрсетілген. Нақты құны өлшеуден кейін есептеледі.', 'Prices are for labour without materials. The exact cost is calculated after the site visit.'],
+    area: ['Площадь', 'Ауданы', 'Area'], type: ['Тип ремонта', 'Жөндеу түрі', 'Type of renovation'], mat: ['Материалы', 'Материалдар', 'Materials'], extra: ['Дополнительно', 'Қосымша', 'Extras'], baths: ['Санузлы', 'Санторап саны', 'Bathrooms'],
+    t1: ['Косметический', 'Косметикалық', 'Cosmetic'], t1d: ['Обои, покраска, замена пола', 'Түсқағаз, бояу, еденді ауыстыру', 'Wallpaper, paint, new flooring'],
+    t2: ['Капитальный', 'Күрделі', 'Full'], t2d: ['С заменой коммуникаций и выравниванием', 'Коммуникацияларды ауыстырып, тегістеумен', 'New utilities and levelling'],
+    t3: ['Дизайнерский', 'Дизайнерлік', 'Designer'], t3d: ['По проекту, со сложными решениями', 'Жоба бойынша, күрделі шешімдермен', 'To a design, with complex details'],
+    m0: ['Без материалов', 'Материалсыз', 'Labour only'], m1: ['Эконом', 'Эконом', 'Economy'], m2: ['Стандарт', 'Стандарт', 'Standard'], m3: ['Премиум', 'Премиум', 'Premium'],
+    o1: ['Дизайн-проект', 'Дизайн-жоба', 'Design project'], o2: ['Электрика под ключ', 'Электр жұмыстары толығымен', 'Full rewiring'], o3: ['Натяжные потолки', 'Керме төбелер', 'Stretch ceilings'], o4: ['Вывоз мусора', 'Қоқыс шығару', 'Waste removal'],
+    perM: ['{p} ₸ за м²', 'бір м² үшін {p} ₸', '{p} ₸ per m²'],
+    est: ['Предварительная смета', 'Алдын ала смета', 'Preliminary estimate'], works: ['Работы', 'Жұмыстар', 'Labour'], plumb: ['Сантехника', 'Сантехника', 'Plumbing'],
+    termL: ['Срок', 'Мерзімі', 'Timeline'], days: ['{n} рабочих дней', '{n} жұмыс күні', '{n} working days'],
+    estN: ['Расчёт примерный, отклонение до 10%. Точную смету составим после бесплатного замера.', 'Есеп шамамен алынған, ауытқу 10%-ға дейін. Нақты сметаны тегін өлшеуден кейін жасаймыз.', 'This is an estimate, accurate to about 10%. We prepare an exact one after a free site visit.'],
+    getEst: ['Получить точную смету', 'Нақты сметаны алу', 'Get an exact estimate'],
+    flat: ['Квартира', 'Пәтер', 'Apartment'], house: ['Дом', 'Үй', 'House'], room: ['Кухня и ванная', 'Ас үй және жуынатын бөлме', 'Kitchen and bathroom'],
+    budget: ['Бюджет', 'Бюджет', 'Budget'], done: ['Что сделали', 'Не істелді', 'What we did'], same: ['Хочу так же', 'Маған да осылай керек', 'I want the same'],
+    cT: ['Вызовите замерщика бесплатно', 'Өлшеушіні тегін шақырыңыз', 'Book a free site visit'], cD: ['Приедем в удобное время, измерим помещение и на следующий день пришлём смету.', 'Ыңғайлы уақытта келіп, бөлмені өлшейміз, келесі күні сметаны жібереміз.', 'We come at a convenient time, measure the space and send the estimate the next day.'],
+    obj: ['Адрес объекта', 'Нысанның мекенжайы', 'Property address'], office: ['Офис', 'Кеңсе', 'Office'], sq: ['м²', 'м²', 'm²']
+  };
+  var U = { m2: ['м²', 'м²', 'm²'], mp: ['пог. м', 'қума м', 'lin. m'], pc: ['шт.', 'дана', 'pc'], trip: ['рейс', 'рейс', 'trip'] };
+  var CATS = [
+    ['demo', ['Демонтаж', 'Бұзу жұмыстары', 'Demolition'], [[['Демонтаж перегородок', 'Аралық қабырғаларды бұзу', 'Partition removal'], 1800, 'm2'], [['Снятие старых обоев', 'Ескі түсқағазды алу', 'Wallpaper stripping'], 400, 'm2'], [['Демонтаж плитки', 'Плитканы алу', 'Tile removal'], 1200, 'm2'], [['Вывоз мусора', 'Қоқыс шығару', 'Waste removal'], 45000, 'trip']]],
+    ['walls', ['Стены', 'Қабырғалар', 'Walls'], [[['Штукатурка стен', 'Қабырғаны сылау', 'Plastering'], 2400, 'm2'], [['Шпаклёвка под покраску', 'Бояуға дайындап тегістеу', 'Skim coat for painting'], 1600, 'm2'], [['Покраска в два слоя', 'Екі қабат бояу', 'Two-coat painting'], 1100, 'm2'], [['Поклейка обоев', 'Түсқағаз жапсыру', 'Wallpapering'], 1300, 'm2'], [['Укладка плитки', 'Плитка төсеу', 'Tiling'], 5500, 'm2']]],
+    ['floor', ['Полы', 'Едендер', 'Floors'], [[['Стяжка пола', 'Еден құю', 'Floor screed'], 2200, 'm2'], [['Укладка ламината', 'Ламинат төсеу', 'Laminate flooring'], 1800, 'm2'], [['Укладка кварцвинила', 'Кварцвинил төсеу', 'Vinyl plank flooring'], 2200, 'm2'], [['Монтаж плинтуса', 'Плинтус орнату', 'Skirting boards'], 700, 'mp']]],
+    ['elec', ['Электрика', 'Электр жұмыстары', 'Electrics'], [[['Розетка или выключатель', 'Розетка немесе ажыратқыш', 'Socket or switch'], 2500, 'pc'], [['Прокладка кабеля', 'Кабель тарту', 'Cable run'], 450, 'mp'], [['Сборка электрощита', 'Электр қалқанын жинау', 'Distribution board'], 35000, 'pc'], [['Установка светильника', 'Шам орнату', 'Light fitting'], 1500, 'pc']]],
+    ['plumb', ['Сантехника', 'Сантехника', 'Plumbing'], [[['Разводка труб на точку', 'Бір нүктеге құбыр тарту', 'Pipework per point'], 8000, 'pc'], [['Установка унитаза', 'Унитаз орнату', 'Toilet installation'], 12000, 'pc'], [['Установка ванны', 'Ванна орнату', 'Bathtub installation'], 18000, 'pc'], [['Установка смесителя', 'Араластырғыш орнату', 'Tap installation'], 5000, 'pc']]],
+    ['ceil', ['Потолки', 'Төбелер', 'Ceilings'], [[['Натяжной потолок', 'Керме төбе', 'Stretch ceiling'], 3500, 'm2'], [['Потолок из гипсокартона', 'Гипсокартон төбе', 'Plasterboard ceiling'], 4200, 'm2']]]
+  ];
+  var TYPES = [['t1', 15000, .35], ['t2', 35000, .8], ['t3', 55000, 1.1]], MATS = [['m0', 0], ['m1', 8000], ['m2', 14000], ['m3', 26000]];
+  var OPTS = [['o1', 8000, 1], ['o2', 6000, 1], ['o3', 3500, 1], ['o4', 45000, 0]];
+  var PRJ = [
+    { id: 'p1', k: 'flat', img: '1658218635253-64728f6234be', n: ['Квартира 68 м², капитальный ремонт', '68 м² пәтер, күрделі жөндеу', '68 m² apartment, full renovation'], a: 68, d: 55, b: 4900000, w: ['w3', 'w4', 'o2', 'o3'] },
+    { id: 'p2', k: 'room', img: '1689043528099-2ba014dd7c64', n: ['Кухня-гостиная 42 м²', '42 м² ас үй-қонақ бөлме', '42 m² kitchen-living room'], a: 42, d: 30, b: 2700000, w: ['o1', 'w4', 'o2'] },
+    { id: 'p3', k: 'house', img: '1737233459465-8eaf6c7d8856', n: ['Дом 140 м², дизайнерский ремонт', '140 м² үй, дизайнерлік жөндеу', '140 m² house, designer renovation'], a: 140, d: 150, b: 14800000, w: ['o1', 'w3', 'w4', 'o2', 'o3'] },
+    { id: 'p4', k: 'room', img: '1663811397133-2d1f5addd9d5', n: ['Ванная комната 6 м²', '6 м² жуынатын бөлме', '6 m² bathroom'], a: 6, d: 14, b: 980000, w: ['plumb', 'w4'] },
+    { id: 'p5', k: 'flat', img: '1560185007-5f0bb1866cab', n: ['Квартира 45 м², косметический ремонт', '45 м² пәтер, косметикалық жөндеу', '45 m² apartment, cosmetic renovation'], a: 45, d: 18, b: 1150000, w: ['w4', 'o4'] },
+    { id: 'p6', k: 'house', img: '1667375186016-db03fabfc259', n: ['Дом 210 м² под ключ', '210 м² үй, толық жөндеу', '210 m² turnkey house'], a: 210, d: 180, b: 21500000, w: ['o1', 'w3', 'w4', 'o2', 'plumb', 'o3'] }
+  ];
+  var st = { cat: 'all', q: '', pk: 'all' }, c = { a: 60, t: 1, m: 2, o: {}, b: 1 };
+
+  function calc() {
+    var T = TYPES[c.t], lines = [[s('works') + ', ' + s(T[0]).toLowerCase(), T[1] * c.a]];
+    if (MATS[c.m][1]) lines.push([s('mat') + ', ' + s(MATS[c.m][0]).toLowerCase(), MATS[c.m][1] * c.a]);
+    OPTS.forEach(function (o) { if (c.o[o[0]]) lines.push([s(o[0]), o[2] ? o[1] * c.a : o[1]]); });
+    if (c.b) lines.push([s('plumb') + ', ' + s('baths').toLowerCase() + ': ' + c.b, 180000 * c.b]);
+    var total = lines.reduce(function (x, l) { return x + l[1]; }, 0);
+    return { lines: lines, total: total, days: Math.max(10, Math.round(c.a * T[2] / 5) * 5) };
+  }
+  function calcOut() {
+    var r = calc();
+    return '<div class="total"><span class="mu sm">' + e(s('est')) + '</span><span class="big num">' + K.tg(r.total) + '</span><span class="mu sm">' + s('perM', { p: K.money(r.total / c.a) }) + ', ' + e(s('termL')).toLowerCase() + ' ' + s('days', { n: r.days }) + '</span></div><div class="list">' +
+      r.lines.map(function (l) { return '<div><span>' + e(l[0]) + '</span><i></i><b>' + K.tg(l[1]) + '</b></div>'; }).join('') + '</div><p class="mu sm">' + e(s('estN')) + '</p>';
+  }
+  function rows() {
+    var out = [], q = st.q.trim().toLowerCase();
+    CATS.forEach(function (cat) {
+      if (st.cat !== 'all' && st.cat !== cat[0]) return;
+      cat[2].forEach(function (r) { if (!q || L(r[0]).toLowerCase().indexOf(q) > -1) out.push('<tr><td>' + e(L(r[0])) + '<br><span class="mu sm">' + e(L(cat[1])) + '</span></td><td>' + e(L(U[r[2]])) + '</td><td class="num"><b>' + K.from(r[1]) + '</b></td></tr>'); });
+    });
+    return out.length ? out.join('') : '<tr><td colspan="3" class="mu">' + e(s('noRows')) + '</td></tr>';
+  }
+  function pcard(p) {
+    return '<a class="card pcard" href="#/project/' + p.id + '">' + K.ph(p.img, '3/2', L(p.n)) + '<div><span class="tag">' + e(s(p.k)) + '</span><h3>' + e(L(p.n)) + '</h3><p class="mu sm">' + s('days', { n: p.d }) + ', ' + K.tg(p.b) + '</p></div></a>';
+  }
+  function plist() { return PRJ.filter(function (p) { return st.pk === 'all' || p.k === st.pk; }).map(pcard).join(''); }
+  function visitForm(note) {
+    return K.form('visit', (note ? '<input type="hidden" name="note" data-l="' + e(s('est')) + '" value="' + e(note) + '">' : '') + K.fl(s('obj'), '<input name="address">') + '<div class="f2">' + K.fl(s('date'), '<input name="date" type="date">') + K.fl(s('area') + ', ' + s('sq'), '<input name="area" type="number" min="1" value="' + c.a + '">') + '</div>' + K.np(), s('visit'));
+  }
+
+  var routes = {
+    home: function () {
+      return '<section class="hero"><div class="wrap"><div class="hero-c"><h1>' + e(s('h1')) + '</h1><p class="lead">' + e(s('hp')) + '</p><div class="row"><a class="btn" href="#/calc">' + e(s('toCalc')) + '</a><a class="btn gh" href="#/contacts">' + e(s('visit')) + '</a></div></div>' + K.ph('1742541656775-5fc717774c02', '4/3', s('projects')) + '</div></section>' +
+        '<section class="band"><div class="wrap"><div class="g" style="--min:300px">' + [1, 2, 3].map(function (i) { return '<div class="card"><h3>' + e(s('a' + i)) + '</h3><p class="mu">' + e(s('a' + i + 'd')) + '</p></div>'; }).join('') + '</div></div></section>' +
+        '<section><div class="wrap"><div class="hd"><h2>' + e(s('services')) + '</h2></div><div class="g" style="--min:300px">' + CATS.map(function (cat) { var min = Math.min.apply(null, cat[2].map(function (r) { return r[1]; })); return '<a class="card" href="#/services" data-cat="' + cat[0] + '"><h3>' + e(L(cat[1])) + '</h3><p class="mu sm">' + cat[2].slice(0, 3).map(function (r) { return e(L(r[0])); }).join(', ') + '</p><b class="num ac">' + K.from(min) + '</b></a>'; }).join('') + '</div></div></section>' +
+        '<section class="band"><div class="wrap"><div class="hd"><h2>' + e(s('how')) + '</h2></div><ol class="g steps" style="--min:190px">' + [1, 2, 3, 4, 5].map(function (i) { return '<li><h3>' + e(s('w' + i)) + '</h3><p class="mu sm">' + e(s('w' + i + 'd')) + '</p></li>'; }).join('') + '</ol></div></section>' +
+        '<section><div class="wrap"><div class="hd"><h2>' + e(s('recent')) + '</h2></div><div class="g" style="--min:300px">' + PRJ.slice(0, 3).map(pcard).join('') + '</div><p style="margin-top:24px"><a class="btn gh" href="#/projects">' + e(s('allP')) + '</a></p></div></section>';
+    },
+    services: function () {
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('services')) + '</h1><p class="lead">' + e(s('sNote')) + '</p></div><div class="f" style="margin-bottom:20px"><div class="chips">' + [['all', s('allF')]].concat(CATS.map(function (x) { return [x[0], L(x[1])]; })).map(function (o) { return '<button class="chip" type="button" data-cat="' + o[0] + '" aria-pressed="' + (st.cat === o[0]) + '">' + e(o[1]) + '</button>'; }).join('') + '</div>' +
+        '<input id="q" type="search" placeholder="' + e(s('find')) + '" aria-label="' + e(s('find')) + '" value="' + e(st.q) + '" style="max-width:420px"></div><div class="tw"><table><thead><tr><th>' + e(s('work')) + '</th><th>' + e(s('unit')) + '</th><th>' + e(s('price')) + '</th></tr></thead><tbody id="rows">' + rows() + '</tbody></table></div><p style="margin-top:24px"><a class="btn" href="#/calc">' + e(s('toCalc')) + '</a></p></div></section>';
+    },
+    calc: function () {
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('calc')) + '</h1><p class="lead">' + e(s('estN')) + '</p></div><div class="g2"><div class="f">' +
+        '<label class="fl"><span>' + e(s('area')) + ': <b id="aOut">' + c.a + ' ' + s('sq') + '</b></span><input type="range" id="area" min="20" max="250" step="1" value="' + c.a + '"></label>' +
+        '<fieldset class="f"><legend class="mu sm" style="margin-bottom:8px">' + e(s('type')) + '</legend>' + TYPES.map(function (t, i) { return '<label class="opt"><input type="radio" name="ct" value="' + i + '"' + (i === c.t ? ' checked' : '') + '><span><b>' + e(s(t[0])) + ', ' + s('perM', { p: K.money(t[1]) }) + '</b><span class="mu sm">' + e(s(t[0] + 'd')) + '</span></span></label>'; }).join('') + '</fieldset>' +
+        K.fl(s('mat'), '<select id="mat">' + MATS.map(function (m, i) { return '<option value="' + i + '"' + (i === c.m ? ' selected' : '') + '>' + e(s(m[0])) + (m[1] ? ', ' + s('perM', { p: K.money(m[1]) }) : '') + '</option>'; }).join('') + '</select>') +
+        K.fl(s('baths'), '<select id="baths">' + [0, 1, 2, 3].map(function (n) { return '<option' + (n === c.b ? ' selected' : '') + '>' + n + '</option>'; }).join('') + '</select>') +
+        '<fieldset class="f"><legend class="mu sm" style="margin-bottom:8px">' + e(s('extra')) + '</legend>' + OPTS.map(function (o) { return '<label class="opt"><input type="checkbox" name="co" value="' + o[0] + '"' + (c.o[o[0]] ? ' checked' : '') + '><span><b>' + e(s(o[0])) + '</b><span class="mu sm">' + (o[2] ? s('perM', { p: K.money(o[1]) }) : K.tg(o[1])) + '</span></span></label>'; }).join('') + '</fieldset></div>' +
+        '<div class="box sticky"><div id="out" style="display:grid;gap:16px">' + calcOut() + '</div><a class="btn" href="#/contacts">' + e(s('getEst')) + '</a></div></div></div></section>';
+    },
+    projects: function () {
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('projects')) + '</h1></div><div class="chips" style="margin-bottom:24px">' + [['all', s('allF')], ['flat', s('flat')], ['house', s('house')], ['room', s('room')]].map(function (o) { return '<button class="chip" type="button" data-pk="' + o[0] + '" aria-pressed="' + (st.pk === o[0]) + '">' + e(o[1]) + '</button>'; }).join('') + '</div><div class="g" style="--min:300px">' + plist() + '</div></div></section>';
+    },
+    project: function (id) {
+      var p = PRJ.filter(function (x) { return x.id === id; })[0] || PRJ[0];
+      return '<section class="pg"><div class="wrap"><div class="crumbs"><a href="#/projects">' + e(s('projects')) + '</a><span>/</span><span>' + e(L(p.n)) + '</span></div><div class="g2">' + K.ph(p.img, '4/3', L(p.n)) + '<div class="f"><span><span class="tag">' + e(s(p.k)) + '</span></span><h1 style="font-size:clamp(1.6rem,3.6vw,2.4rem)">' + e(L(p.n)) + '</h1><div class="list"><div><span>' + e(s('area')) + '</span><i></i><b>' + p.a + ' ' + s('sq') + '</b></div><div><span>' + e(s('termL')) + '</span><i></i><b>' + s('days', { n: p.d }) + '</b></div><div><span>' + e(s('budget')) + '</span><i></i><b>' + K.tg(p.b) + '</b></div></div><h3>' + e(s('done')) + '</h3><ul class="ck">' + p.w.map(function (k) { return '<li>' + e(s(k)) + (S[k + 'd'] ? '<span class="mu sm">: ' + e(s(k + 'd')).toLowerCase() + '</span>' : '') + '</li>'; }).join('') + '</ul><div><a class="btn" href="#/contacts">' + e(s('same')) + '</a></div></div></div></div></section>';
+    },
+    contacts: function () {
+      var r = calc();
+      return '<section class="pg"><div class="wrap g2"><div class="hd"><h1>' + e(s('cT')) + '</h1><p class="lead">' + e(s('cD')) + '</p><div class="list"><div><span>' + e(s('office')) + '</span><i></i><b>' + e(s('addr')) + '</b></div><div><span>' + e(s('phone')) + '</span><i></i><b>+7 (700) 000-00-00</b></div><div><span>' + e(s('time')) + '</span><i></i><b>' + e(s('hours')) + '</b></div></div>' + K.ph('1674649207083-281c2517ab49', '16/9', s('how')) + '</div><div class="box">' + visitForm(c.a + ' ' + s('sq') + ', ' + s(TYPES[c.t][0]) + ', ' + K.tg(r.total).replace(/ /g, ' ')) + '</div></div></section>';
+    }
+  };
+
+  function upd() { var o = K.q('#out'); if (o) o.innerHTML = calcOut(); }
+  document.addEventListener('click', function (ev) {
+    var b;
+    if ((b = ev.target.closest('[data-cat]'))) { st.cat = b.getAttribute('data-cat'); if (b.tagName === 'BUTTON') K.refresh(); return; }
+    if ((b = ev.target.closest('[data-pk]'))) { st.pk = b.getAttribute('data-pk'); K.refresh(); }
+  });
+  document.addEventListener('input', function (ev) {
+    var t = ev.target;
+    if (t.id === 'area') { c.a = +t.value; K.q('#aOut').textContent = c.a + ' ' + s('sq'); upd(); }
+    else if (t.id === 'q') { st.q = t.value; K.q('#rows').innerHTML = rows(); }
+  });
+  document.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (t.name === 'ct') { c.t = +t.value; upd(); }
+    else if (t.id === 'mat') { c.m = +t.value; upd(); }
+    else if (t.id === 'baths') { c.b = +t.value; upd(); }
+    else if (t.name === 'co') { c.o[t.value] = t.checked; upd(); }
+  });
+
+  K.init({
+    brand: 'Demo<i>Build</i>', niche: ['компании по ремонту и строительству', 'жөндеу және құрылыс компаниясына', 'a renovation and construction company'], S: S,
+    nav: [['services', 'services'], ['calc', 'calc'], ['projects', 'projects'], ['contacts', 'contacts']], cta: ['contacts', 'visit'], routes: routes
+  });
+})();
+</script>
+</body>
+</html>

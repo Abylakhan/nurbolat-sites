@@ -1,0 +1,162 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Demo Cargo</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* Карго: тёмно-синий «диспетчерский» стиль, жёлтый акцент, номера и цифры моноширинно */
+:root{color-scheme:dark;--bg:#0C1826;--fg:#EAF1F7;--ac:#F2C230;--ai:#17130A;--sf:#12233A;--cd:#132740;--ln:#25405E;--mu:#9BB2C8;--hf:'IBM Plex Sans',system-ui,sans-serif;--bf:'IBM Plex Sans',system-ui,sans-serif;--hw:600;--ht:-.02em;--r:8px}
+.trk{display:flex;gap:10px;flex-wrap:wrap}
+.trk input{flex:1 1 220px;text-transform:uppercase;letter-spacing:.06em;font-variant-numeric:tabular-nums}
+.trk input::placeholder{text-transform:none;letter-spacing:0}
+.mth{position:relative}
+.mth[aria-pressed=true]{border-color:var(--ac)}
+.tl{display:grid;gap:0;margin:8px 0}
+.tl li{position:relative;display:grid;gap:2px;padding:0 0 22px 34px}
+.tl li::before{content:"";position:absolute;left:5px;top:4px;width:14px;height:14px;border-radius:50%;border:2px solid var(--ln);background:var(--bg)}
+.tl li::after{content:"";position:absolute;left:11px;top:22px;bottom:0;border-left:2px solid var(--ln)}
+.tl li:last-child::after{display:none}
+.tl li.done::before{background:var(--ac);border-color:var(--ac)}
+.tl li.done::after{border-color:var(--ac)}
+.tl li.now::before{border-color:var(--ac);box-shadow:0 0 0 5px color-mix(in srgb,var(--ac) 25%,transparent)}
+.tl li:not(.done):not(.now){color:var(--mu)}
+.prog{height:8px;border-radius:4px;background:var(--sf);overflow:hidden}
+.prog i{display:block;height:100%;background:var(--ac)}
+</style>
+</head>
+<body>
+<script src="kit.js"></script>
+<script>
+(function () {
+  'use strict';
+  var K = Kit, L = K.L, s = K.s, e = K.esc;
+
+  var S = {
+    tariffs: ['Тарифы', 'Тарифтер', 'Rates'], calc: ['Калькулятор', 'Калькулятор', 'Calculator'], track: ['Отслеживание', 'Жүкті бақылау', 'Tracking'],
+    quote: ['Рассчитать доставку', 'Жеткізуді есептеу', 'Get a quote'],
+    h1: ['Доставка грузов из Китая от 7 дней', 'Қытайдан жүкті 7 күннен бастап жеткізу', 'Freight delivery from China from 7 days'],
+    hp: ['Авто, железная дорога и авиа. Склады в Гуанчжоу, Иу и Урумчи, выдача в Алматы, Астане и Шымкенте.', 'Авто, теміржол және әуе тасымалы. Қоймалар Гуанчжоу, Иу және Үрімшіде, жүк Алматы, Астана және Шымкентте беріледі.', 'Road, rail and air. Warehouses in Guangzhou, Yiwu and Urumqi; pickup in Almaty, Astana and Shymkent.'],
+    tH: ['Где мой груз', 'Жүгім қайда', 'Where is my cargo'], tP: ['Номер, например DC104582', 'Нөмір, мысалы DC104582', 'Number, e.g. DC104582'], tB: ['Отследить', 'Бақылау', 'Track'],
+    tTry: ['Номера для примера', 'Мысал нөмірлер', 'Sample numbers'], tBad: ['Введите номер в формате DC и шесть цифр, например DC104582.', 'Нөмірді DC және алты цифр форматында енгізіңіз, мысалы DC104582.', 'Enter the number as DC plus six digits, for example DC104582.'],
+    road: ['Авто', 'Авто', 'Road'], rail: ['Железная дорога', 'Теміржол', 'Rail'], air: ['Авиа', 'Әуе', 'Air'],
+    roadD: ['Оптимально по цене и сроку', 'Баға мен мерзім жағынан тиімді', 'The best balance of price and time'], railD: ['Дешевле всего для тяжёлых партий', 'Ауыр партиялар үшін ең арзаны', 'Cheapest for heavy shipments'], airD: ['Самый быстрый способ', 'Ең жылдам тәсіл', 'The fastest option'],
+    dd: ['{a}–{b} дней', '{a}–{b} күн', '{a}–{b} days'], perKg: ['{p} ₸ за кг', 'бір кг үшін {p} ₸', '{p} ₸ per kg'],
+    how: ['Как это работает', 'Бұл қалай жұмыс істейді', 'How it works'],
+    w1: ['Заявка', 'Өтінім', 'Request'], w1d: ['Считаете стоимость и оставляете заявку.', 'Құнын есептеп, өтінім қалдырасыз.', 'You get a quote and leave a request.'],
+    w2: ['Склад в Китае', 'Қытайдағы қойма', 'Warehouse in China'], w2d: ['Поставщик привозит товар, мы взвешиваем и фотографируем.', 'Жеткізуші тауарды әкеледі, біз өлшеп, суретке түсіреміз.', 'Your supplier delivers the goods; we weigh and photograph them.'],
+    w3: ['Перевозка', 'Тасымалдау', 'Transit'], w3d: ['Груз едет, статус виден по трек-номеру.', 'Жүк жолда, күйі трек-нөмір бойынша көрінеді.', 'The cargo travels and the status is visible by tracking number.'],
+    w4: ['Таможня', 'Кеден', 'Customs'], w4d: ['Оформляем документы и проходим границу.', 'Құжаттарды рәсімдеп, шекарадан өтеміз.', 'We handle the paperwork and cross the border.'],
+    w5: ['Выдача', 'Беру', 'Pickup'], w5d: ['Забираете на складе или заказываете доставку до двери.', 'Қоймадан алып кетесіз немесе есікке дейін жеткізуге тапсырыс бересіз.', 'Collect at the warehouse or order door delivery.'],
+    a1: ['Трек-номер на каждый груз', 'Әр жүкке трек-нөмір', 'A tracking number for every shipment'], a2: ['Страхование груза', 'Жүкті сақтандыру', 'Cargo insurance'], a3: ['Фото при приёмке', 'Қабылдау кезіндегі фото', 'Photos at intake'],
+    method: ['Способ', 'Тәсіл', 'Method'], time: ['Срок', 'Мерзімі', 'Transit time'], w0: ['до 100 кг', '100 кг-ға дейін', 'up to 100 kg'], w100: ['100–500 кг', '100–500 кг', '100–500 kg'], w500: ['от 500 кг', '500 кг-нан бастап', 'over 500 kg'],
+    tN: ['Тарифы указаны за килограмм на маршруте Гуанчжоу — Алматы. Лёгкий объёмный груз считается по объёмному весу: 1 м³ = 200 кг, для авиа 167 кг.', 'Тарифтер Гуанчжоу — Алматы бағыты бойынша бір килограмм үшін көрсетілген. Жеңіл көлемді жүк көлемдік салмақпен есептеледі: 1 м³ = 200 кг, әуе тасымалында 167 кг.', 'Rates are per kilogram for Guangzhou to Almaty. Light bulky cargo is charged by volumetric weight: 1 m³ = 200 kg, or 167 kg for air.'],
+    xT: ['Дополнительные услуги', 'Қосымша қызметтер', 'Extra services'], ins: ['Страхование', 'Сақтандыру', 'Insurance'], insD: ['1% от стоимости груза', 'жүк құнының 1%-ы', '1% of the cargo value'], pack: ['Обрешётка', 'Ағаш қаптама', 'Crating'], packD: ['9 000 ₸ за м³', 'бір м³ үшін 9 000 ₸', '9,000 ₸ per m³'], door: ['Доставка до двери', 'Есікке дейін жеткізу', 'Door delivery'], doorD: ['7 000 ₸ по городу', 'қала ішінде 7 000 ₸', '7,000 ₸ within the city'],
+    fromC: ['Откуда', 'Қайдан', 'From'], toC: ['Куда', 'Қайда', 'To'], weight: ['Вес, кг', 'Салмағы, кг', 'Weight, kg'], vol: ['Объём, м³', 'Көлемі, м³', 'Volume, m³'], val: ['Стоимость груза, ₸', 'Жүк құны, ₸', 'Cargo value, ₸'],
+    chg: ['Расчётный вес', 'Есептік салмақ', 'Chargeable weight'], dens: ['Плотность', 'Тығыздығы', 'Density'], kg: ['кг', 'кг', 'kg'], kgm: ['кг/м³', 'кг/м³', 'kg/m³'], m3: ['м³', 'м³', 'm³'],
+    cheap: ['Дешевле всего', 'Ең арзаны', 'Cheapest'], fast: ['Быстрее всего', 'Ең жылдамы', 'Fastest'], choose: ['Выбрать', 'Таңдау', 'Choose'], chosen: ['Выбрано', 'Таңдалды', 'Selected'],
+    cN: ['Расчёт предварительный. Точную стоимость менеджер подтвердит после взвешивания на складе.', 'Есеп алдын ала жасалған. Нақты құнын менеджер қоймада өлшегеннен кейін растайды.', 'This is an estimate. A manager confirms the exact cost after weighing at the warehouse.'],
+    req: ['Оставить заявку на доставку', 'Жеткізуге өтінім қалдыру', 'Request this delivery'], calcL: ['Расчёт', 'Есеп', 'Quote'],
+    stat: ['Статус', 'Күйі', 'Status'], route: ['Маршрут', 'Бағыт', 'Route'], places: ['Мест', 'Орын саны', 'Packages'], exp: ['ожидается', 'күтілуде', 'expected'],
+    s1: ['Принят на складе в Китае', 'Қытайдағы қоймада қабылданды', 'Received at the China warehouse'], s2: ['Отправлен со склада', 'Қоймадан жөнелтілді', 'Dispatched from the warehouse'], s3: ['Пересёк границу', 'Шекарадан өтті', 'Crossed the border'], s4: ['Прошёл таможню', 'Кеденнен өтті', 'Cleared customs'], s5: ['Прибыл на склад выдачи', 'Беру қоймасына келді', 'Arrived at the pickup warehouse'], s6: ['Выдан получателю', 'Алушыға берілді', 'Handed over to the recipient'],
+    cT: ['Свяжитесь с нами', 'Бізбен байланысыңыз', 'Get in touch'], cD: ['Менеджер ответит в рабочее время и поможет с расчётом и документами.', 'Менеджер жұмыс уақытында жауап беріп, есеп пен құжаттарға көмектеседі.', 'A manager replies during working hours and helps with the quote and paperwork.'],
+    wh: ['Склады', 'Қоймалар', 'Warehouses'], whN: ['адрес для примера', 'мекенжай үлгі ретінде', 'sample address'], what: ['Что везём', 'Не тасымалдаймыз', 'What are you shipping']
+  };
+  var FROM = [[['Гуанчжоу', 'Гуанчжоу', 'Guangzhou'], 1, 0], [['Иу', 'Иу', 'Yiwu'], 1.04, 1], [['Урумчи', 'Үрімші', 'Urumqi'], .85, -4]];
+  var TO = [[['Алматы', 'Алматы', 'Almaty'], 1, 0], [['Астана', 'Астана', 'Astana'], 1.08, 2], [['Шымкент', 'Шымкент', 'Shymkent'], 1.05, 1]];
+  var M = [['road', 1800, 12, 18, 200], ['rail', 1200, 18, 25, 200], ['air', 4500, 7, 10, 167]];
+  var c = { f: 0, t: 0, w: 120, v: 0.8, val: 1500000, ins: false, pack: false, door: false, m: 'road' };
+  var MN = [['янв', 'қаң', 'Jan'], ['фев', 'ақп', 'Feb'], ['мар', 'нау', 'Mar'], ['апр', 'сәу', 'Apr'], ['мая', 'мам', 'May'], ['июн', 'мау', 'Jun'], ['июл', 'шіл', 'Jul'], ['авг', 'там', 'Aug'], ['сен', 'қыр', 'Sep'], ['окт', 'қаз', 'Oct'], ['ноя', 'қар', 'Nov'], ['дек', 'жел', 'Dec']];
+
+  function tier(w) { return w < 100 ? 1 : w <= 500 ? .92 : .85; }
+  function quote() {
+    var fr = FROM[c.f], to = TO[c.t], extra = (c.ins ? c.val * .01 : 0) + (c.pack ? 9000 * c.v : 0) + (c.door ? 7000 : 0);
+    return M.map(function (m) {
+      var cw = Math.max(c.w, c.v * m[4]);
+      return { id: m[0], cw: cw, price: Math.round((cw * m[1] * tier(cw) * fr[1] * to[1] + extra) / 100) * 100, a: Math.max(3, m[2] + fr[2] + to[2]), b: m[3] + fr[2] + to[2] };
+    });
+  }
+  function qHtml() {
+    var q = quote(), min = Math.min.apply(null, q.map(function (x) { return x.price; })), fast = Math.min.apply(null, q.map(function (x) { return x.b; })), d = c.v > 0 ? Math.round(c.w / c.v) : 0;
+    return '<p class="mu sm">' + e(s('dens')) + ': <b class="num">' + d + ' ' + e(s('kgm')) + '</b></p><div class="f">' + q.map(function (x) {
+      return '<button class="pick mth card" type="button" data-m="' + x.id + '" aria-pressed="' + (c.m === x.id) + '" style="text-align:left;cursor:pointer"><span class="row" style="justify-content:space-between"><b>' + e(s(x.id)) + '</b><span class="row">' + (x.price === min ? '<span class="tag on">' + e(s('cheap')) + '</span>' : '') + (x.b === fast ? '<span class="tag on">' + e(s('fast')) + '</span>' : '') + '</span></span><span class="big num">' + K.tg(x.price) + '</span><span class="mu sm">' + s('dd', { a: x.a, b: x.b }) + ', ' + e(s('chg')).toLowerCase() + ' ' + K.money(x.cw) + ' ' + e(s('kg')) + '</span></button>';
+    }).join('') + '</div><p class="mu sm">' + e(s('cN')) + '</p>';
+  }
+  function sumText() { var x = quote().filter(function (y) { return y.id === c.m; })[0]; return L(FROM[c.f][0]) + ' — ' + L(TO[c.t][0]) + ', ' + s(c.m) + ', ' + c.w + ' ' + s('kg') + ', ' + c.v + ' ' + s('m3') + ', ' + K.tg(x.price).replace(/ /g, ' ') + ', ' + s('dd', { a: x.a, b: x.b }); }
+  function fmtDate(d) { var m = L(MN[d.getMonth()]); return K.lang() === 'en' ? m + ' ' + d.getDate() : d.getDate() + ' ' + m; }
+  function trackHtml(num) {
+    num = (num || '').toUpperCase().replace(/\s/g, '');
+    if (!num) return '';
+    if (!/^DC\d{6}$/.test(num)) return '<div class="box"><p class="err">' + e(s('tBad')) + '</p></div>';
+    var n = 0, i; for (i = 2; i < num.length; i++) n = n * 7 + +num.charAt(i);
+    var m = M[n % 3], stage = n % 6, step = Math.max(2, Math.round((m[2] + m[3]) / 2 / 5)), start = new Date(); start.setDate(start.getDate() - stage * step - 1);
+    var li = [1, 2, 3, 4, 5, 6].map(function (k, idx) {
+      var d = new Date(start); d.setDate(d.getDate() + idx * step);
+      return '<li class="' + (idx < stage ? 'done' : idx === stage ? 'done now' : '') + '"><b>' + e(s('s' + k)) + '</b><span class="sm' + (idx > stage ? '' : ' mu') + '">' + (idx > stage ? e(s('exp')) + ' ' : '') + e(fmtDate(d)) + '</span></li>';
+    }).join('');
+    return '<div class="box in"><div class="row" style="justify-content:space-between"><h2 class="num">' + num + '</h2><span class="tag on">' + e(s('s' + (stage + 1))) + '</span></div><div class="prog"><i style="width:' + ((stage + 1) / 6 * 100) + '%"></i></div><div class="list"><div><span>' + e(s('route')) + '</span><i></i><b>' + e(L(FROM[n % 3][0])) + ' — ' + e(L(TO[(n >> 2) % 3][0])) + '</b></div><div><span>' + e(s('method')) + '</span><i></i><b>' + e(s(m[0])) + '</b></div><div><span>' + e(s('weight')) + '</span><i></i><b>' + (40 + n % 460) + '</b></div><div><span>' + e(s('places')) + '</span><i></i><b>' + (1 + n % 9) + '</b></div></div><ol class="tl">' + li + '</ol></div>';
+  }
+  function trackForm(v) { return '<form class="trk" id="trk"><input id="trkN" aria-label="' + e(s('tP')) + '" placeholder="' + e(s('tP')) + '" value="' + e(v || '') + '" maxlength="10"><button class="btn" type="submit">' + e(s('tB')) + '</button></form><p class="mu sm">' + e(s('tTry')) + ': ' + ['DC104582', 'DC220417', 'DC775309'].map(function (x) { return '<a href="#/track/' + x + '" class="num">' + x + '</a>'; }).join(', ') + '</p>'; }
+  function sel(id, arr, cur) { return '<select id="' + id + '">' + arr.map(function (x, i) { return '<option value="' + i + '"' + (i === cur ? ' selected' : '') + '>' + e(L(x[0])) + '</option>'; }).join('') + '</select>'; }
+  function opt(k) { return '<label class="opt"><input type="checkbox" name="x" value="' + k + '"' + (c[k] ? ' checked' : '') + '><span><b>' + e(s(k)) + '</b><span class="mu sm">' + e(s(k + 'D')) + '</span></span></label>'; }
+
+  var routes = {
+    home: function () {
+      return '<section class="hero"><div class="wrap"><div class="hero-c"><h1>' + e(s('h1')) + '</h1><p class="lead">' + e(s('hp')) + '</p><div class="row"><a class="btn" href="#/calc">' + e(s('quote')) + '</a><a class="btn gh" href="#/tariffs">' + e(s('tariffs')) + '</a></div></div>' + K.ph('1634646809203-f3b4adff9127', '4/3', s('h1')) + '</div></section>' +
+        '<section class="band"><div class="wrap g2"><div class="hd" style="margin:0"><h2>' + e(s('tH')) + '</h2></div><div class="f">' + trackForm('') + '</div></div></section>' +
+        '<section><div class="wrap"><div class="g" style="--min:260px">' + M.map(function (m) { return '<a class="card" href="#/calc" data-pm="' + m[0] + '"><h3>' + e(s(m[0])) + '</h3><p class="mu sm">' + e(s(m[0] + 'D')) + '</p><p class="big num">' + s('dd', { a: m[2], b: m[3] }) + '</p><b class="num ac">' + s('perKg', { p: K.money(m[1] * .85) }) + '</b><span class="mu sm">' + e(s('w500')) + '</span></a>'; }).join('') + '</div></div></section>' +
+        '<section class="band"><div class="wrap"><div class="hd"><h2>' + e(s('how')) + '</h2></div><ol class="g steps" style="--min:190px">' + [1, 2, 3, 4, 5].map(function (i) { return '<li><h3>' + e(s('w' + i)) + '</h3><p class="mu sm">' + e(s('w' + i + 'd')) + '</p></li>'; }).join('') + '</ol></div></section>' +
+        '<section><div class="wrap g2"><ul class="ck">' + [1, 2, 3].map(function (i) { return '<li><b>' + e(s('a' + i)) + '</b></li>'; }).join('') + '</ul>' + K.ph('1601467995997-ac1ae9a8fff4', '16/9', s('w3')) + '</div></section>';
+    },
+    tariffs: function () {
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('tariffs')) + '</h1><p class="lead">' + e(s('tN')) + '</p></div><div class="tw"><table><thead><tr><th>' + e(s('method')) + '</th><th>' + e(s('time')) + '</th><th>' + e(s('w0')) + '</th><th>' + e(s('w100')) + '</th><th>' + e(s('w500')) + '</th></tr></thead><tbody>' +
+        M.map(function (m) { return '<tr><td><b>' + e(s(m[0])) + '</b><br><span class="mu sm">' + e(s(m[0] + 'D')) + '</span></td><td class="num">' + s('dd', { a: m[2], b: m[3] }) + '</td>' + [1, .92, .85].map(function (k) { return '<td class="num">' + s('perKg', { p: K.money(m[1] * k) }) + '</td>'; }).join('') + '</tr>'; }).join('') + '</tbody></table></div>' +
+        '<h2 style="margin:36px 0 16px">' + e(s('xT')) + '</h2><div class="list">' + ['ins', 'pack', 'door'].map(function (k) { return '<div><span>' + e(s(k)) + '</span><i></i><b>' + e(s(k + 'D')) + '</b></div>'; }).join('') + '</div><p style="margin-top:28px"><a class="btn" href="#/calc">' + e(s('quote')) + '</a></p></div></section>';
+    },
+    calc: function () {
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('calc')) + '</h1></div><div class="g2"><div class="f"><div class="f2">' + K.fl(s('fromC'), sel('cf', FROM, c.f)) + K.fl(s('toC'), sel('ct', TO, c.t)) + '</div><div class="f2">' + K.fl(s('weight'), '<input id="cw" type="number" min="1" max="20000" step="1" value="' + c.w + '">') + K.fl(s('vol'), '<input id="cv" type="number" min="0.01" max="120" step="0.01" value="' + c.v + '">') + '</div>' +
+        K.fl(s('val'), '<input id="cval" type="number" min="0" step="10000" value="' + c.val + '">') + '<fieldset class="f"><legend class="mu sm" style="margin-bottom:8px">' + e(s('xT')) + '</legend>' + opt('ins') + opt('pack') + opt('door') + '</fieldset></div><div class="f"><div id="q" style="display:grid;gap:14px">' + qHtml() + '</div></div></div>' +
+        '<div class="box" style="margin-top:32px"><h2>' + e(s('req')) + '</h2>' + K.form('cargo', '<input type="hidden" name="calc" id="qHid" data-l="' + e(s('calcL')) + '" value="' + e(sumText()) + '">' + K.fl(s('what'), '<input name="goods">') + K.np(), s('req')) + '</div></div></section>';
+    },
+    track: function (num) {
+      return '<section class="pg"><div class="wrap" style="max-width:820px"><div class="hd"><h1>' + e(s('track')) + '</h1></div><div class="f">' + trackForm(num) + '</div><div style="margin-top:24px">' + trackHtml(num) + '</div></div></section>';
+    },
+    contacts: function () {
+      return '<section class="pg"><div class="wrap g2"><div class="hd"><h1>' + e(s('cT')) + '</h1><p class="lead">' + e(s('cD')) + '</p><h3>' + e(s('wh')) + '</h3><div class="list">' + FROM.concat(TO).map(function (x) { return '<div><span>' + e(L(x[0])) + '</span><i></i><b class="mu">' + e(s('whN')) + '</b></div>'; }).join('') + '<div><span>' + e(s('phone')) + '</span><i></i><b>+7 (700) 000-00-00</b></div></div></div><div class="box">' + K.form('contact', K.fl(s('what'), '<input name="goods">') + K.np() + K.fl(s('comment'), '<input name="comment">')) + '</div></div></section>';
+    }
+  };
+
+  function upd() { var q = K.q('#q'); if (q) q.innerHTML = qHtml(); var h = K.q('#qHid'); if (h) h.value = sumText(); }
+  document.addEventListener('click', function (ev) {
+    var x;
+    if ((x = ev.target.closest('[data-m]'))) { c.m = x.getAttribute('data-m'); upd(); }
+    else if ((x = ev.target.closest('[data-pm]'))) c.m = x.getAttribute('data-pm');
+  });
+  document.addEventListener('input', function (ev) {
+    var t = ev.target, v = parseFloat(t.value);
+    if (t.id === 'cw' && v > 0) { c.w = v; upd(); } else if (t.id === 'cv' && v > 0) { c.v = v; upd(); } else if (t.id === 'cval' && v >= 0) { c.val = v; upd(); }
+  });
+  document.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (t.id === 'cf') { c.f = +t.value; upd(); } else if (t.id === 'ct') { c.t = +t.value; upd(); } else if (t.name === 'x') { c[t.value] = t.checked; upd(); }
+  });
+  document.addEventListener('submit', function (ev) {
+    if (ev.target.id !== 'trk') return;
+    ev.preventDefault();
+    var v = K.q('#trkN').value.trim().toUpperCase();
+    if (location.hash === '#/track/' + v) K.refresh(); else K.go('track/' + encodeURIComponent(v || '-'));
+  });
+
+  K.init({
+    brand: 'Demo<i>Cargo</i>', niche: ['карго и доставки', 'карго және жеткізу қызметіне', 'a cargo and delivery company'], S: S,
+    nav: [['tariffs', 'tariffs'], ['calc', 'calc'], ['track', 'track'], ['contacts', 'contacts']], cta: ['calc', 'quote'], routes: routes
+  });
+})();
+</script>
+</body>
+</html>

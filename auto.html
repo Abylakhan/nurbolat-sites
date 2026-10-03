@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Demo Auto</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Oswald:wght@500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* Автосалон: тёмный шоурум, крупные заголовки, автомобили нарисованы в SVG */
+:root{color-scheme:dark;--bg:#0E0F12;--fg:#F2F2EE;--ac:#E4572E;--ai:#fff;--sf:#191B21;--cd:#14161B;--ln:#2A2D36;--mu:#9A9DA8;--hf:'Oswald','Arial Narrow',sans-serif;--bf:'Onest',system-ui,sans-serif;--hw:600;--ht:.01em;--r:6px}
+h1,h2{text-transform:uppercase}
+.cv{display:block;border-radius:8px;background:radial-gradient(ellipse at 50% 100%,#2b2e38 0,#191B21 62%);padding:18px 10px 8px}
+.cv svg{display:block;width:100%;height:auto}
+.stage{padding:8% 4% 4%;border-radius:14px;background:radial-gradient(ellipse at 50% 96%,#383c49 0,#191B21 58%,#0E0F12 100%)}
+.heart{flex:none;display:grid;place-items:center;width:38px;height:38px;border:1px solid var(--ln);border-radius:50%;background:none;color:var(--mu);cursor:pointer}
+.heart svg{width:18px;height:18px}
+.heart[aria-pressed=true]{color:var(--ac);border-color:var(--ac)}
+.heart[aria-pressed=true] path{fill:currentColor}
+.sw{width:34px;height:34px;border-radius:50%;border:2px solid var(--ln);cursor:pointer;padding:0}
+.sw[aria-pressed=true]{outline:2px solid var(--ac);outline-offset:3px}
+.filters{display:grid;gap:18px;padding:20px;border:1px solid var(--ln);border-radius:12px;background:var(--cd);margin-bottom:24px}
+.filters .row{gap:8px 14px}
+.filters small{color:var(--mu);min-width:74px}
+.cnt{display:inline-grid;place-items:center;min-width:20px;height:20px;margin-left:6px;padding:0 6px;border-radius:10px;background:var(--ac);color:#fff;font-size:.75rem}
+.sp{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:1px;background:var(--ln);border:1px solid var(--ln);border-radius:10px;overflow:hidden}
+.sp div{display:grid;gap:2px;padding:14px;background:var(--cd)}
+.sp small{color:var(--mu)}
+</style>
+</head>
+<body>
+<script src="kit.js"></script>
+<script>
+(function () {
+  'use strict';
+  var K = Kit, L = K.L, s = K.s, e = K.esc;
+  var RATE = 19.9;
+
+  var S = {
+    catalog: ['Каталог', 'Каталог', 'Catalogue'],
+    credit: ['Кредит и трейд-ин', 'Несие және трейд-ин', 'Financing and trade-in'],
+    fav: ['Избранное', 'Таңдаулылар', 'Favourites'],
+    h1: ['Новые автомобили в наличии и под заказ', 'Жаңа автокөліктер қолда бар және тапсырыспен', 'New cars in stock and to order'],
+    hp: ['Кредит от 12 месяцев, трейд-ин и тест-драйв в день обращения.', '12 айдан бастап несие, трейд-ин және өтініш берген күні тест-драйв.', 'Financing from 12 months, trade-in and a same-day test drive.'],
+    toCat: ['Смотреть каталог', 'Каталогты көру', 'Browse catalogue'],
+    td: ['Записаться на тест-драйв', 'Тест-драйвқа жазылу', 'Book a test drive'],
+    pop: ['Популярные модели', 'Танымал модельдер', 'Popular models'],
+    why: ['Почему покупают у нас', 'Неге бізден алады', 'Why buy from us'],
+    a1: ['Официальная гарантия', 'Ресми кепілдік', 'Official warranty'], a1d: ['5 лет или 150 000 км на каждый автомобиль.', 'Әр автокөлікке 5 жыл немесе 150 000 км.', '5 years or 150,000 km on every car.'],
+    a2: ['Кредит за один визит', 'Бір келгенде несие', 'Financing in one visit'], a2d: ['Работаем с несколькими банками, решение в день обращения.', 'Бірнеше банкпен жұмыс істейміз, шешім сол күні шығады.', 'We work with several banks; a decision the same day.'],
+    a3: ['Трейд-ин', 'Трейд-ин', 'Trade-in'], a3d: ['Примем ваш автомобиль в счёт нового.', 'Көлігіңізді жаңасының есебіне қабылдаймыз.', 'We take your current car as part of the payment.'],
+    a4: ['Свой сервис', 'Өз сервисіміз', 'In-house service'], a4d: ['Техобслуживание и запчасти в одном месте.', 'Техникалық қызмет пен қосалқы бөлшектер бір жерде.', 'Maintenance and parts in one place.'],
+    body: ['Кузов', 'Шанақ', 'Body'], fuel: ['Топливо', 'Отын', 'Fuel'],
+    maxp: ['Цена до', 'Ең жоғары баға', 'Price up to'], stock: ['Только в наличии', 'Тек қолда бары', 'In stock only'],
+    sort: ['Сортировка', 'Сұрыптау', 'Sort by'], pa: ['Сначала дешевле', 'Алдымен арзаны', 'Price: low to high'], pd: ['Сначала дороже', 'Алдымен қымбаты', 'Price: high to low'], hpS: ['По мощности', 'Қуаты бойынша', 'By power'],
+    found: ['Найдено: {n}', 'Табылды: {n}', 'Found: {n}'], none: ['Под эти условия ничего нет. Измените фильтры.', 'Бұл шарттарға сай көлік жоқ. Сүзгілерді өзгертіңіз.', 'Nothing matches. Try changing the filters.'], reset: ['Сбросить фильтры', 'Сүзгілерді тазарту', 'Reset filters'],
+    inSt: ['В наличии', 'Қолда бар', 'In stock'], ord: ['Под заказ', 'Тапсырыспен', 'To order'], hpU: ['л.с.', 'а.к.', 'hp'], mln: ['млн ₸', 'млн ₸', 'M ₸'],
+    specs: ['Характеристики', 'Сипаттамалары', 'Specifications'], eng: ['Двигатель', 'Қозғалтқыш', 'Engine'], power: ['Мощность', 'Қуаты', 'Power'], drive: ['Привод', 'Жетек', 'Drivetrain'],
+    cons: ['Расход', 'Отын шығыны', 'Consumption'], consU: ['л на 100 км', 'л / 100 км', 'l per 100 km'], rng: ['Запас хода', 'Жүріс қоры', 'Range'], km: ['км', 'км', 'km'],
+    color: ['Цвет', 'Түсі', 'Colour'], trim: ['Комплектация', 'Жинақтама', 'Trim'],
+    t0: ['Базовое оснащение', 'Базалық жабдықталуы', 'Core equipment'], t1: ['Подогрев сидений, камера, диски 18"', 'Орындық жылытқышы, камера, 18" дискілер', 'Heated seats, camera, 18" wheels'], t2: ['Кожа, панорамная крыша, ассистенты водителя', 'Былғары, панорамалық төбе, жүргізуші көмекшілері', 'Leather, panoramic roof, driver assists'],
+    price: ['Цена', 'Бағасы', 'Price'], perMo: ['{p} ₸ в месяц', 'айына {p} ₸', '{p} ₸ per month'], inCr: ['В кредит: {p}', 'Несиеге: {p}', 'On finance: {p}'],
+    crHint: ['взнос 20%, 60 месяцев', 'жарна 20%, 60 ай', '20% down, 60 months'],
+    addFav: ['В избранное', 'Таңдаулыға қосу', 'Add to favourites'], inFav: ['В избранном', 'Таңдаулыда', 'In favourites'],
+    favOn: ['Добавлено в избранное', 'Таңдаулыға қосылды', 'Added to favourites'], favOff: ['Убрано из избранного', 'Таңдаулыдан алынды', 'Removed from favourites'],
+    cH: ['Кредитный калькулятор', 'Несие калькуляторы', 'Loan calculator'], model: ['Модель', 'Модель', 'Model'],
+    down: ['Первоначальный взнос', 'Бастапқы жарна', 'Down payment'], term: ['Срок', 'Мерзімі', 'Term'], mo: ['мес.', 'ай', 'months'],
+    rateN: ['Ставка 19,9% годовых условная, для примера расчёта.', 'Жылдық 19,9% мөлшерлеме шартты, есеп үлгісі ретінде алынған.', 'The 19.9% annual rate is a placeholder for this example.'],
+    pay: ['Платёж в месяц', 'Айлық төлем', 'Monthly payment'], loan: ['Сумма кредита', 'Несие сомасы', 'Loan amount'], over: ['Переплата', 'Артық төлем', 'Interest paid'],
+    apply: ['Оставить заявку на кредит', 'Несиеге өтінім қалдыру', 'Apply for financing'],
+    tiH: ['Оценка вашего авто по трейд-ин', 'Көлігіңізді трейд-инге бағалау', 'Trade-in valuation'], tiD: ['Заполните данные, менеджер назовёт предварительную цену в течение часа.', 'Деректерді толтырыңыз, менеджер бір сағат ішінде алдын ала бағасын айтады.', 'Fill in the details and a manager will give a preliminary price within an hour.'],
+    tiCar: ['Марка и модель', 'Маркасы мен моделі', 'Make and model'], tiY: ['Год выпуска', 'Шыққан жылы', 'Year'], tiKm: ['Пробег, км', 'Жүрісі, км', 'Mileage, km'], tiBtn: ['Получить оценку', 'Бағасын білу', 'Get a valuation'],
+    favE: ['В избранном пока пусто. Отметьте сердечком автомобили в каталоге.', 'Таңдаулылар әзірге бос. Каталогтағы көліктерді жүрекшемен белгілеңіз.', 'No favourites yet. Tap the heart on cars in the catalogue.'],
+    cT: ['Приезжайте на тест-драйв', 'Тест-драйвқа келіңіз', 'Come for a test drive'], cD: ['Оставьте заявку, менеджер перезвонит и согласует время.', 'Өтінім қалдырыңыз, менеджер қоңырау шалып, уақытты келіседі.', 'Leave a request and a manager will call to arrange a time.'],
+    salon: ['Автосалон', 'Автосалон', 'Showroom']
+  };
+  var BODY = { sedan: ['Седан', 'Седан', 'Sedan'], suv: ['Кроссовер', 'Кроссовер', 'Crossover'], hatch: ['Хэтчбек', 'Хэтчбек', 'Hatchback'] };
+  var FUEL = { p: ['Бензин', 'Бензин', 'Petrol'], h: ['Гибрид', 'Гибрид', 'Hybrid'], e: ['Электро', 'Электр', 'Electric'] };
+  var DRIVE = { FWD: ['Передний', 'Алдыңғы', 'Front-wheel'], AWD: ['Полный', 'Толық', 'All-wheel'], RWD: ['Задний', 'Артқы', 'Rear-wheel'] };
+  var COL = ['#C9CED6', '#20242C', '#9B1C1C', '#F3F1EA', '#1E4E8C'];
+  var TRIMS = [['Comfort', 0, 't0'], ['Style', 900000, 't1'], ['Premium', 1900000, 't2']];
+  /* модели выдуманные: n имя, b кузов, p цена, f топливо, hp мощность, st в наличии */
+  var CARS = [
+    { id: 'altai-s', n: 'Altai S', b: 'sedan', p: 8900000, f: 'p', hp: 150, eng: '1.5T', dr: 'FWD', cons: 6.4, st: 1 },
+    { id: 'altai-h', n: 'Altai S Hybrid', b: 'sedan', p: 11400000, f: 'h', hp: 184, eng: '1.5 HEV', dr: 'FWD', cons: 4.6, st: 1 },
+    { id: 'arlan-gt', n: 'Arlan GT', b: 'sedan', p: 16800000, f: 'p', hp: 261, eng: '2.0T', dr: 'AWD', cons: 8.1, st: 0 },
+    { id: 'tengri-x', n: 'Tengri X', b: 'suv', p: 12500000, f: 'p', hp: 170, eng: '1.5T', dr: 'AWD', cons: 7.4, st: 1 },
+    { id: 'tengri-x7', n: 'Tengri X7', b: 'suv', p: 18900000, f: 'h', hp: 245, eng: '2.0 HEV', dr: 'AWD', cons: 5.9, st: 1 },
+    { id: 'saryarka', n: 'Saryarka 9', b: 'suv', p: 24500000, f: 'p', hp: 299, eng: '3.0T', dr: 'AWD', cons: 10.2, st: 0 },
+    { id: 'sunkar', n: 'Sunkar', b: 'hatch', p: 6900000, f: 'p', hp: 113, eng: '1.5', dr: 'FWD', cons: 5.9, st: 1 },
+    { id: 'sunkar-x', n: 'Sunkar Cross', b: 'hatch', p: 8200000, f: 'p', hp: 122, eng: '1.6', dr: 'FWD', cons: 6.3, st: 1 },
+    { id: 'zhuldyz-e', n: 'Zhuldyz E', b: 'hatch', p: 13900000, f: 'e', hp: 204, eng: '60 kWh', dr: 'RWD', rng: 430, st: 1 }
+  ];
+  var SHAPE = {
+    sedan: ['M10 56Q12 43 30 41L58 39Q72 23 100 23L128 23Q150 24 166 39L186 44Q194 47 194 56L194 61L10 61Z', 'M64 39Q76 28 100 28L112 28L112 39Z', 'M116 28L128 28Q144 29 156 39L116 39Z', 50, 156],
+    suv: ['M10 57Q10 41 24 39L46 37Q58 17 84 17L150 17Q168 18 178 37L188 41Q194 44 194 55L194 61L10 61Z', 'M52 37Q62 23 84 23L104 23L104 37Z', 'M108 23L146 23Q160 24 168 37L108 37Z', 48, 158],
+    hatch: ['M12 57Q13 44 30 42L56 40Q70 23 96 23L140 23Q160 25 176 41L186 45Q192 48 192 56L192 61L12 61Z', 'M62 40Q74 28 96 28L110 28L110 40Z', 'M114 28L138 28Q152 30 164 40L114 40Z', 50, 154]
+  };
+  var HEART = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.600-7 10-7 10Z"/></svg>';
+
+  var st = { b: 'all', f: 'all', max: 25, stock: false, sort: 'pa' };
+  var view = { color: 0, trim: 0 }, cr = { car: 'tengri-x', down: 20, term: 60 };
+  function favs() { return K.store.get('autoFav', []); }
+  function byId(id) { for (var i = 0; i < CARS.length; i++) if (CARS[i].id === id) return CARS[i]; return CARS[0]; }
+  function pay(p, down, n) { var P = p * (1 - down / 100), r = RATE / 1200; return P * r / (1 - Math.pow(1 + r, -n)); }
+  function svg(b, color) {
+    var a = SHAPE[b], w = function (x) { return '<circle cx="' + x + '" cy="61" r="12" fill="#0b0c0f"/><circle cx="' + x + '" cy="61" r="6" fill="#8d919c"/>'; };
+    return '<svg viewBox="0 0 204 76" aria-hidden="true"><ellipse cx="102" cy="72" rx="92" ry="3" fill="#000" opacity=".45"/><path d="' + a[0] + '" fill="' + color + '"/><path d="' + a[1] + '" fill="#0d1016" opacity=".82"/><path d="' + a[2] + '" fill="#0d1016" opacity=".82"/><rect x="10" y="52" width="184" height="3" fill="#000" opacity=".18"/>' + w(a[3]) + w(a[4]) + '</svg>';
+  }
+  function meta(c) { return L(BODY[c.b]) + ', ' + c.eng + ', ' + c.hp + ' ' + s('hpU'); }
+  function card(c, i) {
+    var on = favs().indexOf(c.id) > -1;
+    return '<article class="card"><a class="cv" href="#/car/' + c.id + '" aria-label="' + e(c.n) + '">' + svg(c.b, COL[(i || 0) % COL.length]) + '</a>' +
+      '<div class="row" style="justify-content:space-between;flex-wrap:nowrap"><h3><a href="#/car/' + c.id + '" style="text-decoration:none">' + e(c.n) + '</a></h3><button class="heart" type="button" data-fav="' + c.id + '" aria-pressed="' + on + '" aria-label="' + e(s('addFav')) + '">' + HEART + '</button></div>' +
+      '<p class="mu sm">' + e(meta(c)) + ', ' + e(L(FUEL[c.f])) + '</p>' +
+      '<div class="row" style="justify-content:space-between"><b class="num">' + K.from(c.p) + '</b><span class="tag' + (c.st ? ' on' : '') + '">' + e(s(c.st ? 'inSt' : 'ord')) + '</span></div></article>';
+  }
+  function chips(key, map) {
+    return '<div class="chips">' + [['all', s('allF')]].concat(Object.keys(map).map(function (k) { return [k, L(map[k])]; })).map(function (o) {
+      return '<button class="chip" type="button" data-flt="' + key + '" data-v="' + o[0] + '" aria-pressed="' + (st[key] === o[0]) + '">' + e(o[1]) + '</button>';
+    }).join('') + '</div>';
+  }
+  function listHtml() {
+    var a = CARS.filter(function (c) { return (st.b === 'all' || c.b === st.b) && (st.f === 'all' || c.f === st.f) && c.p <= st.max * 1e6 && (!st.stock || c.st); });
+    a.sort(function (x, y) { return st.sort === 'pa' ? x.p - y.p : st.sort === 'pd' ? y.p - x.p : y.hp - x.hp; });
+    return '<p class="mu sm" style="margin-bottom:14px">' + s('found', { n: a.length }) + '</p>' + (a.length ? '<div class="g">' + a.map(function (c) { return card(c, CARS.indexOf(c)); }).join('') + '</div>' :
+      '<div class="box"><p>' + e(s('none')) + '</p><div><button class="btn gh s" type="button" data-reset>' + e(s('reset')) + '</button></div></div>');
+  }
+  function tdForm(id) {
+    return K.form('testdrive', K.fl(s('model'), '<select name="car">' + CARS.map(function (c) { return '<option value="' + c.id + '"' + (c.id === id ? ' selected' : '') + '>' + e(c.n) + '</option>'; }).join('') + '</select>') +
+      '<div class="f2">' + K.fl(s('date'), '<input name="date" type="date">') + K.fl(s('time'), '<select name="time"><option>10:00</option><option>12:00</option><option>14:00</option><option>16:00</option><option>18:00</option></select>') + '</div>' + K.np(), s('td'));
+  }
+  function crOut() {
+    var c = byId(cr.car), m = pay(c.p, cr.down, cr.term), loan = c.p * (1 - cr.down / 100);
+    return '<p class="mu sm">' + e(s('pay')) + '</p><p class="big num ac">' + K.tg(m) + '</p><div class="list"><div><span>' + e(s('price')) + '</span><i></i><b>' + K.tg(c.p) + '</b></div><div><span>' + e(s('down')) + ', ' + cr.down + '%</span><i></i><b>' + K.tg(c.p * cr.down / 100) + '</b></div><div><span>' + e(s('loan')) + '</span><i></i><b>' + K.tg(loan) + '</b></div><div><span>' + e(s('over')) + '</span><i></i><b>' + K.tg(m * cr.term - loan) + '</b></div></div><p class="mu sm">' + e(s('rateN')) + '</p>';
+  }
+
+  var routes = {
+    home: function () {
+      var top = ['tengri-x', 'altai-h', 'zhuldyz-e'].map(byId);
+      return '<section class="hero"><div class="wrap"><div class="hero-c"><h1>' + e(s('h1')) + '</h1><p class="lead">' + e(s('hp')) + '</p><div class="row"><a class="btn" href="#/catalog">' + e(s('toCat')) + '</a><a class="btn gh" href="#/contacts">' + e(s('td')) + '</a></div></div><div class="stage">' + svg('suv', '#E4572E') + '</div></div></section>' +
+        '<section><div class="wrap"><div class="hd"><h2>' + e(s('pop')) + '</h2></div><div class="g">' + top.map(function (c) { return card(c, CARS.indexOf(c)); }).join('') + '</div></div></section>' +
+        '<section class="band"><div class="wrap"><div class="hd"><h2>' + e(s('why')) + '</h2></div><div class="g steps" style="--min:220px">' + [1, 2, 3, 4].map(function (i) { return '<div><h3>' + e(s('a' + i)) + '</h3><p class="mu">' + e(s('a' + i + 'd')) + '</p></div>'; }).join('') + '</div></div></section>' +
+        '<section><div class="wrap g2"><div class="hd"><h2>' + e(s('cH')) + '</h2><p class="lead">' + e(s('rateN')) + '</p><div><a class="btn" href="#/credit">' + e(s('credit')) + '</a></div></div><div class="box" id="crOut">' + crOut() + '</div></div></section>';
+    },
+    catalog: function () {
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('catalog')) + '</h1></div><div class="filters">' +
+        '<div class="row"><small>' + e(s('body')) + '</small>' + chips('b', BODY) + '</div><div class="row"><small>' + e(s('fuel')) + '</small>' + chips('f', FUEL) + '</div>' +
+        '<div class="f2"><label class="fl"><span>' + e(s('maxp')) + ': <b id="maxOut">' + st.max + ' ' + e(s('mln')) + '</b></span><input type="range" id="maxp" min="7" max="25" step="1" value="' + st.max + '"></label>' +
+        K.fl(s('sort'), '<select id="sort">' + ['pa', 'pd', 'hpS'].map(function (k) { return '<option value="' + k + '"' + (st.sort === k ? ' selected' : '') + '>' + e(s(k)) + '</option>'; }).join('') + '</select>') + '</div>' +
+        '<label class="row" style="cursor:pointer"><input type="checkbox" id="stock"' + (st.stock ? ' checked' : '') + ' style="accent-color:var(--ac);width:18px;height:18px"> ' + e(s('stock')) + '</label></div><div id="list">' + listHtml() + '</div></div></section>';
+    },
+    car: function (id) {
+      var c = byId(id), p = c.p + TRIMS[view.trim][1], on = favs().indexOf(c.id) > -1;
+      return '<section class="pg"><div class="wrap"><div class="crumbs"><a href="#/catalog">' + e(s('catalog')) + '</a><span>/</span><span>' + e(c.n) + '</span></div><div class="g2">' +
+        '<div style="display:grid;gap:18px"><div class="stage" id="carPic">' + svg(c.b, COL[view.color]) + '</div><div class="row"><span class="mu sm">' + e(s('color')) + '</span>' + COL.map(function (h, i) { return '<button class="sw" type="button" data-color="' + i + '" aria-pressed="' + (i === view.color) + '" style="background:' + h + '" aria-label="' + e(s('color')) + ' ' + (i + 1) + '"></button>'; }).join('') + '</div>' +
+        '<h2>' + e(s('specs')) + '</h2><div class="sp"><div><small>' + e(s('body')) + '</small><b>' + e(L(BODY[c.b])) + '</b></div><div><small>' + e(s('eng')) + '</small><b>' + e(c.eng) + ', ' + e(L(FUEL[c.f])) + '</b></div><div><small>' + e(s('power')) + '</small><b>' + c.hp + ' ' + e(s('hpU')) + '</b></div><div><small>' + e(s('drive')) + '</small><b>' + e(L(DRIVE[c.dr])) + '</b></div><div><small>' + e(s(c.rng ? 'rng' : 'cons')) + '</small><b>' + (c.rng ? c.rng + ' ' + e(s('km')) : String(c.cons).replace('.', K.lang() === 'en' ? '.' : ',') + ' ' + e(s('consU'))) + '</b></div></div></div>' +
+        '<div class="box sticky"><div class="row" style="justify-content:space-between"><h1 style="font-size:clamp(1.8rem,4vw,2.6rem)">' + e(c.n) + '</h1><span class="tag' + (c.st ? ' on' : '') + '">' + e(s(c.st ? 'inSt' : 'ord')) + '</span></div>' +
+        '<fieldset class="f"><legend class="mu sm" style="margin-bottom:8px">' + e(s('trim')) + '</legend>' + TRIMS.map(function (t, i) { return '<label class="opt"><input type="radio" name="trim" value="' + i + '"' + (i === view.trim ? ' checked' : '') + '><span><b>' + t[0] + (t[1] ? ', + ' + K.tg(t[1]) : '') + '</b><span class="mu sm">' + e(s(t[2])) + '</span></span></label>'; }).join('') + '</fieldset>' +
+        '<div><p class="mu sm">' + e(s('price')) + '</p><p class="big num">' + K.tg(p) + '</p><p class="mu sm">' + s('inCr', { p: s('perMo', { p: K.money(pay(p, 20, 60)) }) }) + ' (' + e(s('crHint')) + ')</p></div>' +
+        '<div class="row"><button class="btn" type="button" data-scroll="tdf">' + e(s('td')) + '</button><button class="btn gh" type="button" data-fav="' + c.id + '" aria-pressed="' + on + '">' + e(s(on ? 'inFav' : 'addFav')) + '</button></div></div></div>' +
+        '<div class="box" id="tdf" style="margin-top:32px;scroll-margin-top:110px"><h2>' + e(s('td')) + '</h2>' + tdForm(c.id) + '</div></div></section>';
+    },
+    credit: function () {
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('credit')) + '</h1></div><div class="g2"><div class="box"><h2>' + e(s('cH')) + '</h2>' +
+        K.fl(s('model'), '<select id="crCar">' + CARS.map(function (c) { return '<option value="' + c.id + '"' + (c.id === cr.car ? ' selected' : '') + '>' + e(c.n) + ', ' + K.tg(c.p) + '</option>'; }).join('') + '</select>') +
+        '<label class="fl"><span>' + e(s('down')) + ': <b id="downOut">' + cr.down + '%</b></span><input type="range" id="crDown" min="10" max="70" step="5" value="' + cr.down + '"></label>' +
+        '<label class="fl"><span>' + e(s('term')) + ': <b id="termOut">' + cr.term + ' ' + e(s('mo')) + '</b></span><input type="range" id="crTerm" min="12" max="84" step="12" value="' + cr.term + '"></label></div>' +
+        '<div class="box" id="crOut">' + crOut() + '</div></div>' +
+        '<div class="g2" style="margin-top:32px"><div class="box"><h2>' + e(s('apply')) + '</h2>' + K.form('credit', '<input type="hidden" name="calc" id="crHid" data-l="' + e(s('cH')) + '">' + K.np(), s('apply')) + '</div>' +
+        '<div class="box"><h2>' + e(s('tiH')) + '</h2><p class="mu">' + e(s('tiD')) + '</p>' + K.form('tradein', K.fl(s('tiCar'), '<input name="car" required>') + '<div class="f2">' + K.fl(s('tiY'), '<input name="year" type="number" min="1995" max="2026" placeholder="2018">') + K.fl(s('tiKm'), '<input name="km" type="number" min="0" step="1000" placeholder="90000">') + '</div>' + K.np(), s('tiBtn')) + '</div></div></div></section>';
+    },
+    fav: function () {
+      var a = CARS.filter(function (c) { return favs().indexOf(c.id) > -1; });
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('fav')) + '</h1></div>' + (a.length ? '<div class="g">' + a.map(function (c) { return card(c, CARS.indexOf(c)); }).join('') + '</div>' : '<div class="box"><p>' + e(s('favE')) + '</p><div><a class="btn" href="#/catalog">' + e(s('toCat')) + '</a></div></div>') + '</div></section>';
+    },
+    contacts: function () {
+      return '<section class="pg"><div class="wrap g2"><div class="hd"><h1>' + e(s('cT')) + '</h1><p class="lead">' + e(s('cD')) + '</p><div class="list"><div><span>' + e(s('salon')) + '</span><i></i><b>' + e(s('addr')) + '</b></div><div><span>' + e(s('phone')) + '</span><i></i><b>+7 (700) 000-00-00</b></div><div><span>' + e(s('time')) + '</span><i></i><b>' + e(s('hours')) + '</b></div></div></div><div class="box">' + tdForm('tengri-x') + '</div></div></section>';
+    }
+  };
+
+  function syncCr() {
+    var o = K.q('#crOut'); if (o) o.innerHTML = crOut();
+    var h = K.q('#crHid'), c = byId(cr.car);
+    if (h) h.value = c.n + ', ' + cr.down + '%, ' + cr.term + ' ' + s('mo') + ', ' + s('perMo', { p: K.money(pay(c.p, cr.down, cr.term)) });
+  }
+  document.addEventListener('click', function (ev) {
+    var t = ev.target, b;
+    if ((b = t.closest('[data-fav]'))) {
+      var id = b.getAttribute('data-fav'), f = favs(), i = f.indexOf(id);
+      if (i > -1) f.splice(i, 1); else f.push(id);
+      K.store.set('autoFav', f); K.toast(s(i > -1 ? 'favOff' : 'favOn')); K.refresh(); return;
+    }
+    if ((b = t.closest('[data-flt]'))) { st[b.getAttribute('data-flt')] = b.getAttribute('data-v'); K.refresh(); return; }
+    if (t.closest('[data-reset]')) { st = { b: 'all', f: 'all', max: 25, stock: false, sort: 'pa' }; K.refresh(); return; }
+    if ((b = t.closest('[data-color]'))) { view.color = +b.getAttribute('data-color'); K.refresh(); }
+  });
+  document.addEventListener('input', function (ev) {
+    var t = ev.target;
+    if (t.id === 'maxp') { st.max = +t.value; K.q('#maxOut').textContent = st.max + ' ' + s('mln'); K.q('#list').innerHTML = listHtml(); }
+    else if (t.id === 'crDown') { cr.down = +t.value; K.q('#downOut').textContent = cr.down + '%'; syncCr(); }
+    else if (t.id === 'crTerm') { cr.term = +t.value; K.q('#termOut').textContent = cr.term + ' ' + s('mo'); syncCr(); }
+  });
+  document.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (t.id === 'sort') { st.sort = t.value; K.q('#list').innerHTML = listHtml(); }
+    else if (t.id === 'stock') { st.stock = t.checked; K.q('#list').innerHTML = listHtml(); }
+    else if (t.name === 'trim') { view.trim = +t.value; K.refresh(); }
+    else if (t.id === 'crCar') { cr.car = t.value; syncCr(); }
+  });
+
+  K.init({
+    brand: 'Demo <i>Auto</i>', niche: ['автосалона', 'автосалонға', 'a car dealership'], S: S,
+    nav: [['catalog', 'catalog'], ['credit', 'credit'], ['fav', 'fav', function () { var n = favs().length; return n ? '<span class="cnt">' + n + '</span>' : ''; }], ['contacts', 'contacts']],
+    cta: ['contacts', 'td'], routes: routes,
+    after: function (name) { if (name === 'credit') syncCr(); if (name !== 'car') { view.color = 0; view.trim = 0; } }
+  });
+})();
+</script>
+</body>
+</html>

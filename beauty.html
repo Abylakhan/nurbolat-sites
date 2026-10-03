@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Demo Beauty</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600&family=Onest:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* Салон красоты: тёплый розовый фон, заголовки с засечками, мягкие округлые формы */
+:root{--bg:#FBF5F3;--fg:#2A1B20;--ac:#B8436F;--ai:#fff;--sf:#F4E4E3;--cd:#FFFFFF;--ln:#EAD7D8;--mu:#7A6068;--hf:'Lora',Georgia,serif;--bf:'Onest',system-ui,sans-serif;--hw:600;--ht:-.01em;--r:22px}
+h1{font-size:clamp(2.1rem,5.4vw,3.8rem)}
+.svc{display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:6px 16px;align-items:center;padding-block:16px;border-bottom:1px solid var(--ln)}
+.svc small{color:var(--mu)}
+@media (max-width:560px){.svc{grid-template-columns:minmax(0,1fr) auto}.svc .btn{grid-column:1/-1;justify-self:start}}
+.av{display:grid;place-items:center;width:64px;height:64px;border-radius:50%;background:var(--sf);color:var(--ac);font:600 1.5rem var(--hf)}
+.stp{display:flex;gap:8px;margin-bottom:24px}
+.stp i{flex:1;height:4px;border-radius:2px;background:var(--ln)}
+.stp i.on{background:var(--ac)}
+.pick{display:flex;gap:14px;align-items:center;width:100%;padding:14px 16px;border:1px solid var(--ln);border-radius:18px;background:var(--cd);text-align:left;cursor:pointer;transition:border-color .2s}
+.pick:hover,.pick[aria-pressed=true]{border-color:var(--ac)}
+.pick[aria-pressed=true]{background:color-mix(in srgb,var(--ac) 7%,var(--cd))}
+.pick span{flex:1;min-width:0}.pick b{display:block}
+.days{display:flex;gap:8px;overflow-x:auto;padding-bottom:6px}
+.day{flex:none;display:grid;gap:2px;justify-items:center;min-width:62px;padding:10px 8px;border:1px solid var(--ln);border-radius:16px;background:var(--cd);cursor:pointer}
+.day small{color:var(--mu)}
+.day[aria-pressed=true]{background:var(--ac);border-color:var(--ac);color:#fff}
+.day[aria-pressed=true] small{color:#fff}
+.gal{display:grid;grid-template-columns:1.3fr 1fr 1fr;gap:14px}
+@media (max-width:700px){.gal{grid-template-columns:1fr 1fr}.gal>:first-child{grid-column:1/-1}}
+</style>
+</head>
+<body>
+<script src="kit.js"></script>
+<script>
+(function () {
+  'use strict';
+  var K = Kit, L = K.L, s = K.s, e = K.esc;
+
+  var S = {
+    services: ['Услуги и цены', 'Қызметтер мен бағалар', 'Services and prices'], masters: ['Мастера', 'Шеберлер', 'Specialists'], book: ['Онлайн-запись', 'Онлайн-жазылу', 'Book online'], my: ['Мои записи', 'Менің жазылуларым', 'My bookings'],
+    bookBtn: ['Записаться онлайн', 'Онлайн жазылу', 'Book online'], bookS: ['Записаться', 'Жазылу', 'Book'],
+    h1: ['Красота в удобное для вас время', 'Сізге ыңғайлы уақытта сұлулық', 'Beauty at a time that suits you'],
+    hp: ['Стрижки, окрашивание, маникюр и уход за лицом. Выберите мастера и время онлайн, без звонков.', 'Шаш қию, бояу, маникюр және бет күтімі. Қоңырау шалмай-ақ шебер мен уақытты онлайн таңдаңыз.', 'Haircuts, colouring, manicure and facials. Choose your specialist and time online, no phone calls.'],
+    hair: ['Волосы', 'Шаш', 'Hair'], nails: ['Ногти', 'Тырнақ', 'Nails'], face: ['Лицо', 'Бет', 'Face'], brows: ['Брови и ресницы', 'Қас пен кірпік', 'Brows and lashes'],
+    min: ['{n} мин', '{n} мин', '{n} min'],
+    our: ['Наши мастера', 'Біздің шеберлер', 'Our specialists'], exp: ['Стаж {n} лет', '{n} жыл тәжірибе', '{n} years of experience'],
+    salon: ['Салон', 'Салон', 'The salon'], rev: ['Отзывы', 'Пікірлер', 'Reviews'], revTag: ['Пример отзыва', 'Пікір үлгісі', 'Sample review'],
+    r1: ['Записалась за минуту прямо с телефона, мастер приняла вовремя.', 'Телефоннан бір минутта жазылдым, шебер уақытында қабылдады.', 'Booked from my phone in a minute and was seen right on time.'],
+    r2: ['Удобно, что свободное время и цены видно заранее.', 'Бос уақыт пен бағалардың алдын ала көрініп тұрғаны ыңғайлы.', 'I like seeing free slots and prices in advance.'],
+    r3: ['Напоминание пришло в WhatsApp, про запись не забыла.', 'Еске салу WhatsApp-қа келді, жазылғанымды ұмытпадым.', 'The reminder came on WhatsApp, so I did not forget.'],
+    st1: ['Услуга', 'Қызмет', 'Service'], st2: ['Мастер', 'Шебер', 'Specialist'], st3: ['Дата и время', 'Күні мен уақыты', 'Date and time'], st4: ['Контакты', 'Байланыс деректері', 'Your details'],
+    stepN: ['Шаг {a} из 4', 'Қадам: {a} / 4', 'Step {a} of 4'], any: ['Любой свободный мастер', 'Кез келген бос шебер', 'Any available specialist'], anyD: ['Подберём того, кто свободен в выбранное время', 'Таңдалған уақытта бос шеберді өзіміз таңдаймыз', 'We pick whoever is free at your time'],
+    pickD: ['Выберите день', 'Күнді таңдаңыз', 'Choose a day'], pickT: ['Свободное время', 'Бос уақыт', 'Available times'], noT: ['На этот день всё занято, выберите другой.', 'Бұл күні бос уақыт жоқ, басқа күнді таңдаңыз.', 'This day is fully booked; choose another.'],
+    back: ['Назад', 'Артқа', 'Back'], next: ['Дальше', 'Келесі', 'Next'], confirm: ['Подтвердить запись', 'Жазылуды растау', 'Confirm booking'],
+    sum: ['Ваша запись', 'Сіздің жазылуыңыз', 'Your booking'], total: ['К оплате в салоне', 'Салонда төленеді', 'To pay at the salon'], notYet: ['не выбрано', 'таңдалмаған', 'not selected'],
+    saved: ['Запись сохранена в этом браузере. Её видно в разделе «Мои записи».', 'Жазылу осы браузерде сақталды. Оны «Менің жазылуларым» бөлімінен көре аласыз.', 'The booking is saved in this browser. You can see it under “My bookings”.'],
+    myE: ['Записей пока нет.', 'Әзірге жазылу жоқ.', 'No bookings yet.'], cancel: ['Отменить', 'Бас тарту', 'Cancel'], cancelled: ['Запись отменена', 'Жазылудан бас тартылды', 'Booking cancelled'],
+    myN: ['Записи хранятся только в этом браузере. На настоящем сайте они попадают в журнал салона, а клиенту приходит напоминание.', 'Жазылулар тек осы браузерде сақталады. Нақты сайтта олар салон журналына түседі, ал клиентке еске салу келеді.', 'Bookings are stored only in this browser. On a real site they go to the salon diary and the client gets a reminder.'],
+    where: ['Как нас найти', 'Бізді қалай табуға болады', 'How to find us'], addrL: ['Адрес', 'Мекенжай', 'Address'], hrsL: ['Часы работы', 'Жұмыс уақыты', 'Opening hours']
+  };
+  var WD = [['Вс', 'Жс', 'Sun'], ['Пн', 'Дс', 'Mon'], ['Вт', 'Сс', 'Tue'], ['Ср', 'Ср', 'Wed'], ['Чт', 'Бс', 'Thu'], ['Пт', 'Жм', 'Fri'], ['Сб', 'Сб', 'Sat']];
+  var MN = [['января', 'қаңтар', 'January'], ['февраля', 'ақпан', 'February'], ['марта', 'наурыз', 'March'], ['апреля', 'сәуір', 'April'], ['мая', 'мамыр', 'May'], ['июня', 'маусым', 'June'], ['июля', 'шілде', 'July'], ['августа', 'тамыз', 'August'], ['сентября', 'қыркүйек', 'September'], ['октября', 'қазан', 'October'], ['ноября', 'қараша', 'November'], ['декабря', 'желтоқсан', 'December']];
+  var CATS = ['hair', 'nails', 'face', 'brows'];
+  var SVC = [
+    ['h1', 'hair', ['Женская стрижка', 'Әйелдер шаш қиюы', 'Women’s haircut'], 7000, 60], ['h2', 'hair', ['Мужская стрижка', 'Ерлер шаш қиюы', 'Men’s haircut'], 4000, 45], ['h3', 'hair', ['Окрашивание в один тон', 'Бір түске бояу', 'Single-colour dye'], 18000, 120], ['h4', 'hair', ['Сложное окрашивание', 'Күрделі бояу', 'Complex colouring'], 35000, 180], ['h5', 'hair', ['Укладка', 'Шаш сәндеу', 'Styling'], 6000, 45],
+    ['n1', 'nails', ['Маникюр с покрытием', 'Жабыны бар маникюр', 'Manicure with gel polish'], 6000, 90], ['n2', 'nails', ['Педикюр', 'Педикюр', 'Pedicure'], 8000, 90], ['n3', 'nails', ['Наращивание ногтей', 'Тырнақ өсіру', 'Nail extensions'], 12000, 120],
+    ['f1', 'face', ['Чистка лица', 'Бет тазалау', 'Facial cleansing'], 12000, 60], ['f2', 'face', ['Пилинг', 'Пилинг', 'Peel'], 10000, 45], ['f3', 'face', ['Уходовая процедура', 'Күтім процедурасы', 'Care treatment'], 9000, 60],
+    ['b1', 'brows', ['Коррекция и окрашивание бровей', 'Қасты түзету және бояу', 'Brow shaping and tinting'], 4500, 40], ['b2', 'brows', ['Ламинирование ресниц', 'Кірпікті ламинаттау', 'Lash lift'], 8000, 60]
+  ];
+  var MS = [['m1', ['Алина', 'Алина', 'Alina'], ['hair'], 9], ['m2', ['Жанар', 'Жанар', 'Zhanar'], ['hair', 'brows'], 6], ['m3', ['Мадина', 'Мадина', 'Madina'], ['nails'], 7], ['m4', ['Дана', 'Дана', 'Dana'], ['face', 'brows'], 12]];
+  var REV = [[['Айжан', 'Айжан', 'Aizhan'], 'r1'], [['Камила', 'Камила', 'Kamila'], 'r2'], [['Салтанат', 'Салтанат', 'Saltanat'], 'r3']];
+  var TIMES = ['10:00', '11:00', '12:00', '13:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'];
+  var cat = 'hair', b = { step: 1, svc: null, m: null, date: null, time: null };
+
+  function svc(id) { return SVC.filter(function (x) { return x[0] === id; })[0]; }
+  function mst(id) { return MS.filter(function (x) { return x[0] === id; })[0]; }
+  function list() { return K.store.get('beautyBookings', []); }
+  function iso(d) { return d.getFullYear() + '-' + ('0' + (d.getMonth() + 1)).slice(-2) + '-' + ('0' + d.getDate()).slice(-2); }
+  function nice(str) { var p = str.split('-'), d = new Date(+p[0], p[1] - 1, +p[2]), m = L(MN[d.getMonth()]); return L(WD[d.getDay()]) + ', ' + (K.lang() === 'en' ? m + ' ' + d.getDate() : d.getDate() + ' ' + m); }
+  function busy(date, m, t) {
+    var k = date + (m || 'any') + t, h = 0, i;
+    for (i = 0; i < k.length; i++) h = (h * 31 + k.charCodeAt(i)) % 997;
+    if (h % 3 === 0) return true;
+    if (date === iso(new Date()) && +t.slice(0, 2) <= new Date().getHours()) return true;
+    return list().some(function (x) { return x.date === date && x.time === t && (x.m === m || m === 'any' || x.m === 'any'); });
+  }
+  function svcRows(c) {
+    return SVC.filter(function (x) { return x[1] === c; }).map(function (x) { return '<div class="svc"><div><b>' + e(L(x[2])) + '</b><br><small>' + s('min', { n: x[4] }) + '</small></div><b class="num">' + K.tg(x[3]) + '</b><button class="btn s" type="button" data-book="' + x[0] + '">' + e(s('bookS')) + '</button></div>'; }).join('');
+  }
+  function tabs() { return '<div class="chips" style="margin-bottom:8px">' + CATS.map(function (c) { return '<button class="chip" type="button" data-cat="' + c + '" aria-pressed="' + (c === cat) + '">' + e(s(c)) + '</button>'; }).join('') + '</div>'; }
+  function mcard(m) { return '<div class="card"><div class="who"><div class="av">' + L(m[1]).charAt(0) + '</div><div><h3>' + e(L(m[1])) + '</h3><p class="mu sm">' + m[2].map(function (c) { return e(s(c)); }).join(', ') + '</p></div></div><p class="mu sm">' + s('exp', { n: m[3] }) + '</p><button class="btn gh s" type="button" data-bm="' + m[0] + '">' + e(s('bookS')) + '</button></div>'; }
+  function summary() {
+    var v = b.svc && svc(b.svc), no = '<span class="mu">' + e(s('notYet')) + '</span>';
+    return '<div class="box sticky"><h3>' + e(s('sum')) + '</h3><div class="list"><div><span>' + e(s('st1')) + '</span><i></i><b>' + (v ? e(L(v[2])) : no) + '</b></div><div><span>' + e(s('st2')) + '</span><i></i><b>' + (b.m ? e(b.m === 'any' ? s('any') : L(mst(b.m)[1])) : no) + '</b></div><div><span>' + e(s('st3')) + '</span><i></i><b>' + (b.date && b.time ? e(nice(b.date)) + ', ' + b.time : no) + '</b></div></div>' + (v ? '<div><p class="mu sm">' + e(s('total')) + '</p><p class="big num">' + K.tg(v[3]) + '</p></div>' : '') + '</div>';
+  }
+  function stepHtml() {
+    var h = '', i, d, v;
+    if (b.step === 1) {
+      h = tabs() + '<div class="f">' + SVC.filter(function (x) { return x[1] === cat; }).map(function (x) { return '<button class="pick" type="button" data-svc="' + x[0] + '" aria-pressed="' + (b.svc === x[0]) + '"><span><b>' + e(L(x[2])) + '</b><small class="mu">' + s('min', { n: x[4] }) + '</small></span><b class="num">' + K.tg(x[3]) + '</b></button>'; }).join('') + '</div>';
+    } else if (b.step === 2) {
+      v = svc(b.svc);
+      h = '<div class="f"><button class="pick" type="button" data-m="any" aria-pressed="' + (b.m === 'any') + '"><div class="av">?</div><span><b>' + e(s('any')) + '</b><small class="mu">' + e(s('anyD')) + '</small></span></button>' + MS.filter(function (m) { return m[2].indexOf(v[1]) > -1; }).map(function (m) { return '<button class="pick" type="button" data-m="' + m[0] + '" aria-pressed="' + (b.m === m[0]) + '"><div class="av">' + L(m[1]).charAt(0) + '</div><span><b>' + e(L(m[1])) + '</b><small class="mu">' + s('exp', { n: m[3] }) + '</small></span></button>'; }).join('') + '</div>';
+    } else if (b.step === 3) {
+      h = '<p class="mu sm" style="margin-bottom:8px">' + e(s('pickD')) + '</p><div class="days">';
+      for (i = 0; i < 10; i++) { d = new Date(); d.setDate(d.getDate() + i); v = iso(d); h += '<button class="day" type="button" data-date="' + v + '" aria-pressed="' + (b.date === v) + '"><small>' + e(L(WD[d.getDay()])) + '</small><b>' + d.getDate() + '</b></button>'; }
+      h += '</div>';
+      if (b.date) {
+        var free = TIMES.filter(function (t) { return !busy(b.date, b.m, t); });
+        h += '<p class="mu sm" style="margin:18px 0 8px">' + e(s('pickT')) + ', ' + e(nice(b.date)) + '</p>' + (free.length ? '<div class="chips">' + TIMES.map(function (t) { return '<button class="chip" type="button" data-time="' + t + '" aria-pressed="' + (b.time === t) + '"' + (free.indexOf(t) < 0 ? ' disabled' : '') + '>' + t + '</button>'; }).join('') + '</div>' : '<p>' + e(s('noT')) + '</p>');
+      }
+    } else {
+      v = svc(b.svc);
+      h = K.form('booking', '<input type="hidden" name="svc" data-l="' + e(s('st1')) + '" value="' + e(L(v[2])) + '"><input type="hidden" name="master" data-l="' + e(s('st2')) + '" value="' + e(b.m === 'any' ? s('any') : L(mst(b.m)[1])) + '"><input type="hidden" name="when" data-l="' + e(s('st3')) + '" value="' + e(nice(b.date) + ', ' + b.time) + '">' + K.np() + K.fl(s('comment'), '<input name="comment">'), s('confirm'));
+    }
+    var can = (b.step === 1 && b.svc) || (b.step === 2 && b.m) || (b.step === 3 && b.date && b.time);
+    return '<div class="stp">' + [1, 2, 3, 4].map(function (n) { return '<i' + (n <= b.step ? ' class="on"' : '') + '></i>'; }).join('') + '</div><p class="mu sm">' + s('stepN', { a: b.step }) + '</p><h2 style="margin-bottom:18px">' + e(s('st' + b.step)) + '</h2>' + h +
+      '<div class="row" style="margin-top:24px">' + (b.step > 1 ? '<button class="btn gh" type="button" data-step="-1">' + e(s('back')) + '</button>' : '') + (b.step < 4 ? '<button class="btn" type="button" data-step="1"' + (can ? '' : ' disabled') + '>' + e(s('next')) + '</button>' : '') + '</div>';
+  }
+
+  var routes = {
+    home: function () {
+      return '<section class="hero"><div class="wrap"><div class="hero-c"><h1>' + e(s('h1')) + '</h1><p class="lead">' + e(s('hp')) + '</p><div class="row"><a class="btn" href="#/book">' + e(s('bookBtn')) + '</a><a class="btn gh" href="#/services">' + e(s('services')) + '</a></div></div>' + K.ph('1637777277435-3c44f82fd0c9', '4/5', s('salon')) + '</div></section>' +
+        '<section class="band"><div class="wrap"><div class="hd"><h2>' + e(s('services')) + '</h2></div>' + tabs() + '<div>' + svcRows(cat) + '</div></div></section>' +
+        '<section><div class="wrap"><div class="hd"><h2>' + e(s('our')) + '</h2></div><div class="g" style="--min:230px">' + MS.map(mcard).join('') + '</div></div></section>' +
+        '<section class="band"><div class="wrap"><div class="hd"><h2>' + e(s('salon')) + '</h2></div><div class="gal">' + K.ph('1521590832167-7bcbfaa6381f', '16/10', s('salon')) + K.ph('1695527081827-fdbc4e77be9b', '4/5', s('salon')) + K.ph('1626383120723-2a941488860d', '4/5', s('salon')) + '</div></div></section>' +
+        '<section><div class="wrap"><div class="hd"><h2>' + e(s('rev')) + '</h2></div><div class="g" style="--min:260px">' + REV.map(function (r) { return '<figure class="card"><span><span class="tag">' + e(s('revTag')) + '</span></span><blockquote style="margin:0">' + e(s(r[1])) + '</blockquote><figcaption class="mu sm">' + e(L(r[0])) + '</figcaption></figure>'; }).join('') + '</div></div></section>' +
+        '<section class="band"><div class="wrap g2"><div class="hd"><h2>' + e(s('where')) + '</h2><div class="list"><div><span>' + e(s('addrL')) + '</span><i></i><b>' + e(s('addr')) + '</b></div><div><span>' + e(s('hrsL')) + '</span><i></i><b>' + e(s('hours')) + '</b></div><div><span>' + e(s('phone')) + '</span><i></i><b>+7 (700) 000-00-00</b></div></div></div><div class="box"><h3>' + e(s('bookBtn')) + '</h3><p class="mu">' + e(s('hp')) + '</p><div><a class="btn" href="#/book">' + e(s('bookBtn')) + '</a></div></div></div></section>';
+    },
+    services: function () { return '<section class="pg"><div class="wrap" style="max-width:860px"><div class="hd"><h1>' + e(s('services')) + '</h1></div>' + CATS.map(function (c) { return '<h2 style="margin-top:28px">' + e(s(c)) + '</h2>' + svcRows(c); }).join('') + '</div></section>'; },
+    masters: function () { return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('our')) + '</h1></div><div class="g" style="--min:250px">' + MS.map(mcard).join('') + '</div></div></section>'; },
+    book: function () { return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('book')) + '</h1></div><div class="g2"><div id="wiz">' + stepHtml() + '</div>' + summary() + '</div></div></section>'; },
+    my: function () {
+      var a = list();
+      return '<section class="pg"><div class="wrap" style="max-width:860px"><div class="hd"><h1>' + e(s('my')) + '</h1><p class="lead">' + e(s('myN')) + '</p></div>' + (a.length ? '<div class="f">' + a.map(function (x, i) { var v = svc(x.svc); return '<div class="box"><div class="row" style="justify-content:space-between"><h3>' + e(L(v[2])) + '</h3><b class="num">' + K.tg(v[3]) + '</b></div><p class="mu">' + e(nice(x.date)) + ', ' + x.time + ', ' + e(x.m === 'any' ? s('any') : L(mst(x.m)[1])) + '</p><div><button class="btn gh s" type="button" data-del="' + i + '">' + e(s('cancel')) + '</button></div></div>'; }).join('') + '</div>' : '<div class="box"><p>' + e(s('myE')) + '</p><div><a class="btn" href="#/book">' + e(s('bookBtn')) + '</a></div></div>') + '</div></section>';
+    }
+  };
+
+  document.addEventListener('click', function (ev) {
+    var t = ev.target, x;
+    if ((x = t.closest('[data-cat]'))) { cat = x.getAttribute('data-cat'); K.refresh(); }
+    else if ((x = t.closest('[data-book]'))) { b = { step: 2, svc: x.getAttribute('data-book'), m: null, date: null, time: null }; cat = svc(b.svc)[1]; K.go('book'); if (location.hash === '#/book') K.refresh(); }
+    else if ((x = t.closest('[data-bm]'))) { var m = mst(x.getAttribute('data-bm')); cat = m[2][0]; b = { step: 1, svc: null, m: null, date: null, time: null, pm: m[0] }; K.go('book'); }
+    else if ((x = t.closest('[data-svc]'))) { b.svc = x.getAttribute('data-svc'); b.m = b.pm && mst(b.pm)[2].indexOf(svc(b.svc)[1]) > -1 ? b.pm : null; K.refresh(); }
+    else if ((x = t.closest('[data-m]'))) { b.m = x.getAttribute('data-m'); b.time = null; K.refresh(); }
+    else if ((x = t.closest('[data-date]'))) { b.date = x.getAttribute('data-date'); b.time = null; K.refresh(); }
+    else if ((x = t.closest('[data-time]'))) { b.time = x.getAttribute('data-time'); K.refresh(); }
+    else if ((x = t.closest('[data-step]')) && !x.disabled) { b.step += +x.getAttribute('data-step'); K.refresh(); K.q('#wiz').scrollIntoView({ block: 'start' }); window.scrollBy(0, -110); }
+    else if ((x = t.closest('[data-del]'))) { var a = list(); a.splice(+x.getAttribute('data-del'), 1); K.store.set('beautyBookings', a); K.toast(s('cancelled')); K.refresh(); }
+  });
+
+  K.init({
+    brand: 'Demo <i>Beauty</i>', niche: ['салона красоты', 'сұлулық салонына', 'a beauty salon'], S: S,
+    nav: [['services', 'services'], ['masters', 'masters'], ['book', 'book'], ['my', 'my', function () { var n = list().length; return n ? ' (' + n + ')' : ''; }]], cta: ['book', 'bookBtn'], routes: routes,
+    onSubmit: function (name) {
+      if (name !== 'booking') return '';
+      var a = list(); a.push({ svc: b.svc, m: b.m, date: b.date, time: b.time }); K.store.set('beautyBookings', a);
+      b = { step: 1, svc: null, m: null, date: null, time: null };
+      return '<p class="sm">' + e(s('saved')) + '</p><div><a class="btn gh s" href="#/my">' + e(s('my')) + '</a></div>';
+    }
+  });
+})();
+</script>
+</body>
+</html>

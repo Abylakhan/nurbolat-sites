@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex">
+<title>Demo Academy</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Onest:wght@400;500;600&family=Rubik:wght@500;700&display=swap">
+<link rel="stylesheet" href="kit.css">
+<style>
+/* Учебный центр: белый фон, индиго и жёлтый маркер, округлые формы */
+:root{--bg:#FFFFFF;--fg:#1B1F3B;--ac:#5B5BD6;--ai:#fff;--sf:#F2F2FD;--cd:#FFFFFF;--ln:#E0E1F3;--mu:#5C6185;--hf:'Rubik',system-ui,sans-serif;--bf:'Onest',system-ui,sans-serif;--hw:700;--ht:-.02em;--r:14px;--yl:#FFD45C}
+.mark{background:linear-gradient(transparent 62%,var(--yl) 62%)}
+.av{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--yl);font:700 1.2rem var(--hf)}
+.slot{display:block;padding:6px 8px;margin:2px 0;border-radius:8px;background:var(--sf);color:var(--fg);font-size:.82rem;line-height:1.3;text-decoration:none}
+.slot:hover{background:var(--ac);color:#fff}
+.bar{height:8px;border-radius:4px;background:var(--sf);overflow:hidden}
+.bar i{display:block;height:100%;background:var(--ac);transition:width .3s}
+.qopt{display:grid;gap:10px}
+.lvl{display:grid;place-items:center;width:96px;height:96px;border-radius:50%;background:var(--yl);font:700 2rem var(--hf)}
+</style>
+</head>
+<body>
+<script src="kit.js"></script>
+<script>
+(function () {
+  'use strict';
+  var K = Kit, L = K.L, s = K.s, e = K.esc;
+
+  var S = {
+    courses: ['Курсы', 'Курстар', 'Courses'], schedule: ['Расписание', 'Сабақ кестесі', 'Schedule'], test: ['Тест уровня', 'Деңгей тесті', 'Level test'], signup: ['Запись', 'Жазылу', 'Sign up'],
+    trial: ['Записаться на пробный урок', 'Сынақ сабағына жазылу', 'Book a trial lesson'],
+    h1a: ['Английский, ЕНТ и программирование', 'Ағылшын тілі, ҰБТ және бағдарламалау', 'English, exam prep and coding'], h1b: ['в малых группах', 'шағын топтарда', 'in small groups'],
+    hp: ['До 8 человек в группе, занятия в центре и онлайн. Первый урок бесплатно.', 'Топта 8 адамға дейін, сабақтар орталықта және онлайн өтеді. Алғашқы сабақ тегін.', 'Up to 8 students per group, in the centre and online. The first lesson is free.'],
+    toTest: ['Пройти тест уровня', 'Деңгей тестін тапсыру', 'Take the level test'],
+    f1: ['Группы до 8 человек', '8 адамға дейінгі топтар', 'Groups of up to 8'], f1d: ['Преподаватель успевает поработать с каждым.', 'Оқытушы әр оқушымен жұмыс істеп үлгереді.', 'The teacher has time for every student.'],
+    f2: ['Пробный урок бесплатно', 'Сынақ сабағы тегін', 'Free trial lesson'], f2d: ['Познакомитесь с преподавателем и форматом до оплаты.', 'Төлемге дейін оқытушымен және сабақ форматымен танысасыз.', 'Meet the teacher and try the format before paying.'],
+    f3: ['Отчёт каждый месяц', 'Ай сайын есеп', 'Monthly report'], f3d: ['Родители видят посещаемость, оценки и прогресс.', 'Ата-аналар қатысуды, бағаларды және ілгерілеуді көреді.', 'Parents see attendance, marks and progress.'],
+    pop: ['Популярные курсы', 'Танымал курстар', 'Popular courses'], allC: ['Все курсы', 'Барлық курстар', 'All courses'],
+    team: ['Преподаватели', 'Оқытушылар', 'Teachers'],
+    tc1: ['Английский, IELTS', 'Ағылшын тілі, IELTS', 'English, IELTS'], tc2: ['Математика и ЕНТ', 'Математика және ҰБТ', 'Maths and UNT prep'], tc3: ['Программирование', 'Бағдарламалау', 'Programming'],
+    exp: ['Стаж {n} лет', '{n} жыл тәжірибе', '{n} years of experience'],
+    faq: ['Частые вопросы', 'Жиі қойылатын сұрақтар', 'Frequent questions'],
+    q1: ['Как проходит пробный урок?', 'Сынақ сабағы қалай өтеді?', 'How does the trial lesson work?'], q1a: ['Вы приходите на обычное занятие группы вашего уровня. Это бесплатно и ни к чему не обязывает.', 'Өз деңгейіңіздегі топтың кәдімгі сабағына келесіз. Бұл тегін және ешқандай міндеттеме жүктемейді.', 'You join a regular class at your level. It is free and comes with no obligation.'],
+    q2: ['Можно ли заниматься онлайн?', 'Онлайн оқуға бола ма?', 'Can I study online?'], q2a: ['Да, все курсы доступны в онлайн-группах с тем же преподавателем.', 'Иә, барлық курстар сол оқытушымен онлайн топтарда да бар.', 'Yes, every course has online groups with the same teacher.'],
+    q3: ['Что будет, если пропустить занятие?', 'Сабақты жіберіп алсам не болады?', 'What if I miss a class?'], q3a: ['Запись урока и домашнее задание остаются в личном кабинете.', 'Сабақ жазбасы мен үй тапсырмасы жеке кабинетте сақталады.', 'The recording and homework stay in your account.'],
+    age: ['Возраст', 'Жасы', 'Age'], subj: ['Предмет', 'Пән', 'Subject'],
+    kids: ['Дети 7–10 лет', '7–10 жастағы балалар', 'Children 7–10'], teens: ['Подростки 11–17 лет', '11–17 жастағы жасөспірімдер', 'Teens 11–17'], adults: ['Взрослые', 'Ересектер', 'Adults'],
+    en: ['Английский', 'Ағылшын тілі', 'English'], ent: ['ЕНТ', 'ҰБТ', 'UNT prep'], math: ['Математика', 'Математика', 'Maths'], it: ['Программирование', 'Бағдарламалау', 'Coding'],
+    perMo: ['{p} ₸ в месяц', 'айына {p} ₸', '{p} ₸ per month'], perW: ['{n} занятия в неделю', 'аптасына {n} сабақ', '{n} classes a week'], dur: ['{n} месяцев', '{n} ай', '{n} months'],
+    noC: ['Таких курсов пока нет. Измените фильтры.', 'Мұндай курс әзірге жоқ. Сүзгілерді өзгертіңіз.', 'No courses match. Try other filters.'],
+    prog: ['Программа курса', 'Курс бағдарламасы', 'Course programme'], when: ['Когда занятия', 'Сабақ уақыты', 'Class times'], teacher: ['Преподаватель', 'Оқытушы', 'Teacher'], length: ['Длительность', 'Ұзақтығы', 'Length'], group: ['Группа', 'Топ', 'Group'], upTo: ['до 8 человек', '8 адамға дейін', 'up to 8 students'],
+    course: ['Курс', 'Курс', 'Course'], allS: ['Все курсы', 'Барлық курстар', 'All courses'], timeC: ['Время', 'Уақыты', 'Time'],
+    tIntro: ['Восемь коротких вопросов по английскому. Займёт три минуты, результат покажем сразу.', 'Ағылшын тілінен сегіз қысқа сұрақ. Үш минут уақыт алады, нәтижесін бірден көрсетеміз.', 'Eight short English questions. It takes three minutes and you get the result right away.'],
+    qOf: ['Вопрос {a} из {b}', 'Сұрақ: {a} / {b}', 'Question {a} of {b}'], next: ['Дальше', 'Келесі', 'Next'], finish: ['Узнать результат', 'Нәтижені білу', 'See the result'], again: ['Пройти заново', 'Қайта тапсыру', 'Retake the test'],
+    res: ['Ваш уровень', 'Сіздің деңгейіңіз', 'Your level'], right: ['Правильных ответов: {a} из {b}', 'Дұрыс жауап: {a} / {b}', 'Correct answers: {a} of {b}'], rec: ['Рекомендуем курс', 'Ұсынатын курсымыз', 'Recommended course'],
+    lA1: ['Начальный. Начнём с основ: чтение, простые фразы, базовая грамматика.', 'Бастапқы деңгей. Негізден бастаймыз: оқу, қарапайым сөйлемдер, базалық грамматика.', 'Beginner. We start with the basics: reading, simple phrases and core grammar.'],
+    lA2: ['Элементарный. Вы знаете основы, пора расширять словарь и говорить увереннее.', 'Элементар деңгей. Негізді білесіз, енді сөздік қорды кеңейтіп, сенімдірек сөйлеу керек.', 'Elementary. You know the basics; time to widen your vocabulary and speak with more confidence.'],
+    lB1: ['Средний. Можно браться за сложную грамматику и свободную речь.', 'Орта деңгей. Күрделі грамматика мен еркін сөйлеуге кірісуге болады.', 'Intermediate. You are ready for complex grammar and fluent speech.'],
+    lB2: ['Выше среднего. Хороший уровень для подготовки к IELTS.', 'Ортадан жоғары деңгей. IELTS-ке дайындалуға жақсы негіз.', 'Upper-intermediate. A good base for IELTS preparation.'],
+    fmt: ['Формат', 'Формат', 'Format'], off: ['В центре', 'Орталықта', 'In the centre'], onl: ['Онлайн', 'Онлайн', 'Online'],
+    pref: ['Удобное время', 'Ыңғайлы уақыт', 'Preferred time'], mor: ['Утро', 'Таңертең', 'Morning'], day: ['День', 'Күндіз', 'Afternoon'], eve: ['Вечер', 'Кешке', 'Evening'],
+    sT: ['Запишитесь на бесплатный пробный урок', 'Тегін сынақ сабағына жазылыңыз', 'Book a free trial lesson'], sD: ['Администратор перезвонит, подберёт группу и время.', 'Әкімші қоңырау шалып, топ пен уақытты таңдап береді.', 'An administrator will call to find the right group and time.'],
+    student: ['Имя ученика', 'Оқушының аты', 'Student name']
+  };
+  var DAYS = [['Пн', 'Дс', 'Mon'], ['Вт', 'Сс', 'Tue'], ['Ср', 'Ср', 'Wed'], ['Чт', 'Бс', 'Thu'], ['Пт', 'Жм', 'Fri'], ['Сб', 'Сб', 'Sat']];
+  var PROG = {
+    en: [['Говорение и произношение', 'Сөйлеу және айтылым', 'Speaking and pronunciation'], ['Грамматика на практике', 'Тәжірибедегі грамматика', 'Grammar in practice'], ['Чтение и словарный запас', 'Оқу және сөздік қор', 'Reading and vocabulary'], ['Аудирование и письмо', 'Тыңдау және жазу', 'Listening and writing']],
+    ent: [['Диагностика и план подготовки', 'Диагностика және дайындық жоспары', 'Diagnostics and study plan'], ['Разбор тем по предметам', 'Пәндер бойынша тақырыптарды талдау', 'Topic-by-topic revision'], ['Пробные тесты каждую неделю', 'Апта сайын сынақ тесттері', 'Weekly mock tests'], ['Работа над ошибками', 'Қателермен жұмыс', 'Error analysis']],
+    math: [['Арифметика и дроби', 'Арифметика және бөлшектер', 'Arithmetic and fractions'], ['Уравнения и функции', 'Теңдеулер мен функциялар', 'Equations and functions'], ['Геометрия', 'Геометрия', 'Geometry'], ['Задачи повышенной сложности', 'Күрделілігі жоғары есептер', 'Challenge problems']],
+    it: [['Основы алгоритмов', 'Алгоритм негіздері', 'Algorithm basics'], ['Переменные, условия, циклы', 'Айнымалылар, шарттар, циклдер', 'Variables, conditions, loops'], ['Свой проект: игра или бот', 'Өз жобаң: ойын немесе бот', 'Your own project: a game or a bot'], ['Защита проекта', 'Жобаны қорғау', 'Project presentation']]
+  };
+  var TCH = [[['Айгерим', 'Айгерім', 'Aigerim'], 'tc1', 8], [['Данияр', 'Данияр', 'Daniyar'], 'tc2', 11], [['Алия', 'Әлия', 'Aliya'], 'tc3', 6]];
+  /* sl: [день 0–5, время] */
+  var CRS = [
+    { id: 'en-kids', sj: 'en', ag: 'kids', p: 22000, w: 2, m: 9, t: 0, n: ['Английский для детей', 'Балаларға арналған ағылшын тілі', 'English for children'], d: ['Игры, песни и первые фразы. Учим говорить без страха.', 'Ойындар, әндер және алғашқы сөйлемдер. Қорықпай сөйлеуге үйретеміз.', 'Games, songs and first phrases. We teach children to speak without fear.'], sl: [[0, '15:00'], [3, '15:00']] },
+    { id: 'en-teens', sj: 'en', ag: 'teens', p: 25000, w: 3, m: 9, t: 0, n: ['Английский для подростков', 'Жасөспірімдерге арналған ағылшын тілі', 'English for teens'], d: ['Школьная программа и живая речь: от A2 до B2.', 'Мектеп бағдарламасы және ауызекі сөйлеу: A2-ден B2-ге дейін.', 'School curriculum plus real conversation, from A2 to B2.'], sl: [[0, '17:00'], [2, '17:00'], [4, '17:00']] },
+    { id: 'ielts', sj: 'en', ag: 'adults', p: 40000, w: 3, m: 5, t: 0, n: ['Подготовка к IELTS', 'IELTS-ке дайындық', 'IELTS preparation'], d: ['Все четыре раздела экзамена и пробные тесты каждую неделю.', 'Емтиханның төрт бөлімі және апта сайын сынақ тесттері.', 'All four exam sections and weekly mock tests.'], sl: [[1, '19:00'], [3, '19:00'], [5, '11:00']] },
+    { id: 'en-talk', sj: 'en', ag: 'adults', p: 28000, w: 2, m: 6, t: 0, n: ['Разговорный английский', 'Ауызекі ағылшын тілі', 'Conversational English'], d: ['Для работы и поездок. Много практики, минимум теории.', 'Жұмыс пен сапарға арналған. Тәжірибе көп, теория аз.', 'For work and travel. Lots of practice, little theory.'], sl: [[1, '10:00'], [4, '19:00']] },
+    { id: 'ent', sj: 'ent', ag: 'teens', p: 35000, w: 4, m: 8, t: 1, n: ['Подготовка к ЕНТ', 'ҰБТ-ға дайындық', 'UNT exam preparation'], d: ['Математика, история Казахстана и грамотность чтения.', 'Математика, Қазақстан тарихы және оқу сауаттылығы.', 'Maths, history of Kazakhstan and reading literacy.'], sl: [[0, '16:00'], [1, '16:00'], [3, '16:00'], [5, '10:00']] },
+    { id: 'math', sj: 'math', ag: 'teens', p: 22000, w: 2, m: 9, t: 1, n: ['Математика, 5–9 классы', 'Математика, 5–9 сыныптар', 'Maths, grades 5–9'], d: ['Закрываем пробелы и идём с опережением школьной программы.', 'Олқылықтарды жойып, мектеп бағдарламасынан озып оқимыз.', 'We close the gaps and move ahead of the school curriculum.'], sl: [[2, '15:00'], [4, '15:00']] },
+    { id: 'python', sj: 'it', ag: 'teens', p: 30000, w: 2, m: 6, t: 2, n: ['Программирование на Python', 'Python тілінде бағдарламалау', 'Python programming'], d: ['От первой программы до своего бота или игры.', 'Алғашқы бағдарламадан өз ботыңа немесе ойыныңа дейін.', 'From the first program to your own bot or game.'], sl: [[2, '18:00'], [5, '12:00']] },
+    { id: 'scratch', sj: 'it', ag: 'kids', p: 24000, w: 2, m: 5, t: 2, n: ['Scratch для детей', 'Балаларға арналған Scratch', 'Scratch for children'], d: ['Собираем мультфильмы и игры из блоков, учимся логике.', 'Блоктардан мультфильм мен ойын құрастырып, логиканы үйренеміз.', 'We build cartoons and games from blocks and learn logic.'], sl: [[1, '15:00'], [5, '14:00']] }
+  ];
+  var QS = [
+    ['She ___ to school every day.', ['goes', 'go', 'going', 'gone'], 0], ['There ___ some milk in the fridge.', ['are', 'be', 'is', 'am'], 2],
+    ['I ___ TV when you called.', ['watched', 'watch', 'am watching', 'was watching'], 3], ['We have lived here ___ 2019.', ['for', 'since', 'from', 'during'], 1],
+    ['If it rains, we ___ at home.', ['will stay', 'stayed', 'would stay', 'staying'], 0], ['The report ___ by Friday.', ['must finish', 'must be finished', 'must finished', 'must be finishing'], 1],
+    ['I wish I ___ more time.', ['have', 'had', 'will have', 'having'], 1], ['Hardly ___ arrived when it started to rain.', ['we had', 'had we', 'we have', 'have we'], 1]
+  ];
+  var st = { ag: 'all', sj: 'all', sc: 'all' }, tq = { i: -1, a: [] }, pick = '';
+  function crs(id) { return CRS.filter(function (c) { return c.id === id; })[0] || CRS[0]; }
+  function ccard(c) {
+    return '<a class="card" href="#/course/' + c.id + '"><div class="row"><span class="tag on">' + e(s(c.sj)) + '</span><span class="tag">' + e(s(c.ag)) + '</span></div><h3>' + e(L(c.n)) + '</h3><p class="mu sm">' + e(L(c.d)) + '</p><p class="sm mu">' + s('perW', { n: c.w }) + ', ' + s('dur', { n: c.m }) + '</p><b class="num">' + s('perMo', { p: K.money(c.p) }) + '</b></a>';
+  }
+  function chips(key, keys) { return '<div class="chips">' + ['all'].concat(keys).map(function (k) { return '<button class="chip" type="button" data-flt="' + key + '" data-v="' + k + '" aria-pressed="' + (st[key] === k) + '">' + e(k === 'all' ? s('allF') : s(k)) + '</button>'; }).join('') + '</div>'; }
+  function slots(c) { return c.sl.map(function (x) { return L(DAYS[x[0]]) + ' ' + x[1]; }).join(', '); }
+  function signForm() {
+    return K.form('trial', K.fl(s('course'), '<select name="course">' + CRS.map(function (c) { return '<option value="' + c.id + '"' + (c.id === pick ? ' selected' : '') + '>' + e(L(c.n)) + '</option>'; }).join('') + '</select>') +
+      '<div class="f2">' + K.fl(s('fmt'), '<select name="format"><option>' + e(s('off')) + '</option><option>' + e(s('onl')) + '</option></select>') + K.fl(s('pref'), '<select name="pref"><option>' + e(s('mor')) + '</option><option>' + e(s('day')) + '</option><option selected>' + e(s('eve')) + '</option></select>') + '</div>' + K.np(), s('trial'));
+  }
+  function testHtml() {
+    if (tq.i < 0) return '<div class="box"><p class="lead">' + e(s('tIntro')) + '</p><div><button class="btn" type="button" data-t="start">' + e(s('toTest')) + '</button></div></div>';
+    if (tq.i >= QS.length) {
+      var ok = tq.a.filter(function (a, i) { return a === QS[i][2]; }).length, lv = ok <= 2 ? 'A1' : ok <= 4 ? 'A2' : ok <= 6 ? 'B1' : 'B2', rec = crs(lv === 'B2' ? 'ielts' : 'en-talk');
+      pick = rec.id;
+      return '<div class="box in"><div class="row" style="gap:20px"><div class="lvl">' + lv + '</div><div><p class="mu sm">' + e(s('res')) + '</p><p class="big">' + lv + '</p><p class="mu sm">' + s('right', { a: ok, b: QS.length }) + '</p></div></div><p>' + e(s('l' + lv)) + '</p><p class="mu sm">' + e(s('rec')) + '</p>' + ccard(rec) + '<div class="row"><a class="btn" href="#/signup">' + e(s('trial')) + '</a><button class="btn gh" type="button" data-t="start">' + e(s('again')) + '</button></div></div>';
+    }
+    var q = QS[tq.i], sel = tq.a[tq.i];
+    return '<div class="box in"><div class="bar"><i style="width:' + (tq.i / QS.length * 100) + '%"></i></div><p class="mu sm">' + s('qOf', { a: tq.i + 1, b: QS.length }) + '</p><h2 lang="en">' + e(q[0]) + '</h2><div class="qopt" lang="en">' + q[1].map(function (o, i) { return '<label class="opt"><input type="radio" name="ans" value="' + i + '"' + (sel === i ? ' checked' : '') + '><span><b>' + e(o) + '</b></span></label>'; }).join('') + '</div><div><button class="btn" type="button" data-t="next"' + (sel == null ? ' disabled' : '') + '>' + e(s(tq.i === QS.length - 1 ? 'finish' : 'next')) + '</button></div></div>';
+  }
+  function grid() {
+    var list = CRS.filter(function (c) { return st.sc === 'all' || c.id === st.sc; }), times = {};
+    list.forEach(function (c) { c.sl.forEach(function (x) { times[x[1]] = 1; }); });
+    return Object.keys(times).sort().map(function (t) {
+      return '<tr><th class="num">' + t + '</th>' + DAYS.map(function (d, di) {
+        return '<td>' + list.filter(function (c) { return c.sl.some(function (x) { return x[0] === di && x[1] === t; }); }).map(function (c) { return '<a class="slot" href="#/course/' + c.id + '">' + e(L(c.n)) + '</a>'; }).join('') + '</td>';
+      }).join('') + '</tr>';
+    }).join('');
+  }
+
+  var routes = {
+    home: function () {
+      return '<section class="hero"><div class="wrap"><div class="hero-c"><h1>' + e(s('h1a')) + ' <span class="mark">' + e(s('h1b')) + '</span></h1><p class="lead">' + e(s('hp')) + '</p><div class="row"><a class="btn" href="#/signup">' + e(s('trial')) + '</a><a class="btn gh" href="#/test">' + e(s('toTest')) + '</a></div></div>' + K.ph('1509062522246-3755977927d7', '4/3', s('courses')) + '</div></section>' +
+        '<section class="band"><div class="wrap"><div class="g" style="--min:300px">' + [1, 2, 3].map(function (i) { return '<div class="card"><h3>' + e(s('f' + i)) + '</h3><p class="mu">' + e(s('f' + i + 'd')) + '</p></div>'; }).join('') + '</div></div></section>' +
+        '<section><div class="wrap"><div class="hd"><h2>' + e(s('pop')) + '</h2></div><div class="g" style="--min:230px">' + ['en-teens', 'ielts', 'ent', 'python'].map(function (id) { return ccard(crs(id)); }).join('') + '</div><p style="margin-top:24px"><a class="btn gh" href="#/courses">' + e(s('allC')) + '</a></p></div></section>' +
+        '<section class="band"><div class="wrap"><div class="hd"><h2>' + e(s('team')) + '</h2></div><div class="g" style="--min:300px">' + TCH.map(function (t) { return '<div class="card"><div class="who"><div class="av">' + L(t[0]).charAt(0) + '</div><div><h3>' + e(L(t[0])) + '</h3><p class="mu sm">' + e(s(t[1])) + '</p></div></div><p class="mu sm">' + s('exp', { n: t[2] }) + '</p></div>'; }).join('') + '</div></div></section>' +
+        '<section><div class="wrap g2"><div class="hd"><h2>' + e(s('faq')) + '</h2></div><div>' + [1, 2, 3].map(function (i) { return '<details' + (i === 1 ? ' open' : '') + '><summary>' + e(s('q' + i)) + '</summary><p>' + e(s('q' + i + 'a')) + '</p></details>'; }).join('') + '</div></div></section>';
+    },
+    courses: function () {
+      var a = CRS.filter(function (c) { return (st.ag === 'all' || c.ag === st.ag) && (st.sj === 'all' || c.sj === st.sj); });
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('courses')) + '</h1></div><div class="f" style="margin-bottom:24px"><div class="row"><span class="mu sm">' + e(s('age')) + '</span>' + chips('ag', ['kids', 'teens', 'adults']) + '</div><div class="row"><span class="mu sm">' + e(s('subj')) + '</span>' + chips('sj', ['en', 'ent', 'math', 'it']) + '</div></div>' + (a.length ? '<div class="g">' + a.map(ccard).join('') + '</div>' : '<div class="box"><p>' + e(s('noC')) + '</p></div>') + '</div></section>';
+    },
+    course: function (id) {
+      var c = crs(id), t = TCH[c.t]; pick = c.id;
+      return '<section class="pg"><div class="wrap"><div class="crumbs"><a href="#/courses">' + e(s('courses')) + '</a><span>/</span><span>' + e(L(c.n)) + '</span></div><div class="g2"><div class="f"><div class="row"><span class="tag on">' + e(s(c.sj)) + '</span><span class="tag">' + e(s(c.ag)) + '</span></div><h1 style="font-size:clamp(1.8rem,4vw,2.8rem)">' + e(L(c.n)) + '</h1><p class="lead">' + e(L(c.d)) + '</p><h2 style="margin-top:12px">' + e(s('prog')) + '</h2><ol class="g steps" style="--min:200px">' + PROG[c.sj].map(function (m) { return '<li><h3>' + e(L(m)) + '</h3></li>'; }).join('') + '</ol></div>' +
+        '<div class="box sticky"><p class="big num">' + s('perMo', { p: K.money(c.p) }) + '</p><div class="list"><div><span>' + e(s('when')) + '</span><i></i><b>' + e(slots(c)) + '</b></div><div><span>' + e(s('length')) + '</span><i></i><b>' + s('dur', { n: c.m }) + '</b></div><div><span>' + e(s('group')) + '</span><i></i><b>' + e(s('upTo')) + '</b></div><div><span>' + e(s('teacher')) + '</span><i></i><b>' + e(L(t[0])) + '</b></div></div><a class="btn" href="#/signup">' + e(s('trial')) + '</a></div></div></div></section>';
+    },
+    schedule: function () {
+      return '<section class="pg"><div class="wrap"><div class="hd"><h1>' + e(s('schedule')) + '</h1></div><div style="max-width:420px;margin-bottom:20px">' + K.fl(s('course'), '<select id="sc"><option value="all">' + e(s('allS')) + '</option>' + CRS.map(function (c) { return '<option value="' + c.id + '"' + (st.sc === c.id ? ' selected' : '') + '>' + e(L(c.n)) + '</option>'; }).join('') + '</select>') + '</div><div class="tw"><table style="min-width:720px"><thead><tr><th>' + e(s('timeC')) + '</th>' + DAYS.map(function (d) { return '<th>' + e(L(d)) + '</th>'; }).join('') + '</tr></thead><tbody id="grid">' + grid() + '</tbody></table></div></div></section>';
+    },
+    test: function () { return '<section class="pg"><div class="wrap" style="max-width:760px"><div class="hd"><h1>' + e(s('test')) + '</h1></div><div id="tbox">' + testHtml() + '</div></div></section>'; },
+    signup: function () {
+      return '<section class="pg"><div class="wrap g2"><div class="hd"><h1>' + e(s('sT')) + '</h1><p class="lead">' + e(s('sD')) + '</p>' + K.ph('1524178232363-1fb2b075b655', '16/10', s('courses')) + '</div><div class="box">' + signForm() + '</div></div></section>';
+    }
+  };
+
+  function tUpd() { var b = K.q('#tbox'); if (b) b.innerHTML = testHtml(); }
+  document.addEventListener('click', function (ev) {
+    var b;
+    if ((b = ev.target.closest('[data-flt]'))) { st[b.getAttribute('data-flt')] = b.getAttribute('data-v'); K.refresh(); return; }
+    if ((b = ev.target.closest('[data-t]'))) {
+      if (b.getAttribute('data-t') === 'start') tq = { i: 0, a: [] }; else if (tq.a[tq.i] != null) tq.i++;
+      tUpd();
+    }
+  });
+  document.addEventListener('change', function (ev) {
+    var t = ev.target;
+    if (t.name === 'ans') { tq.a[tq.i] = +t.value; var n = K.q('[data-t=next]'); if (n) n.disabled = false; }
+    else if (t.id === 'sc') { st.sc = t.value; K.q('#grid').innerHTML = grid(); }
+  });
+
+  K.init({
+    brand: 'Demo <i>Academy</i>', niche: ['учебного центра', 'оқу орталығына', 'a training centre'], S: S,
+    nav: [['courses', 'courses'], ['schedule', 'schedule'], ['test', 'test'], ['signup', 'signup']], cta: ['signup', 'trial'], routes: routes
+  });
+})();
+</script>
+</body>
+</html>
