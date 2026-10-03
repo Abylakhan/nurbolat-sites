@@ -1085,7 +1085,7 @@ var whatsappMessages = {
 
   function renderDemos(){
     $('demos').innerHTML = DEMOS.map(function(d, i){
-      var tx = T().demos[d.id], href = d.url || 'demo.html#' + d.id + '-' + lang;
+      var tx = T().demos[d.id], href = d.url || d.id + '.html?lang=' + lang;
       return '<figure class="work" style="--n:' + i + '">' +
         '<a class="shot demo-shot" href="' + href + '" target="_blank" rel="noopener" aria-label="' + esc(t('demo_open') + ': ' + tx.name) + '" style="--pb:' + d.pb + ';--pf:' + d.pf + ';--pa:' + d.pa + ';--ps:' + d.ps + ';--c:' + d.pa + '">' +
           '<span class="d-bar"><b>' + d.brand + '</b></span>' +
