@@ -518,7 +518,7 @@ section{scroll-margin-top:84px}
 .lang button{position:relative;width:36px;min-width:0;padding:0;border-radius:999px}
 @media (max-width:520px){.lang button{width:33px;min-width:0;padding:0}}
 @supports selector(:has(*)){
-  .lang::before{content:"";position:absolute;z-index:2;pointer-events:none;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);border-radius:999px;background:rgba(255,255,255,.1);box-shadow:var(--edge-s),0 5px 12px -5px rgba(0,0,0,.7);-webkit-backdrop-filter:var(--lens,saturate(160%) brightness(1.15));backdrop-filter:var(--lens,saturate(160%) brightness(1.15));transition:transform .55s var(--spring);will-change:transform}
+  .lang::before{content:"";position:absolute;z-index:2;pointer-events:none;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);border-radius:999px;background:rgba(255,255,255,.1);box-shadow:var(--edge-s),0 5px 12px -5px rgba(0,0,0,.7);-webkit-backdrop-filter:saturate(170%) brightness(1.2);backdrop-filter:saturate(170%) brightness(1.2);transition:transform .55s var(--spring);will-change:transform}
   /* while it travels the thumb swells like a drop, then settles */
   .lang.moving::before{animation:blob .6s var(--ease)}
   .lang:has(button:nth-child(2)[aria-pressed="true"])::before{transform:translateX(100%)}
@@ -1579,10 +1579,6 @@ var whatsappMessages = {
     lens(head, 'lens-top', { blur:3, bevel:999, bend:15 });
     lens(doc.querySelector('.sum'), 'lens-sum', { blur:4, bevel:40, bend:16 });
     lens($('toast'), 'lens-toast', { blur:1.6, bevel:999, bend:10 });
-    /* the language thumb is a small lens that rides over the letters and enlarges them a little */
-    lens(doc.querySelector('.lang'), 'lens-thumb', { blur:0, bevel:999, bend:3, zoom:0, sat:1.5,
-      size:function(el){ return [(el.clientWidth - 6) / 3, el.clientHeight - 6, 999]; },
-      apply:function(el, css){ el.style.setProperty('--lens', css + ' brightness(1.12)'); } });
     if (!touch) {
       lens(doc.querySelector('.mock'), 'lens-mock', { blur:2.4, bevel:46, bend:18,
         apply:function(el, css){ el.style.setProperty('--lens', css); } });
