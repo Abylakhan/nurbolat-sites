@@ -354,41 +354,58 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
    rim but no blur, because nothing detailed is ever behind them. Nothing moves on its own
    behind a bar, so an idle page costs nothing and scrolling stays smooth. */
 :root{
-  --glass:linear-gradient(180deg,rgba(255,255,255,.13),rgba(255,255,255,.035) 46%,rgba(255,255,255,.075));
-  --rim:rgba(255,255,255,.18);
-  --edge:inset 0 1px 0 rgba(255,255,255,.5),inset 0 -1px 0 rgba(255,255,255,.14),inset 0 0 14px 1px rgba(255,255,255,.09),inset 0 -12px 18px -14px rgba(0,0,0,.45);
-  --lift:0 18px 44px -20px rgba(0,0,0,.85),0 2px 6px rgba(0,0,0,.25);
+  --glass:rgba(255,255,255,.07);
+  --rim:rgba(255,255,255,.1);
+  --edge:inset 1px 1px .5px -.5px rgba(255,255,255,.85),inset -1px -1px .5px -.5px rgba(255,255,255,.5),inset 3px 4px 7px -4px rgba(255,255,255,.4),inset -3px -4px 7px -4px rgba(255,255,255,.22),inset 0 0 18px rgba(255,255,255,.055);
+  --lift:0 14px 36px -16px rgba(0,0,0,.6),0 2px 5px rgba(0,0,0,.18);
+  --clear:blur(7px) saturate(185%);
   --spring:cubic-bezier(.3,1.5,.5,1);
   --btn-bg:radial-gradient(120% 95% at 50% -35%,rgba(255,255,255,.6),transparent 62%),linear-gradient(180deg,color-mix(in srgb,var(--accent) 86%,#fff),var(--accent) 55%,color-mix(in srgb,var(--accent) 88%,#000));
 }
 a,button,summary,label{-webkit-tap-highlight-color:transparent}
 body::before{content:"";position:fixed;z-index:-1;inset:0;pointer-events:none;
   background:
-    radial-gradient(40vmax 40vmax at 16% 18%,color-mix(in srgb,var(--accent) 36%,transparent),transparent 70%),
-    radial-gradient(36vmax 36vmax at 86% 36%,rgba(72,110,255,.34),transparent 70%),
-    radial-gradient(26vmax 26vmax at 40% 60%,rgba(150,90,255,.16),transparent 70%),
-    radial-gradient(32vmax 32vmax at 62% 92%,color-mix(in srgb,var(--gold) 17%,transparent),transparent 70%)}
-.stage::before{animation:none;opacity:.85}
+    radial-gradient(40vmax 40vmax at 14% 20%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 70%),
+    radial-gradient(36vmax 36vmax at 88% 40%,rgba(72,110,255,.3),transparent 70%),
+    radial-gradient(26vmax 26vmax at 40% 62%,rgba(150,90,255,.15),transparent 70%),
+    radial-gradient(32vmax 32vmax at 62% 94%,color-mix(in srgb,var(--gold) 15%,transparent),transparent 70%)}
+/* the hero has a wallpaper: ribbons of colour, so the glass above it has something to show and bend */
+.hero{position:relative}
+.hero::before{content:"";position:absolute;z-index:-1;inset:-96px 0 -40px;pointer-events:none;
+  background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 760' preserveAspectRatio='xMaxYMin slice'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233FE0F0'/%3E%3Cstop offset='.55' stop-color='%232F6BFF'/%3E%3Cstop offset='1' stop-color='%236A3DFF'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%237B4DFF'/%3E%3Cstop offset='.6' stop-color='%232F8FFF'/%3E%3Cstop offset='1' stop-color='%2339C7DA'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23F3C544'/%3E%3Cstop offset='1' stop-color='%23FF6F61'/%3E%3C/linearGradient%3E%3Cfilter id='f' x='-30%25' y='-30%25' width='160%25' height='160%25'%3E%3CfeGaussianBlur stdDeviation='16'/%3E%3C/filter%3E%3Cfilter id='s' x='-30%25' y='-30%25' width='160%25' height='160%25'%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M520 -80 C 700 150 960 20 1290 250' stroke='url(%23a)' stroke-width='130' opacity='.8' filter='url(%23f)'/%3E%3Cpath d='M610 820 C 760 520 1000 640 1300 400' stroke='url(%23b)' stroke-width='170' opacity='.62' filter='url(%23f)'/%3E%3Cpath d='M800 150 C 900 300 1050 280 1150 470' stroke='url(%23c)' stroke-width='30' opacity='.5' filter='url(%23s)'/%3E%3Cpath d='M540 -40 C 720 170 960 60 1280 280' stroke='%23BFF6FF' stroke-width='5' opacity='.5' filter='url(%23s)'/%3E%3C/g%3E%3C/svg%3E") right top/cover no-repeat;
+  -webkit-mask-image:linear-gradient(#000 62%,transparent);mask-image:linear-gradient(#000 62%,transparent)}
+@media (max-width:860px){.hero::before{opacity:.75}}
+.stage::before{display:none}
 
-/* bars: blur and saturate what is under them */
-.top,.sum,.toast{border:1px solid var(--rim);background-image:var(--glass);box-shadow:var(--edge),var(--lift);-webkit-backdrop-filter:blur(16px) saturate(190%);backdrop-filter:blur(16px) saturate(190%)}
-.top{background-color:color-mix(in srgb,var(--bg) 42%,transparent);transition:background-color .4s}
+/* content dims as it slides under the header, the way the system fades a scroll edge */
+html::before{content:"";position:fixed;z-index:15;top:0;left:0;right:0;height:108px;pointer-events:none;opacity:0;transition:opacity .35s;
+  background:linear-gradient(color-mix(in srgb,var(--bg) 82%,transparent),color-mix(in srgb,var(--bg) 46%,transparent) 58%,transparent)}
+html.scrolled::before{opacity:1}
+
+/* glass: clear, lightly blurred, lit along the rim from the top left and the bottom right */
+.top,.sum,.toast,.mock,.hero-cta .btn-ghost{border:1px solid var(--rim);background-color:var(--glass);background-image:none;box-shadow:var(--edge),var(--lift);-webkit-backdrop-filter:var(--clear);backdrop-filter:var(--clear)}
+.top{background-color:color-mix(in srgb,var(--bg) 26%,transparent);transition:background-color .4s}
 /* like the system glass, the bar darkens when something light slides under it */
-.top.over-light{background-color:color-mix(in srgb,var(--bg) 78%,transparent)}
-.sum{background-color:color-mix(in srgb,var(--raised) 58%,transparent);border-color:color-mix(in srgb,var(--accent) 30%,var(--rim));border-radius:26px}
-.toast{background-color:color-mix(in srgb,var(--raised) 52%,transparent);border-radius:18px}
-@media (max-width:640px){.sum{background-color:color-mix(in srgb,var(--raised) 66%,transparent);border-radius:24px}}
+.top.over-light{background-color:color-mix(in srgb,var(--bg) 74%,transparent)}
+.sum{background-color:color-mix(in srgb,var(--raised) 50%,transparent);border-radius:26px;-webkit-backdrop-filter:blur(12px) saturate(185%);backdrop-filter:blur(12px) saturate(185%)}
+.toast{background-color:color-mix(in srgb,var(--raised) 34%,transparent);border-radius:18px}
+.mock{background-color:color-mix(in srgb,var(--surface) 30%,transparent);border-radius:22px}
+@media (max-width:640px){.sum{background-color:color-mix(in srgb,var(--raised) 62%,transparent);border-radius:24px}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .top,.sum,.toast{background-color:color-mix(in srgb,var(--raised) 96%,transparent)}
+  .top,.sum,.toast,.mock{background-color:color-mix(in srgb,var(--raised) 96%,transparent)}
 }
-/* panels: tinted glass, no blur needed */
-.gets,.mock{border:1px solid var(--rim);background:var(--glass),color-mix(in srgb,var(--surface) 60%,transparent);box-shadow:var(--edge),var(--lift)}
-.gets{border-radius:24px}
-.mock{border-radius:22px}
-/* bright rim: light comes from the top left and returns at the bottom right */
-.top::before,.sum::before,.gets::before,.mock::before,.toast::before,.btn-ghost::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;
-  background:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.15) 22%,rgba(255,255,255,.02) 50%,rgba(255,255,255,.18) 78%,rgba(255,255,255,.72));
-  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+/* panels with nothing detailed behind them are tinted glass without the blur */
+.gets{border:1px solid var(--rim);background:linear-gradient(var(--glass),var(--glass)),color-mix(in srgb,var(--surface) 55%,transparent);box-shadow:var(--edge),var(--lift);border-radius:24px}
+/* the hero window borrows the look of a desktop window */
+.mock-bar{border-bottom-color:rgba(255,255,255,.1)}
+.mock-bar i{width:10px;height:10px;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.25)}
+.mock-bar i:nth-child(1){background:#FF5F57}
+.mock-bar i:nth-child(2){background:#FEBC2E}
+.mock-bar i:nth-child(3){background:#28C840}
+.url{border-radius:999px;background:rgba(0,0,0,.28);box-shadow:inset 0 0 0 1px rgba(255,255,255,.08)}
+.m-cards div{border-color:rgba(255,255,255,.12);background:rgba(255,255,255,.04)}
+.m-cards i{background:rgba(255,255,255,.1)}
+.m-p,.m-cards u,.m-nav span{background:rgba(255,255,255,.2)}
 
 /* header: a floating capsule */
 .top{top:calc(10px + env(safe-area-inset-top,0px));width:min(calc(100% - 20px),1084px);margin:10px auto 0;border-radius:999px}
@@ -421,10 +438,9 @@ section{scroll-margin-top:84px}
 .btn,.copy,.row,.link{position:relative;overflow:hidden}
 .btn{isolation:isolate;text-align:center;border-radius:999px;transition:transform .45s var(--spring),background-color .2s,border-color .2s,color .2s,filter .2s}
 .btn-primary{background:var(--btn-bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.18),0 12px 26px -14px color-mix(in srgb,var(--accent) 85%,transparent)}
-.btn-ghost{background:var(--glass),rgba(255,255,255,.02);border-color:transparent;box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.1),inset 0 0 14px rgba(255,255,255,.08),0 10px 24px -14px rgba(0,0,0,.8)}
-.btn-ghost::before{inset:0;z-index:-1}
-.copy{border-radius:999px;background:var(--glass);border-color:var(--rim);transition:transform .45s var(--spring),color .2s,border-color .2s}
-.link .ic{background:var(--glass);border-color:var(--rim);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);transition:background-color .25s,color .25s,border-color .25s,transform .45s var(--spring)}
+.btn-ghost{background:var(--glass);border-color:var(--rim);box-shadow:var(--edge),0 10px 24px -14px rgba(0,0,0,.6)}
+.copy{border-radius:999px;background:var(--glass);border-color:var(--rim);box-shadow:var(--edge);transition:transform .45s var(--spring),color .2s,border-color .2s}
+.link .ic{background:var(--glass);border-color:var(--rim);box-shadow:var(--edge);transition:background-color .25s,color .25s,border-color .25s,transform .45s var(--spring)}
 .hero-cta .btn-primary::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.55) 50%,transparent 64%);transform:translateX(-120%);animation:sheen 7s ease-in-out 2.4s infinite}
 @keyframes sheen{0%,74%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
 /* light spreads from the exact point of the tap */
@@ -439,7 +455,7 @@ section{scroll-margin-top:84px}
 /* a finger leaves hover "stuck", so on touch screens hover is switched off and replaced below */
 @media (hover:none){
   .btn-primary:hover{transform:none;background:var(--btn-bg)}
-  .btn-ghost:hover{border-color:transparent;color:var(--fg)}
+  .btn-ghost:hover{border-color:var(--rim);color:var(--fg)}
   .row:hover{background:transparent}
   .link:hover .ic{background:var(--glass);border-color:var(--rim);color:var(--accent)}
   .copy:hover{color:var(--muted);border-color:var(--rim)}
@@ -458,11 +474,11 @@ section{scroll-margin-top:84px}
 .link:active .ic,.links li.is-focus .ic{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);transform:scale(1.08)}
 
 /* language switch: a glass thumb slides between the languages */
-.lang{position:relative;gap:0;border-radius:999px;background:rgba(6,14,16,.38);border-color:var(--rim);box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}
-.lang button{position:relative;z-index:1;width:36px;min-width:0;padding:0;border-radius:999px}
+.lang{position:relative;gap:0;padding:3px;border-radius:999px;background:rgba(0,0,0,.26);border-color:transparent;box-shadow:inset 0 1px 2px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.07)}
+.lang button{position:relative;width:36px;min-width:0;padding:0;border-radius:999px}
 @media (max-width:520px){.lang button{width:33px;min-width:0;padding:0}}
 @supports selector(:has(*)){
-  .lang::before{content:"";position:absolute;top:2px;bottom:2px;left:2px;width:calc((100% - 4px)/3);border-radius:999px;background:linear-gradient(180deg,rgba(255,255,255,.36),rgba(255,255,255,.1));box-shadow:inset 0 1px 0 rgba(255,255,255,.8),inset 0 -1px 0 rgba(255,255,255,.22),inset 0 0 8px rgba(255,255,255,.2),0 6px 14px -6px #000;transition:transform .55s var(--spring);will-change:transform}
+  .lang::before{content:"";position:absolute;z-index:2;pointer-events:none;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);border-radius:999px;background:rgba(255,255,255,.13);box-shadow:var(--edge),0 5px 12px -5px rgba(0,0,0,.7);-webkit-backdrop-filter:var(--lens,saturate(160%) brightness(1.15));backdrop-filter:var(--lens,saturate(160%) brightness(1.15));transition:transform .55s var(--spring);will-change:transform}
   /* while it travels the thumb swells like a drop, then settles */
   .lang.moving::before{animation:blob .6s var(--ease)}
   .lang:has(button:nth-child(2)[aria-pressed="true"])::before{transform:translateX(100%)}
@@ -480,7 +496,7 @@ body.lang-go::after{animation:sweep .7s var(--ease)}
 @keyframes sweep{0%{opacity:1;transform:translateX(-110%)}100%{opacity:1;transform:translateX(110%)}}
 
 /* calculator: the chosen row turns to glass, the tick pops, the total bumps */
-.row:has(input:checked){background:var(--glass);box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 0 0 1px rgba(255,255,255,.05)}
+.row:has(input:checked){background:var(--glass);box-shadow:var(--edge)}
 .row:has(input:checked) .mark{animation:pop .5s var(--spring)}
 @keyframes pop{0%{transform:scale(.55)}100%{transform:scale(1)}}
 .sum-total .num{transform-origin:100% 50%}
@@ -507,10 +523,6 @@ body.lang-go::after{animation:sweep .7s var(--ease)}
 /* entrances run once and leave nothing behind, so re-rendered blocks do not replay them */
 .load,.reveal.in,.reveal.in > .stagger > *{animation-fill-mode:backwards}
 .reveal.seen,.reveal.seen > .stagger > *{animation:none}
-@media (hover:hover) and (min-width:861px){
-  .mock{animation:float 9s ease-in-out 3s infinite}
-}
-@keyframes float{50%{transform:translateY(-8px)}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -1447,17 +1459,36 @@ var whatsappMessages = {
     window.addEventListener('resize', function(){ clearTimeout(lightT); lightT = setTimeout(watchLight, 250); });
   }
 
-  /* real refraction on a computer in Chromium browsers: the rim of a floating bar bends what
-     scrolls under it, with a trace of colour fringing. Phones and other browsers keep the
-     blurred glass from the stylesheet, which every engine draws reliably. */
-  if (!touch && /Chrome\/\d+/.test(navigator.userAgent)) {
+  /* the scroll edge under the header appears once the page has moved */
+  if ('IntersectionObserver' in window) {
+    var mark = doc.createElement('i');
+    mark.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:48px;pointer-events:none';
+    doc.body.appendChild(mark);
+    new IntersectionObserver(function(en){ doc.documentElement.classList.toggle('scrolled', !en[0].isIntersecting); }).observe(mark);
+  }
+
+  /* Real refraction in Chromium browsers. Each glass shape gets a displacement map computed
+     from the profile of a rounded glass edge (a convex squircle bevel, refractive index 1.5):
+     the rim bends what is behind it strongly, the bend dies out quickly towards the flat
+     middle. Other engines cannot refract a backdrop and keep the clear glass from the stylesheet. */
+  if (/Chrome\/\d+/.test(navigator.userAgent) && !(navigator.deviceMemory && navigator.deviceMemory < 4)) {
     var NS = 'http://www.w3.org/2000/svg';
     var defs = doc.createElementNS(NS, 'svg');
     defs.setAttribute('aria-hidden', 'true');
     defs.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
     doc.body.appendChild(defs);
-    /* displacement map for a rounded bar: neutral in the middle, pushing inwards along the rim */
-    var mapURL = function(w, h, r, b){
+    /* how far a ray is shifted at each depth of the bevel, 0 = outer edge, 1 = flat glass */
+    var BEVEL = (function(){
+      var a = [], top = 0;
+      for (var q = 0; q <= 64; q++) {
+        var t = Math.max(q / 64, .004), u = 1 - t, u4 = u * u * u * u;
+        var y = Math.pow(1 - u4, .25), slope = u * u * u / Math.pow(1 - u4, .75);
+        var th = Math.atan(slope), v = y * Math.tan(th - Math.asin(Math.sin(th) / 1.5));
+        a.push(v); if (v > top) top = v;
+      }
+      return a.map(function(v){ return v / top; });
+    })();
+    var mapURL = function(w, h, r, b, zoom){
       var cv = doc.createElement('canvas'); cv.width = w; cv.height = h;
       var cx = cv.getContext('2d'), im = cx.createImageData(w, h), d = im.data;
       var mx = w / 2, my = h / 2, hx = mx - r, hy = my - r;
@@ -1466,38 +1497,55 @@ var whatsappMessages = {
         if (qx > 0 && qy > 0) { var l = Math.sqrt(qx * qx + qy * qy) || 1; dist = l - r; nx = qx / l * (px < 0 ? -1 : 1); ny = qy / l * (py < 0 ? -1 : 1); }
         else if (qx > qy) { dist = qx - r; nx = px < 0 ? -1 : 1; }
         else { dist = qy - r; ny = py < 0 ? -1 : 1; }
-        var t = 1 + dist / b; t = t < 0 ? 0 : t > 1 ? 1 : t;
-        var m = t * t, k = (y * w + x) * 4;
-        d[k] = 128 - nx * m * 127; d[k + 1] = 128 - ny * m * 127; d[k + 2] = 128; d[k + 3] = 255;
+        var t = -dist / b; t = t < 0 ? 0 : t > 1 ? 1 : t;
+        var f = t * 64, f0 = f | 0, m = f0 >= 64 ? BEVEL[64] : BEVEL[f0] + (BEVEL[f0 + 1] - BEVEL[f0]) * (f - f0);
+        var vx = -nx * m - zoom * px / mx, vy = -ny * m - zoom * py / my, k = (y * w + x) * 4;
+        d[k] = 128 + Math.max(-1, Math.min(1, vx)) * 127; d[k + 1] = 128 + Math.max(-1, Math.min(1, vy)) * 127; d[k + 2] = 128; d[k + 3] = 255;
       }
       cx.putImageData(im, 0, 0);
       return cv.toDataURL();
     };
-    var lens = function(el, id, blur){
+    /* o: blur, bevel (px), bend (max shift in px), zoom (0..1 of bend), size(el) -> [w,h,r], apply(css) */
+    var lens = function(el, id, o){
       if (!el) return;
-      var f = doc.createElementNS(NS, 'filter'), ks = [1.06, 1, .94], body = '<feImage result="m" x="0" y="0" preserveAspectRatio="none"/>';
+      var f = doc.createElementNS(NS, 'filter'), ks = touch ? [1] : [1.05, 1, .95], body = '<feImage result="m" x="0" y="0" preserveAspectRatio="none"/>';
       f.setAttribute('id', id); f.setAttribute('x', '0'); f.setAttribute('y', '0'); f.setAttribute('width', '100%'); f.setAttribute('height', '100%');
       f.setAttribute('color-interpolation-filters', 'sRGB');
-      ['1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0', '0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0', '0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0'].forEach(function(v, i){
-        body += '<feDisplacementMap in="SourceGraphic" in2="m" xChannelSelector="R" yChannelSelector="G" result="d' + i + '"/><feColorMatrix in="d' + i + '" type="matrix" values="' + v + '" result="c' + i + '"/>';
-      });
-      f.innerHTML = body + '<feBlend in="c0" in2="c1" mode="screen" result="c01"/><feBlend in="c01" in2="c2" mode="screen" result="c"/><feGaussianBlur in="c" stdDeviation="' + blur + '"/>';
+      if (touch) body += '<feDisplacementMap in="SourceGraphic" in2="m" xChannelSelector="R" yChannelSelector="G" result="c"/>';
+      else {
+        ['1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0', '0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 1 0', '0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 1 0'].forEach(function(v, i){
+          body += '<feDisplacementMap in="SourceGraphic" in2="m" xChannelSelector="R" yChannelSelector="G" result="d' + i + '"/><feColorMatrix in="d' + i + '" type="matrix" values="' + v + '" result="c' + i + '"/>';
+        });
+        body += '<feBlend in="c0" in2="c1" mode="screen" result="c01"/><feBlend in="c01" in2="c2" mode="screen" result="c"/>';
+      }
+      f.innerHTML = body + '<feGaussianBlur in="c" stdDeviation="' + o.blur + '"/>';
       defs.appendChild(f);
       var img = f.querySelector('feImage'), ds = f.querySelectorAll('feDisplacementMap'), lw = 0, lh = 0;
       var fit = function(){
-        var w = Math.round(el.offsetWidth), h = Math.round(el.offsetHeight);
+        var sz = o.size ? o.size(el) : [el.offsetWidth, el.offsetHeight, parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0];
+        var w = Math.round(sz[0]), h = Math.round(sz[1]);
         if (!w || !h || (w === lw && h === lh)) return;
         lw = w; lh = h;
-        var r = Math.min(parseFloat(getComputedStyle(el).borderTopLeftRadius) || 0, h / 2, w / 2), b = Math.max(8, Math.min(h * .3, 18));
-        img.setAttribute('href', mapURL(w, h, r, b)); img.setAttribute('width', w); img.setAttribute('height', h);
-        [].forEach.call(ds, function(dm, i){ dm.setAttribute('scale', (b * 2 * ks[i]).toFixed(1)); });
+        var r = Math.min(sz[2], h / 2, w / 2), b = Math.min(o.bevel, h / 2, w / 2);
+        img.setAttribute('href', mapURL(w, h, r, b, o.zoom || 0)); img.setAttribute('width', w); img.setAttribute('height', h);
+        [].forEach.call(ds, function(dm, i){ dm.setAttribute('scale', (o.bend * 2 * ks[i]).toFixed(1)); });
       };
       fit();
       if ('ResizeObserver' in window) new ResizeObserver(fit).observe(el);
-      el.style.backdropFilter = 'url(#' + id + ') saturate(1.9) brightness(1.06)';
+      var css = 'url(#' + id + ') saturate(' + (o.sat || 1.8) + ')';
+      if (o.apply) o.apply(el, css); else el.style.backdropFilter = css;
     };
-    lens(head, 'lens-top', 7);
-    lens(doc.querySelector('.sum'), 'lens-sum', 8);
+    lens(head, 'lens-top', { blur:3.2, bevel:30, bend:16 });
+    lens(doc.querySelector('.sum'), 'lens-sum', { blur:6, bevel:28, bend:16 });
+    lens($('toast'), 'lens-toast', { blur:1.6, bevel:20, bend:10 });
+    /* the language thumb is a small lens that rides over the letters and enlarges them a little */
+    lens(doc.querySelector('.lang'), 'lens-thumb', { blur:0, bevel:7, bend:4, zoom:.18, sat:1.5,
+      size:function(el){ return [(el.clientWidth - 6) / 3, el.clientHeight - 6, 999]; },
+      apply:function(el, css){ el.style.setProperty('--lens', css + ' brightness(1.12)'); } });
+    if (!touch) {
+      lens(doc.querySelector('.mock'), 'lens-mock', { blur:2.4, bevel:26, bend:14 });
+      lens(doc.querySelector('.hero-cta .btn-ghost'), 'lens-ghost', { blur:1.2, bevel:22, bend:11 });
+    }
   }
 
   if ('IntersectionObserver' in window) {
