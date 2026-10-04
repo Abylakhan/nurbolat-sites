@@ -374,11 +374,21 @@ a,button,summary,label{-webkit-tap-highlight-color:transparent}
 /* taller than the screen, so the phone's collapsing address bar never uncovers its edge */
 body::before{content:"";position:fixed;z-index:-1;top:0;left:0;right:0;height:120vh;height:calc(100lvh + 2px);pointer-events:none;
   background:
-    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%233FE0F0'/%3E%3Cstop offset='.5' stop-color='%232F6BFF'/%3E%3Cstop offset='1' stop-color='%236A3DFF'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%237B4DFF'/%3E%3Cstop offset='.55' stop-color='%232F8FFF'/%3E%3Cstop offset='1' stop-color='%2339C7DA'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F3C544'/%3E%3Cstop offset='1' stop-color='%23FF6F61'/%3E%3C/linearGradient%3E%3Cfilter id='f' filterUnits='userSpaceOnUse' x='-400' y='-400' width='1800' height='1800'%3E%3CfeGaussianBlur stdDeviation='46 30'/%3E%3C/filter%3E%3Cfilter id='s' filterUnits='userSpaceOnUse' x='-400' y='-400' width='1800' height='1800'%3E%3CfeGaussianBlur stdDeviation='20 11'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M-150 30 C 220 -70 620 120 1150 -20' stroke='url(%23a)' stroke-width='120' opacity='.5' filter='url(%23f)'/%3E%3Cpath d='M-150 985 C 280 1070 640 880 1150 990' stroke='url(%23b)' stroke-width='150' opacity='.62' filter='url(%23f)'/%3E%3Cpath d='M120 955 C 420 1010 700 915 1040 965' stroke='url(%23c)' stroke-width='20' opacity='.5' filter='url(%23s)'/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat,
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%233FE0F0'/%3E%3Cstop offset='.5' stop-color='%232F6BFF'/%3E%3Cstop offset='1' stop-color='%236A3DFF'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%237B4DFF'/%3E%3Cstop offset='.55' stop-color='%232F8FFF'/%3E%3Cstop offset='1' stop-color='%2339C7DA'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F3C544'/%3E%3Cstop offset='1' stop-color='%23FF6F61'/%3E%3C/linearGradient%3E%3Cfilter id='f' filterUnits='userSpaceOnUse' x='-400' y='-400' width='1800' height='1800'%3E%3CfeGaussianBlur stdDeviation='46 30'/%3E%3C/filter%3E%3Cfilter id='s' filterUnits='userSpaceOnUse' x='-400' y='-400' width='1800' height='1800'%3E%3CfeGaussianBlur stdDeviation='20 11'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M-150 30 C 220 -70 620 120 1150 -20' stroke='url(%23a)' stroke-width='120' opacity='.5' filter='url(%23f)'/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat,
     radial-gradient(40vmax 40vmax at 14% 20%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 70%),
     radial-gradient(36vmax 36vmax at 88% 40%,rgba(72,110,255,.3),transparent 70%),
     radial-gradient(26vmax 26vmax at 40% 62%,rgba(150,90,255,.15),transparent 70%),
     radial-gradient(32vmax 32vmax at 62% 92%,color-mix(in srgb,var(--gold) 15%,transparent),transparent 70%)}
+/* the total bar needs colour behind it to read as glass; a soft halo, there only while the bar is */
+html::after{content:"";position:fixed;z-index:-1;left:0;right:0;bottom:0;height:300px;pointer-events:none;opacity:0;transition:opacity .5s;
+  background:
+    radial-gradient(46% 120px at 24% calc(100% - 52px),rgba(123,77,255,.42),transparent 72%),
+    radial-gradient(52% 130px at 62% calc(100% - 46px),rgba(47,143,255,.44),transparent 72%),
+    radial-gradient(34% 110px at 92% calc(100% - 56px),rgba(57,199,218,.3),transparent 72%)}
+html.sum-on::after{opacity:1}
+@media (max-width:640px){html::after{background:
+    radial-gradient(70% 150px at 18% calc(100% - 78px),rgba(123,77,255,.4),transparent 72%),
+    radial-gradient(80% 160px at 70% calc(100% - 70px),rgba(47,143,255,.42),transparent 72%)}}
 /* the hero has a wallpaper: ribbons of colour, so the glass above it has something to show and bend */
 .hero{position:relative}
 .hero::before{content:"";position:absolute;z-index:-1;inset:-96px 0 -40px;pointer-events:none;
@@ -1505,6 +1515,11 @@ var whatsappMessages = {
     mark.style.cssText = 'position:absolute;top:0;left:0;width:1px;height:48px;pointer-events:none';
     doc.body.appendChild(mark);
     new IntersectionObserver(function(en){ doc.documentElement.classList.toggle('scrolled', !en[0].isIntersecting); }).observe(mark);
+  }
+
+  /* the halo behind the total bar is lit only while the bar is on screen */
+  if ('IntersectionObserver' in window && doc.querySelector('.sum')) {
+    new IntersectionObserver(function(en){ doc.documentElement.classList.toggle('sum-on', en[0].isIntersecting); }).observe(doc.querySelector('.sum'));
   }
 
   /* Real refraction in Chromium browsers. Each glass shape gets a displacement map computed
