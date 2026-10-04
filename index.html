@@ -419,10 +419,8 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     <div class="wrap">
       <div class="sec-head reveal">
         <h2 data-i18n="prices_h2">Цены</h2>
-        <p class="lead" data-i18n="tariffs_lead">Три готовых пакета. Цены указаны «от»: точная сумма зависит от объёма работы.</p>
+        <p class="lead" data-i18n="tariffs_lead">Цены указаны «от»: точная сумма зависит от объёма работы.</p>
       </div>
-      <div class="reveal"><div class="tariffs stagger" id="tariffs"></div></div>
-
       <div class="calc" id="calc">
         <div class="sub-head reveal">
           <h3 class="sub" data-i18n="calc_h3">Калькулятор стоимости</h3>
@@ -506,7 +504,7 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
     <div class="wrap">
       <div class="sec-head reveal">
         <h2 data-i18n="portfolio_h2">Портфолио</h2>
-        <p class="lead" data-i18n="portfolio_lead">Собственные проекты и демонстрации для разных ниш. Демо можно открыть и посмотреть, как будет выглядеть ваш сайт.</p>
+        <p class="lead" data-i18n="portfolio_lead">Демонстрации для разных ниш. Демо можно открыть и посмотреть, как будет выглядеть ваш сайт.</p>
       </div>
 
       <div class="group reveal">
@@ -515,26 +513,6 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
           <p data-i18n="demos_note">Это демонстрационные шаблоны, а не сайты реальных клиентов. Названия и цены в них условные.</p>
         </div>
         <div class="works stagger" id="demos"></div>
-      </div>
-
-      <div class="group reveal">
-        <div class="group-head"><h3 class="sub" data-i18n="own_h3">Собственные проекты</h3></div>
-        <div class="works two stagger">
-          <figure class="work">
-            <div class="shot shot-a" aria-hidden="true">
-              <div class="sa-list"><div><i></i><span><b></b><u></u></span></div><div><i></i><span><b></b><u></u></span></div><div><i></i><span><b></b><u></u></span></div></div>
-              <div class="sa-grid"><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i></i></div>
-            </div>
-            <figcaption><span class="tag own" data-i18n="tag_own">Свой проект</span><h3 data-i18n="own1_t">Онлайн-запись для салонов и барбершопов</h3><p data-i18n="own1_d">Каталог салонов Шымкента, выбор мастера и времени, русский и казахский. React, Vite, Tailwind.</p></figcaption>
-          </figure>
-          <figure class="work">
-            <div class="shot" style="--c:#8FD06B" aria-hidden="true">
-              <div class="s-head w60"></div><div class="s-line w40"></div>
-              <div class="sb-desks"><i></i><i class="on"></i><i></i><i></i><i class="on"></i><i class="on"></i><i></i><i></i><i></i><i></i><i class="on"></i><i></i><i></i><i></i><i class="on"></i><i></i></div>
-            </div>
-            <figcaption><span class="tag own" data-i18n="tag_own">Свой проект</span><h3>Shymkent Hub</h3><p data-i18n="own2_d">Лендинг IT-коворкинга: бронирование рабочих мест, афиша событий, три языка.</p></figcaption>
-          </figure>
-        </div>
       </div>
 
       <p class="works-note reveal" data-i18n="works_note">Вашей ниши нет в списке? Напишите, чем занимаетесь, и я пришлю структуру сайта под ваш бизнес до оплаты.</p>
@@ -627,7 +605,7 @@ var translations = {
     niches_aria: 'Для каких ниш делаю сайты',
     niches: ['Стоматологии', 'Клиники', 'Автосалоны', 'Ремонт и строительство', 'Мебель на заказ', 'Учебные центры', 'Салоны красоты', 'Карго', 'Автошколы', 'Тойханы', 'СТО и детейлинг', 'Юристы и бухгалтеры', 'Турагентства'],
     prices_h2: 'Цены',
-    tariffs_lead: 'Три готовых пакета. Цены указаны «от»: точная сумма зависит от объёма работы.',
+    tariffs_lead: 'Цены указаны «от»: точная сумма зависит от объёма работы.',
     tariff_tag: 'Рекомендую', tariff_btn: 'Выбрать тариф',
     tariffs: {
       start: { name: 'Старт', items: ['Лендинг', 'Адаптивная версия', 'WhatsApp', 'Форма заявки', 'Базовая настройка'] },
@@ -690,7 +668,7 @@ var translations = {
     s4t: 'Сборка', s4d: 'Собираю сайт, подключаю заявки, домен и хостинг. Вы следите по ссылке.',
     s5t: 'Запуск', s5d: 'Сайт в интернете. Вторая половина оплаты, 14 дней правок и поддержка по желанию.',
     portfolio_h2: 'Портфолио',
-    portfolio_lead: 'Собственные проекты и демонстрации для разных ниш. Демо можно открыть и посмотреть, как будет выглядеть ваш сайт.',
+    portfolio_lead: 'Демонстрации для разных ниш. Демо можно открыть и посмотреть, как будет выглядеть ваш сайт.',
     own_h3: 'Собственные проекты', demos_h3: 'Демонстрации для бизнеса',
     demos_note: 'Это демонстрационные шаблоны, а не сайты реальных клиентов. Названия и цены в них условные.',
     tag_own: 'Свой проект', tag_demo: 'Демо', demo_open: 'Открыть демо', demo_want: 'Хочу такой сайт',
@@ -734,7 +712,7 @@ var translations = {
     niches_aria: 'Қандай салаларға сайт жасаймын',
     niches: ['Стоматологиялар', 'Клиникалар', 'Автосалондар', 'Жөндеу және құрылыс', 'Тапсырыспен жиһаз', 'Оқу орталықтары', 'Сұлулық салондары', 'Карго', 'Автомектептер', 'Тойханалар', 'СТО және детейлинг', 'Заңгерлер мен бухгалтерлер', 'Туристік агенттіктер'],
     prices_h2: 'Бағалар',
-    tariffs_lead: 'Үш дайын пакет. Бағалар «бастап» деп көрсетілген: нақты сома жұмыс көлеміне байланысты.',
+    tariffs_lead: 'Бағалар «бастап» деп көрсетілген: нақты сома жұмыс көлеміне байланысты.',
     tariff_tag: 'Ұсынамын', tariff_btn: 'Тарифті таңдау',
     tariffs: {
       start: { name: 'Старт', items: ['Лендинг', 'Бейімделген нұсқа', 'WhatsApp', 'Өтінім формасы', 'Базалық баптау'] },
@@ -797,7 +775,7 @@ var translations = {
     s4t: 'Жинақтау', s4d: 'Сайтты жинап, өтінімдерді, домен мен хостингті қосамын. Сіз сілтеме арқылы бақылап отырасыз.',
     s5t: 'Іске қосу', s5d: 'Сайт интернетте. Төлемнің екінші жартысы, 14 күн түзету және қалауыңыз бойынша қолдау.',
     portfolio_h2: 'Портфолио',
-    portfolio_lead: 'Жеке жобалар және әртүрлі салаларға арналған демонстрациялар. Демоны ашып, сайтыңыздың қалай көрінетінін көре аласыз.',
+    portfolio_lead: 'Әртүрлі салаларға арналған демонстрациялар. Демоны ашып, сайтыңыздың қалай көрінетінін көре аласыз.',
     own_h3: 'Жеке жобалар', demos_h3: 'Бизнеске арналған демонстрациялар',
     demos_note: 'Бұл нақты клиенттердің сайттары емес, демонстрациялық үлгілер. Олардағы атаулар мен бағалар шартты.',
     tag_own: 'Жеке жоба', tag_demo: 'Демо', demo_open: 'Демоны ашу', demo_want: 'Осындай сайт керек',
@@ -841,7 +819,7 @@ var translations = {
     niches_aria: 'Industries I build websites for',
     niches: ['Dental clinics', 'Medical clinics', 'Car dealerships', 'Renovation and construction', 'Custom furniture', 'Training centres', 'Beauty salons', 'Cargo', 'Driving schools', 'Banquet halls', 'Auto service and detailing', 'Lawyers and accountants', 'Travel agencies'],
     prices_h2: 'Pricing',
-    tariffs_lead: 'Three ready-made packages. Prices are “from”: the exact amount depends on the scope of work.',
+    tariffs_lead: 'Prices are “from”: the exact amount depends on the scope of work.',
     tariff_tag: 'Recommended', tariff_btn: 'Choose package',
     tariffs: {
       start: { name: 'Start', items: ['Landing page', 'Mobile-friendly layout', 'WhatsApp', 'Enquiry form', 'Basic setup'] },
@@ -904,7 +882,7 @@ var translations = {
     s4t: 'Build', s4d: 'I build the site and connect enquiries, the domain and hosting. You follow progress via a link.',
     s5t: 'Launch', s5d: 'The site is live. The second half of the payment, 14 days of revisions and optional support.',
     portfolio_h2: 'Portfolio',
-    portfolio_lead: 'My own projects and demos for different industries. Open a demo to see how your website could look.',
+    portfolio_lead: 'Demos for different industries. Open a demo to see how your website could look.',
     own_h3: 'My own projects', demos_h3: 'Demos for business',
     demos_note: 'These are demo templates, not real client websites. The names and prices in them are placeholders.',
     tag_own: 'Own project', tag_demo: 'Demo', demo_open: 'Open demo', demo_want: 'I want a site like this',
@@ -1180,7 +1158,7 @@ var whatsappMessages = {
     all('[data-i18n-aria]').forEach(function(el){ el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria'))); });
     all('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
     $('toastText').textContent = t('leads')[leadIndex];
-    renderNiches(); renderTariffs(); renderDemos(); renderRows(); renderGets(); update(true); refreshWa();
+    renderNiches(); renderDemos(); renderRows(); renderGets(); update(true); refreshWa();
   }
   function setLang(next){
     if (!LANGS[next] || next === lang) return;
