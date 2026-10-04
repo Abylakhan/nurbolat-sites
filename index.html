@@ -93,7 +93,7 @@ section + section{border-top:1px solid var(--line-soft)}
 @media (max-width:860px){.hero .wrap{grid-template-columns:minmax(0,1fr)}}
 
 .stage{position:relative;min-width:0}
-.stage::before{content:"";position:absolute;inset:-12% -8% -18%;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 22%,transparent),transparent 72%);filter:blur(20px);animation:breathe 9s ease-in-out infinite;pointer-events:none}
+.stage::before{content:"";position:absolute;inset:-12% -8% -18%;background:radial-gradient(closest-side,color-mix(in srgb,var(--accent) 40%,transparent),transparent 72%);filter:blur(20px);animation:breathe 9s ease-in-out infinite;pointer-events:none}
 .mock{position:relative;border:1px solid var(--line);border-radius:14px;background:var(--surface);box-shadow:0 40px 90px -50px #000}
 .mock-bar{display:flex;align-items:center;gap:6px;padding:11px 12px;border-bottom:1px solid var(--line)}
 .mock-bar i{width:9px;height:9px;border-radius:50%;background:var(--line);flex:none}
@@ -361,9 +361,10 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 }
 body::before{content:"";position:fixed;z-index:-1;inset:-12%;pointer-events:none;will-change:transform;
   background:
-    radial-gradient(38vmax 38vmax at 20% 24%,color-mix(in srgb,var(--accent) 26%,transparent),transparent 70%),
-    radial-gradient(34vmax 34vmax at 82% 40%,rgba(64,105,255,.2),transparent 70%),
-    radial-gradient(30vmax 30vmax at 56% 86%,color-mix(in srgb,var(--gold) 11%,transparent),transparent 70%);
+    radial-gradient(40vmax 40vmax at 18% 20%,color-mix(in srgb,var(--accent) 36%,transparent),transparent 70%),
+    radial-gradient(36vmax 36vmax at 84% 36%,rgba(72,110,255,.34),transparent 70%),
+    radial-gradient(26vmax 26vmax at 40% 58%,rgba(150,90,255,.16),transparent 70%),
+    radial-gradient(32vmax 32vmax at 60% 88%,color-mix(in srgb,var(--gold) 17%,transparent),transparent 70%);
   animation:drift 36s ease-in-out infinite alternate}
 @keyframes drift{0%{transform:translate3d(-3%,-2%,0)}50%{transform:translate3d(3%,2%,0)}100%{transform:translate3d(-1%,4%,0)}}
 
@@ -383,7 +384,7 @@ body::before{content:"";position:fixed;z-index:-1;inset:-12%;pointer-events:none
 }
 /* bright rim, strongest at the top-left corner where the light comes from */
 .top::before,.sum::before,.gets::before,.mock::before,.toast::before,.btn-ghost::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;
-  background:linear-gradient(140deg,rgba(255,255,255,.95),rgba(255,255,255,.14) 24%,rgba(255,255,255,.02) 55%,rgba(255,255,255,.55));
+  background:linear-gradient(var(--la,140deg),rgba(255,255,255,.98),rgba(255,255,255,.16) 22%,rgba(255,255,255,.02) 52%,rgba(255,255,255,.2) 78%,rgba(255,255,255,.7));
   -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 /* a patch of light that moves with the scroll, the finger or the cursor */
 .sum::after,.gets::after,.mock::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
@@ -440,7 +441,8 @@ section{scroll-margin-top:84px}
   .lang.moving::before{animation:blob .65s var(--ease)}
   .lang:has(button:nth-child(2)[aria-pressed="true"])::before{transform:translateX(100%)}
   .lang:has(button:nth-child(3)[aria-pressed="true"])::before{transform:translateX(200%)}
-  .lang button[aria-pressed="true"]{background:transparent}
+  .lang button[aria-pressed="true"]{background:transparent;transform:scale(1.14)}
+  .lang button{transition:color .2s,background-color .2s,transform .5s var(--spring)}
 }
 
 /* calculator: the chosen row turns to glass, the tick pops, the total bumps */
@@ -1439,9 +1441,9 @@ var whatsappMessages = {
       cx.putImageData(im, 0, 0);
       return cv.toDataURL();
     };
-    var lens = function(el, id, blur){
+    var lens = function(el, id, blur, spread){
       if (!el) return;
-      var f = doc.createElementNS(NS, 'filter'), ks = touch ? [1] : [1.14, 1, .86], body = '';
+      var f = doc.createElementNS(NS, 'filter'), ks = touch ? [1] : [1 + spread, 1, 1 - spread], body = '';
       f.setAttribute('id', id); f.setAttribute('x', '0'); f.setAttribute('y', '0'); f.setAttribute('width', '100%'); f.setAttribute('height', '100%');
       f.setAttribute('color-interpolation-filters', 'sRGB');
       body = '<feImage result="m" x="0" y="0" preserveAspectRatio="none"/>';
@@ -1467,9 +1469,31 @@ var whatsappMessages = {
       if ('ResizeObserver' in window) new ResizeObserver(fit).observe(el);
       el.style.backdropFilter = 'url(#' + id + ') saturate(2) brightness(1.1)';
     };
-    lens(head, 'lens-top', 9);
-    lens(doc.querySelector('.sum'), 'lens-sum', 9);
-    lens($('toast'), 'lens-toast', 2.5);
+    lens(head, 'lens-top', 9, .14);
+    lens(doc.querySelector('.sum'), 'lens-sum', 9, .14);
+    lens($('toast'), 'lens-toast', 2.5, .05);
+  }
+
+  /* the bright rim turns with the light: with the tilt of the phone where the browser reports
+     it, with the cursor on a computer, and with the scroll everywhere else */
+  var la = 140, laT = 0, tilted = false;
+  var shine = function(){
+    laT = 0;
+    all('.top,.sum,.gets,.mock,.toast,.btn-ghost').forEach(function(g){ g.style.setProperty('--la', la.toFixed(1) + 'deg'); });
+  };
+  var turn = function(v){ v = Math.max(40, Math.min(240, v)); if (Math.abs(v - la) < .6) return; la = v; if (!laT) laT = requestAnimationFrame(shine); };
+  if (touch) {
+    window.addEventListener('deviceorientation', function(e){
+      if (e.gamma == null) return;
+      tilted = true; turn(140 + e.gamma * 1.6 + ((e.beta || 45) - 45) * .5);
+    }, { passive:true });
+    window.addEventListener('scroll', function(){
+      if (tilted) return;
+      var max = doc.documentElement.scrollHeight - window.innerHeight;
+      turn(100 + (max > 0 ? window.pageYOffset / max : 0) * 110);
+    }, { passive:true });
+  } else {
+    window.addEventListener('pointermove', function(e){ turn(95 + e.clientX / window.innerWidth * 90 + (e.clientY / window.innerHeight - .5) * 30); }, { passive:true });
   }
 
   if ('IntersectionObserver' in window) {
