@@ -143,7 +143,7 @@ legend{padding:0;margin-bottom:8px;color:var(--muted);font-size:.9rem}
 .rows{display:grid}
 .row{position:relative;display:grid;grid-template-columns:22px minmax(0,max-content) minmax(12px,1fr) max-content;column-gap:12px;row-gap:2px;align-items:baseline;padding:16px 12px 16px 10px;margin-inline:-10px;border-radius:10px;cursor:pointer;transition:background-color .2s}
 .rows .row::before{content:"";position:absolute;left:10px;right:10px;top:0;border-top:1px solid var(--line)}
-.row:hover{background:var(--surface)}
+.row:hover{background:rgba(255,255,255,.04)}
 .row input{position:absolute;opacity:0;width:1px;height:1px}
 .row:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:-2px}
 .mark{align-self:center;grid-row:1;width:18px;height:18px;border:1.5px solid var(--muted);display:grid;place-items:center;transition:border-color .2s,background-color .2s}
@@ -356,14 +356,17 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 :root{
   --glass:rgba(255,255,255,.06);
   --rim:rgba(255,255,255,.08);
-  /* soft light inside the glass, strongest at the top left and bottom right */
-  --edge:inset 2px 3px 7px -4px rgba(255,255,255,.42),inset -2px -3px 7px -4px rgba(255,255,255,.24),inset 0 0 18px rgba(255,255,255,.05);
+  /* the glass is convex: light catches the upper curve, the lower curve falls into shade,
+     and a thin line of light gathers along the bottom edge */
+  --edge:inset 0 1px .5px rgba(255,255,255,.6),inset 0 14px 16px -14px rgba(255,255,255,.36),inset 0 -14px 18px -12px rgba(0,0,0,.45),inset 0 -1px .5px rgba(255,255,255,.34),inset 0 0 0 .5px rgba(255,255,255,.05);
   /* the crisp specular line on the rim, as a gradient: bright corner, dark sides, bright opposite corner */
   --spec:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.22) 20%,rgba(255,255,255,.04) 44%,rgba(255,255,255,.04) 58%,rgba(255,255,255,.24) 80%,rgba(255,255,255,.75));
-  /* the same rim for shapes too small to carry a gradient ring */
-  --edge-s:inset 1px 1px .5px -.5px rgba(255,255,255,.8),inset -1px -1px .5px -.5px rgba(255,255,255,.45),inset 0 0 10px rgba(255,255,255,.06);
+  /* the same curve for shapes too small to carry a gradient ring */
+  --edge-s:inset 0 1px .5px rgba(255,255,255,.75),inset 0 7px 8px -7px rgba(255,255,255,.34),inset 0 -7px 9px -6px rgba(0,0,0,.4),inset 0 -1px .5px rgba(255,255,255,.34);
   --lift:0 14px 36px -16px rgba(0,0,0,.6),0 2px 5px rgba(0,0,0,.18);
-  --clear:blur(7px) saturate(185%);
+  --clear:blur(7px) saturate(190%) brightness(1.1);
+  /* for glass with nothing detailed behind it: no blur, only the lift in colour and light that glass gives */
+  --boost:saturate(190%) brightness(1.22);
   --spring:cubic-bezier(.3,1.5,.5,1);
   --btn-bg:radial-gradient(120% 95% at 50% -35%,rgba(255,255,255,.6),transparent 62%),linear-gradient(180deg,color-mix(in srgb,var(--accent) 86%,#fff),var(--accent) 55%,color-mix(in srgb,var(--accent) 88%,#000));
 }
@@ -371,6 +374,7 @@ a,button,summary,label{-webkit-tap-highlight-color:transparent}
 /* taller than the screen, so the phone's collapsing address bar never uncovers its edge */
 body::before{content:"";position:fixed;z-index:-1;top:0;left:0;right:0;height:120vh;height:calc(100lvh + 2px);pointer-events:none;
   background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 1000' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%233FE0F0'/%3E%3Cstop offset='.5' stop-color='%232F6BFF'/%3E%3Cstop offset='1' stop-color='%236A3DFF'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%237B4DFF'/%3E%3Cstop offset='.55' stop-color='%232F8FFF'/%3E%3Cstop offset='1' stop-color='%2339C7DA'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' x1='0' y1='0' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%23F3C544'/%3E%3Cstop offset='1' stop-color='%23FF6F61'/%3E%3C/linearGradient%3E%3Cfilter id='f' filterUnits='userSpaceOnUse' x='-400' y='-400' width='1800' height='1800'%3E%3CfeGaussianBlur stdDeviation='46 30'/%3E%3C/filter%3E%3Cfilter id='s' filterUnits='userSpaceOnUse' x='-400' y='-400' width='1800' height='1800'%3E%3CfeGaussianBlur stdDeviation='20 11'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M-150 30 C 220 -70 620 120 1150 -20' stroke='url(%23a)' stroke-width='120' opacity='.5' filter='url(%23f)'/%3E%3Cpath d='M-150 985 C 280 1070 640 880 1150 990' stroke='url(%23b)' stroke-width='150' opacity='.62' filter='url(%23f)'/%3E%3Cpath d='M120 955 C 420 1010 700 915 1040 965' stroke='url(%23c)' stroke-width='20' opacity='.5' filter='url(%23s)'/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat,
     radial-gradient(40vmax 40vmax at 14% 20%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 70%),
     radial-gradient(36vmax 36vmax at 88% 40%,rgba(72,110,255,.3),transparent 70%),
     radial-gradient(26vmax 26vmax at 40% 62%,rgba(150,90,255,.15),transparent 70%),
@@ -385,7 +389,7 @@ body::before{content:"";position:fixed;z-index:-1;top:0;left:0;right:0;height:12
 
 /* content dims as it slides under the header, the way the system fades a scroll edge */
 html::before{content:"";position:fixed;z-index:15;top:0;left:0;right:0;height:96px;pointer-events:none;opacity:0;transition:opacity .35s;
-  background:linear-gradient(color-mix(in srgb,var(--bg) 82%,transparent),color-mix(in srgb,var(--bg) 46%,transparent) 58%,transparent)}
+  background:linear-gradient(color-mix(in srgb,var(--bg) 58%,transparent),color-mix(in srgb,var(--bg) 30%,transparent) 58%,transparent)}
 html.scrolled::before{opacity:1}
 
 /* ONE GLASS. Every glass shape on the page is built from the same parts:
@@ -398,20 +402,26 @@ html.scrolled::before{opacity:1}
 .top::after,.sum::after,.toast::after,.gets::after,.mock::after,.btn-ghost::before,.copy::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;
   background:var(--spec);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
 .btn-ghost::before,.copy::before{inset:0}
+/* on the plain page: lift the colour behind */
+.gets,.btn-ghost,.copy,.link .ic,.row:has(input:checked){-webkit-backdrop-filter:var(--boost);backdrop-filter:var(--boost)}
 /* over content: blur and bend */
 .top,.sum,.toast,.hero-cta .btn-ghost{-webkit-backdrop-filter:var(--clear);backdrop-filter:var(--clear)}
 .top{background-color:color-mix(in srgb,var(--bg) 26%,transparent);transition:background-color .4s}
 /* like the system glass, the bar darkens when something light slides under it */
 .top.over-light{background-color:color-mix(in srgb,var(--bg) 74%,transparent)}
-.sum{background-color:color-mix(in srgb,var(--raised) 50%,transparent);border-radius:26px;-webkit-backdrop-filter:blur(12px) saturate(185%);backdrop-filter:blur(12px) saturate(185%)}
+/* the total bar is the header's twin at the bottom of the screen: same clear capsule over the lower ribbon */
+.sum{background-color:color-mix(in srgb,var(--bg) 30%,transparent);border-radius:36px;padding:11px 12px 11px 30px;-webkit-backdrop-filter:blur(9px) saturate(190%) brightness(1.1);backdrop-filter:blur(9px) saturate(190%) brightness(1.1)}
+html.scrolled .top{background-color:color-mix(in srgb,var(--bg) 34%,transparent)}
+html.scrolled .top.over-light{background-color:color-mix(in srgb,var(--bg) 74%,transparent)}
 .toast{z-index:1;background-color:color-mix(in srgb,var(--raised) 34%,transparent);border-radius:18px}
 /* the window keeps its glass on a layer of its own, so the notification on top of it can blur the window too */
 .mock{isolation:isolate;background:none;border-radius:22px;box-shadow:var(--lift)}
 .mock::before{content:"";position:absolute;inset:-1px;z-index:-1;border-radius:inherit;pointer-events:none;background:color-mix(in srgb,var(--surface) 30%,transparent);box-shadow:var(--edge);-webkit-backdrop-filter:var(--lens,var(--clear));backdrop-filter:var(--lens,var(--clear))}
 .gets{border-radius:24px}
-@media (max-width:640px){.sum{background-color:color-mix(in srgb,var(--raised) 62%,transparent);border-radius:24px}}
+@media (max-width:640px){.sum{background-color:color-mix(in srgb,var(--bg) 38%,transparent);border-radius:30px;padding:15px 15px 14px 18px}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .top,.sum,.toast{background-color:color-mix(in srgb,var(--raised) 96%,transparent)}
+  .top,.sum,.toast,html.scrolled .top{background-color:color-mix(in srgb,var(--raised) 96%,transparent)}
+  .gets{background-color:var(--surface)}
   .mock::before{background:color-mix(in srgb,var(--surface) 92%,transparent)}
 }
 /* small glass: the badge on a demo card, contact icons, the chosen row */
@@ -464,7 +474,7 @@ section{scroll-margin-top:84px}
 /* buttons: capsules that swell slightly under the finger and spring back */
 .btn,.copy,.row,.link{position:relative;overflow:hidden}
 .btn{isolation:isolate;text-align:center;border-radius:999px;transition:transform .45s var(--spring),background-color .2s,border-color .2s,color .2s,filter .2s}
-.btn-primary{background:var(--btn-bg);box-shadow:inset 1px 1px .5px -.5px rgba(255,255,255,.95),inset -1px -1px .5px -.5px rgba(255,255,255,.4),inset 0 -9px 12px -9px rgba(0,40,50,.35),0 12px 26px -14px color-mix(in srgb,var(--accent) 85%,transparent)}
+.btn-primary{background:var(--btn-bg);box-shadow:inset 0 1px .5px rgba(255,255,255,.95),inset 0 -12px 14px -10px rgba(0,50,62,.5),inset 0 -1px .5px rgba(255,255,255,.5),0 12px 26px -14px color-mix(in srgb,var(--accent) 85%,transparent)}
 .copy{border-radius:999px;transition:transform .45s var(--spring),color .2s,border-color .2s}
 .link .ic{background:var(--glass);border-color:var(--rim);box-shadow:var(--edge-s);transition:background-color .25s,color .25s,border-color .25s,transform .45s var(--spring)}
 .hero-cta .btn-primary::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.55) 50%,transparent 64%);transform:translateX(-120%);animation:sheen 7s ease-in-out 2.4s infinite}
@@ -1507,12 +1517,13 @@ var whatsappMessages = {
     defs.setAttribute('aria-hidden', 'true');
     defs.style.cssText = 'position:absolute;width:0;height:0;overflow:hidden';
     doc.body.appendChild(defs);
-    /* how far a ray is shifted at each depth of the bevel, 0 = outer edge, 1 = flat glass */
+    /* how far a ray is shifted at each depth of the curve, 0 = outer edge, 1 = the middle.
+       The surface is a dome (a circular arc, refractive index 1.5), so the whole shape acts as
+       a convex lens: the rim squeezes what is behind it and the middle enlarges it slightly. */
     var BEVEL = (function(){
       var a = [], top = 0;
       for (var q = 0; q <= 64; q++) {
-        var t = Math.max(q / 64, .004), u = 1 - t, u4 = u * u * u * u;
-        var y = Math.pow(1 - u4, .25), slope = u * u * u / Math.pow(1 - u4, .75);
+        var t = Math.max(q / 64, .004), u = 1 - t, y = Math.sqrt(Math.max(1 - u * u, 1e-6)), slope = u / y;
         var th = Math.atan(slope), v = y * Math.tan(th - Math.asin(Math.sin(th) / 1.5));
         a.push(v); if (v > top) top = v;
       }
@@ -1565,18 +1576,18 @@ var whatsappMessages = {
       var css = 'url(#' + id + ') saturate(' + (o.sat || 1.8) + ')';
       if (o.apply) o.apply(el, css); else el.style.backdropFilter = css;
     };
-    lens(head, 'lens-top', { blur:3.2, bevel:30, bend:16 });
-    lens(doc.querySelector('.sum'), 'lens-sum', { blur:6, bevel:28, bend:16 });
-    lens($('toast'), 'lens-toast', { blur:1.6, bevel:20, bend:10 });
+    lens(head, 'lens-top', { blur:3, bevel:999, bend:15 });
+    lens(doc.querySelector('.sum'), 'lens-sum', { blur:4, bevel:40, bend:16 });
+    lens($('toast'), 'lens-toast', { blur:1.6, bevel:999, bend:10 });
     /* the language thumb is a small lens that rides over the letters and enlarges them a little */
-    lens(doc.querySelector('.lang'), 'lens-thumb', { blur:0, bevel:5, bend:3, zoom:.12, sat:1.5,
+    lens(doc.querySelector('.lang'), 'lens-thumb', { blur:0, bevel:999, bend:3, zoom:0, sat:1.5,
       size:function(el){ return [(el.clientWidth - 6) / 3, el.clientHeight - 6, 999]; },
       apply:function(el, css){ el.style.setProperty('--lens', css + ' brightness(1.12)'); } });
     if (!touch) {
-      lens(doc.querySelector('.mock'), 'lens-mock', { blur:2.4, bevel:26, bend:14,
+      lens(doc.querySelector('.mock'), 'lens-mock', { blur:2.4, bevel:46, bend:18,
         apply:function(el, css){ el.style.setProperty('--lens', css); } });
     }
-    lens(doc.querySelector('.hero-cta .btn-ghost'), 'lens-ghost', { blur:1.2, bevel:22, bend:11 });
+    lens(doc.querySelector('.hero-cta .btn-ghost'), 'lens-ghost', { blur:1.2, bevel:999, bend:11 });
   }
 
   if ('IntersectionObserver' in window) {
