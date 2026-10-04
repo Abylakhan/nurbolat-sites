@@ -356,19 +356,22 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 :root{
   --glass:rgba(255,255,255,.06);
   --rim:rgba(255,255,255,.08);
-  /* the glass is convex: light catches the upper curve, the lower curve falls into shade,
-     and a thin line of light gathers along the bottom edge */
-  --edge:inset 0 1px .5px rgba(255,255,255,.6),inset 0 14px 16px -14px rgba(255,255,255,.36),inset 0 -14px 18px -12px rgba(0,0,0,.45),inset 0 -1px .5px rgba(255,255,255,.34),inset 0 0 0 .5px rgba(255,255,255,.05);
+  /* the glass is a drop of water: the side facing the light falls into shade, and the light
+     that went through the drop gathers as a bright crescent on the far side */
+  --edge:inset 0 1px .5px rgba(255,255,255,.7),inset 0 13px 15px -11px rgba(0,0,0,.44),inset 0 -17px 20px -13px rgba(196,234,255,.4),inset 0 -1.5px 1px rgba(255,255,255,.6),inset 0 0 0 .5px rgba(255,255,255,.05);
+  /* the hard glint a drop always carries near the light, and the glow of the light it focuses */
+  --drop:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='69' height='27' viewBox='0 0 69 27'%3E%3Cdefs%3E%3ClinearGradient id='g' gradientUnits='userSpaceOnUse' x1='9.1' y1='0' x2='63' y2='0'%3E%3Cstop offset='0' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='.22' stop-color='white' stop-opacity='.95'/%3E%3Cstop offset='.55' stop-color='white' stop-opacity='.6'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3Cfilter id='b' x='-20%' y='-60%' width='140%' height='220%'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke='url(%23g)' stroke-linecap='round'%3E%3Cpath d='M9.1 20.9 A21.5 21.5 0 0 1 29 7.5 H63' stroke-width='5.7' opacity='.35' filter='url(%23b)'/%3E%3Cpath d='M9.1 20.9 A21.5 21.5 0 0 1 29 7.5 H63' stroke-width='2.2'/%3E%3C/g%3E%3C/svg%3E"),radial-gradient(ellipse 56% 80% at 76% 130%,rgba(190,232,255,.34),transparent 68%);
+  --drop-s:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='43' height='20' viewBox='0 0 43 20'%3E%3Cdefs%3E%3ClinearGradient id='g' gradientUnits='userSpaceOnUse' x1='6.6' y1='0' x2='38' y2='0'%3E%3Cstop offset='0' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='.22' stop-color='white' stop-opacity='.95'/%3E%3Cstop offset='.55' stop-color='white' stop-opacity='.6'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3Cfilter id='b' x='-20%' y='-60%' width='140%' height='220%'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke='url(%23g)' stroke-linecap='round'%3E%3Cpath d='M6.6 15.2 A15.5 15.5 0 0 1 21 5.5 H38' stroke-width='4.4' opacity='.35' filter='url(%23b)'/%3E%3Cpath d='M6.6 15.2 A15.5 15.5 0 0 1 21 5.5 H38' stroke-width='1.7'/%3E%3C/g%3E%3C/svg%3E"),radial-gradient(ellipse 60% 85% at 74% 135%,rgba(190,232,255,.3),transparent 68%);
   /* the crisp specular line on the rim, as a gradient: bright corner, dark sides, bright opposite corner */
   --spec:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.22) 20%,rgba(255,255,255,.04) 44%,rgba(255,255,255,.04) 58%,rgba(255,255,255,.24) 80%,rgba(255,255,255,.75));
   /* the same curve for shapes too small to carry a gradient ring */
-  --edge-s:inset 0 1px .5px rgba(255,255,255,.75),inset 0 7px 8px -7px rgba(255,255,255,.34),inset 0 -7px 9px -6px rgba(0,0,0,.4),inset 0 -1px .5px rgba(255,255,255,.34);
-  --lift:0 14px 36px -16px rgba(0,0,0,.6),0 2px 5px rgba(0,0,0,.18);
+  --edge-s:inset 0 1px .5px rgba(255,255,255,.8),inset 0 6px 7px -6px rgba(0,0,0,.42),inset 0 -8px 9px -6px rgba(196,234,255,.4),inset 0 -1px .5px rgba(255,255,255,.55);
+  --lift:0 16px 34px -16px rgba(0,0,0,.66),0 3px 6px rgba(0,0,0,.2),0 15px 26px -17px rgba(96,176,255,.42);
   --clear:blur(7px) saturate(190%) brightness(1.1);
   /* for glass with nothing detailed behind it: no blur, only the lift in colour and light that glass gives */
   --boost:saturate(190%) brightness(1.22);
   --spring:cubic-bezier(.3,1.5,.5,1);
-  --btn-bg:radial-gradient(120% 95% at 50% -35%,rgba(255,255,255,.6),transparent 62%),linear-gradient(180deg,color-mix(in srgb,var(--accent) 86%,#fff),var(--accent) 55%,color-mix(in srgb,var(--accent) 88%,#000));
+  --btn-bg:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='47' height='21' viewBox='0 0 47 21'%3E%3Cdefs%3E%3ClinearGradient id='g' gradientUnits='userSpaceOnUse' x1='6.7' y1='0' x2='42' y2='0'%3E%3Cstop offset='0' stop-color='white' stop-opacity='0'/%3E%3Cstop offset='.22' stop-color='white' stop-opacity='.95'/%3E%3Cstop offset='.55' stop-color='white' stop-opacity='.6'/%3E%3Cstop offset='1' stop-color='white' stop-opacity='0'/%3E%3C/linearGradient%3E%3Cfilter id='b' x='-20%' y='-60%' width='140%' height='220%'%3E%3CfeGaussianBlur stdDeviation='1.6'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke='url(%23g)' stroke-linecap='round'%3E%3Cpath d='M6.7 15.8 A16.5 16.5 0 0 1 22 5.5 H42' stroke-width='4.7' opacity='.35' filter='url(%23b)'/%3E%3Cpath d='M6.7 15.8 A16.5 16.5 0 0 1 22 5.5 H42' stroke-width='1.8'/%3E%3C/g%3E%3C/svg%3E") 0 0 no-repeat,radial-gradient(ellipse 72% 96% at 70% 138%,rgba(255,255,255,.66),transparent 66%),linear-gradient(180deg,color-mix(in srgb,var(--accent) 80%,#000),var(--accent) 50%,color-mix(in srgb,var(--accent) 80%,#fff));
 }
 a,button,summary,label{-webkit-tap-highlight-color:transparent}
 /* taller than the screen, so the phone's collapsing address bar never uncovers its edge */
@@ -408,6 +411,8 @@ html.scrolled::before{opacity:1}
    blur and bend it; shapes that sit on the plain page skip the blur, which would show nothing. */
 .top,.sum,.toast,.gets,.mock,.btn-ghost,.copy{border:1px solid var(--rim);background-color:var(--glass);background-image:none}
 .top,.sum,.toast,.gets{box-shadow:var(--edge),var(--lift)}
+.top,.sum,.gets{background-image:var(--drop);background-repeat:no-repeat}
+.toast,.btn-ghost,.copy{background-image:var(--drop-s);background-repeat:no-repeat}
 .btn-ghost,.copy{box-shadow:var(--edge),0 10px 24px -14px rgba(0,0,0,.6)}
 .top::after,.sum::after,.toast::after,.gets::after,.mock::after,.btn-ghost::before,.copy::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;
   background:var(--spec);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
@@ -426,7 +431,7 @@ html.scrolled .top.over-light{background-color:color-mix(in srgb,var(--bg) 74%,t
 .toast{z-index:1;background-color:color-mix(in srgb,var(--raised) 34%,transparent);border-radius:18px}
 /* the window keeps its glass on a layer of its own, so the notification on top of it can blur the window too */
 .mock{isolation:isolate;background:none;border-radius:22px;box-shadow:var(--lift)}
-.mock::before{content:"";position:absolute;inset:-1px;z-index:-1;border-radius:inherit;pointer-events:none;background:color-mix(in srgb,var(--surface) 30%,transparent);box-shadow:var(--edge);-webkit-backdrop-filter:var(--lens,var(--clear));backdrop-filter:var(--lens,var(--clear))}
+.mock::before{content:"";position:absolute;inset:-1px;z-index:-1;border-radius:inherit;pointer-events:none;background:var(--drop),color-mix(in srgb,var(--surface) 30%,transparent);background-repeat:no-repeat;box-shadow:var(--edge);-webkit-backdrop-filter:var(--lens,var(--clear));backdrop-filter:var(--lens,var(--clear))}
 .gets{border-radius:24px}
 @media (max-width:640px){.sum{background-color:color-mix(in srgb,var(--bg) 38%,transparent);border-radius:30px;padding:15px 15px 14px 18px}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
@@ -484,7 +489,7 @@ section{scroll-margin-top:84px}
 /* buttons: capsules that swell slightly under the finger and spring back */
 .btn,.copy,.row,.link{position:relative;overflow:hidden}
 .btn{isolation:isolate;text-align:center;border-radius:999px;transition:transform .45s var(--spring),background-color .2s,border-color .2s,color .2s,filter .2s}
-.btn-primary{background:var(--btn-bg);box-shadow:inset 0 1px .5px rgba(255,255,255,.95),inset 0 -12px 14px -10px rgba(0,50,62,.5),inset 0 -1px .5px rgba(255,255,255,.5),0 12px 26px -14px color-mix(in srgb,var(--accent) 85%,transparent)}
+.btn-primary{background:var(--btn-bg);box-shadow:inset 0 1px .5px rgba(255,255,255,.95),inset 0 9px 10px -8px rgba(0,44,56,.5),inset 0 -1.5px 1px rgba(255,255,255,.75),0 12px 26px -14px color-mix(in srgb,var(--accent) 85%,transparent),0 3px 6px rgba(0,0,0,.2)}
 .copy{border-radius:999px;transition:transform .45s var(--spring),color .2s,border-color .2s}
 .link .ic{background:var(--glass);border-color:var(--rim);box-shadow:var(--edge-s);transition:background-color .25s,color .25s,border-color .25s,transform .45s var(--spring)}
 .hero-cta .btn-primary::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.55) 50%,transparent 64%);transform:translateX(-120%);animation:sheen 7s ease-in-out 2.4s infinite}
@@ -493,6 +498,8 @@ section{scroll-margin-top:84px}
 .btn::after,.copy::after,.row::after,.link::after{content:"";position:absolute;left:var(--px,50%);top:var(--py,50%);width:12px;height:12px;margin:-6px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.6),rgba(255,255,255,0) 70%);opacity:0;pointer-events:none}
 .btn::after{z-index:-1}
 .lit::after{animation:lit .7s ease-out}
+.btn.lit,.copy.lit{animation:jelly .62s var(--ease)}
+@keyframes jelly{0%{scale:1}24%{scale:1.06 .93}50%{scale:.97 1.04}76%{scale:1.015 .99}100%{scale:1}}
 @keyframes lit{0%{opacity:.75;transform:scale(1)}100%{opacity:0;transform:scale(34)}}
 
 @media (hover:hover){
@@ -1591,14 +1598,15 @@ var whatsappMessages = {
       var css = 'url(#' + id + ') saturate(' + (o.sat || 1.8) + ')';
       if (o.apply) o.apply(el, css); else el.style.backdropFilter = css;
     };
-    lens(head, 'lens-top', { blur:3, bevel:999, bend:15 });
-    lens(doc.querySelector('.sum'), 'lens-sum', { blur:4, bevel:40, bend:16 });
-    lens($('toast'), 'lens-toast', { blur:1.6, bevel:999, bend:10 });
+    /* a drop is clear and bends hard: little blur, a deep bend, the middle slightly enlarged */
+    lens(head, 'lens-top', { blur:1.8, bevel:999, bend:22, zoom:.06 });
+    lens(doc.querySelector('.sum'), 'lens-sum', { blur:2.4, bevel:52, bend:24, zoom:.1 });
+    lens($('toast'), 'lens-toast', { blur:1.2, bevel:999, bend:15, zoom:.06 });
     if (!touch) {
-      lens(doc.querySelector('.mock'), 'lens-mock', { blur:2.4, bevel:46, bend:18,
+      lens(doc.querySelector('.mock'), 'lens-mock', { blur:1.8, bevel:64, bend:28, zoom:.12,
         apply:function(el, css){ el.style.setProperty('--lens', css); } });
     }
-    lens(doc.querySelector('.hero-cta .btn-ghost'), 'lens-ghost', { blur:1.2, bevel:999, bend:11 });
+    lens(doc.querySelector('.hero-cta .btn-ghost'), 'lens-ghost', { blur:.9, bevel:999, bend:15, zoom:.06 });
   }
 
   if ('IntersectionObserver' in window) {
