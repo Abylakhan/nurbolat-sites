@@ -346,6 +346,128 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
 .load{animation:rise .9s var(--ease) both;animation-delay:calc(var(--i,0)*110ms)}
 .reveal.in{animation:rise .8s var(--ease) both}
 .reveal.in > .stagger > *{animation:build .7s var(--ease) both;animation-delay:calc(var(--n,0)*70ms + 120ms)}
+/* ---------- liquid glass ----------
+   Coloured light drifts behind the page so the glass has something to bend.
+   Floating surfaces (header, total bar, "what you get", the hero window, ghost buttons)
+   are translucent, blurred and saturated, with a bright rim on top and a soft inner glow.
+   On phones nothing depends on hover: the light follows the finger and the scroll. */
+:root{
+  --glass:rgba(255,255,255,.055);
+  --rim:rgba(255,255,255,.15);
+  --glass-fx:blur(22px) saturate(190%) brightness(1.06);
+  --glass-shadow:inset 0 1px 0 rgba(255,255,255,.22),inset 0 -1px 0 rgba(255,255,255,.05),inset 0 0 28px -10px rgba(255,255,255,.14),0 24px 50px -28px rgba(0,0,0,.9);
+  --spring:cubic-bezier(.3,1.5,.5,1);
+  --btn-bg:linear-gradient(180deg,color-mix(in srgb,var(--accent) 86%,#fff),var(--accent) 55%,color-mix(in srgb,var(--accent) 88%,#000));
+}
+body::before{content:"";position:fixed;z-index:-1;inset:-12%;pointer-events:none;will-change:transform;
+  background:
+    radial-gradient(38vmax 38vmax at 20% 24%,color-mix(in srgb,var(--accent) 26%,transparent),transparent 70%),
+    radial-gradient(34vmax 34vmax at 82% 40%,rgba(64,105,255,.2),transparent 70%),
+    radial-gradient(30vmax 30vmax at 56% 86%,color-mix(in srgb,var(--gold) 11%,transparent),transparent 70%);
+  animation:drift 36s ease-in-out infinite alternate}
+@keyframes drift{0%{transform:translate3d(-3%,-2%,0)}50%{transform:translate3d(3%,2%,0)}100%{transform:translate3d(-1%,4%,0)}}
+
+.top,.sum,.gets,.mock,.toast{background:var(--glass);border:1px solid var(--rim);-webkit-backdrop-filter:var(--glass-fx);backdrop-filter:var(--glass-fx);box-shadow:var(--glass-shadow)}
+.top{background:color-mix(in srgb,var(--bg) 70%,transparent);-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%)}
+.sum{background:color-mix(in srgb,var(--raised) 68%,transparent);border-color:color-mix(in srgb,var(--accent) 34%,var(--rim))}
+.toast{background:color-mix(in srgb,var(--raised) 66%,transparent)}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .top,.sum,.toast{background:color-mix(in srgb,var(--raised) 96%,transparent)}
+  .gets,.mock{background:var(--surface)}
+}
+/* bright rim, strongest at the top-left corner where the light comes from */
+.top::before,.sum::before,.gets::before,.mock::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;
+  background:linear-gradient(140deg,rgba(255,255,255,.55),rgba(255,255,255,.05) 28%,rgba(255,255,255,0) 56%,rgba(255,255,255,.22));
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+/* a patch of light that moves with the scroll, the finger or the cursor */
+.sum::after,.gets::after,.mock::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(360px circle at var(--px,18%) var(--py,0%),rgba(255,255,255,.1),transparent 62%)}
+.top::after{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(150px 34px at var(--px,8%) 100%,color-mix(in srgb,var(--accent) 60%,transparent),transparent 72%)}
+
+/* header becomes a floating capsule */
+.top{top:calc(10px + env(safe-area-inset-top,0px));width:min(calc(100% - 20px),1084px);margin:10px auto 0;border-radius:22px}
+.top .wrap{max-width:none;min-height:58px;padding-inline:clamp(12px,2vw,22px)}
+section{scroll-margin-top:84px}
+.gets{top:calc(96px + env(safe-area-inset-top,0px))}
+@media (max-width:900px){.gets{position:relative;top:auto}}
+
+/* buttons: capsules that squash under the finger and spring back */
+.btn,.copy,.row,.link{position:relative;overflow:hidden;-webkit-tap-highlight-color:transparent}
+.btn{isolation:isolate;border-radius:999px;transition:transform .4s var(--spring),background-color .2s,border-color .2s,color .2s,box-shadow .3s}
+.btn-primary{background:var(--btn-bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.18),0 12px 26px -14px color-mix(in srgb,var(--accent) 85%,transparent)}
+.btn-ghost{background:var(--glass);border-color:var(--rim);-webkit-backdrop-filter:var(--glass-fx);backdrop-filter:var(--glass-fx);box-shadow:inset 0 1px 0 rgba(255,255,255,.2),inset 0 0 18px -8px rgba(255,255,255,.16)}
+.copy{border-radius:999px;background:var(--glass);border-color:var(--rim);transition:transform .4s var(--spring),color .2s,border-color .2s}
+.link .ic{background:var(--glass);border-color:var(--rim);box-shadow:inset 0 1px 0 rgba(255,255,255,.18);transition:background-color .25s,color .25s,border-color .25s,transform .4s var(--spring)}
+.hero-cta .btn-primary::before,.sum .btn-primary::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.6) 50%,transparent 64%);transform:translateX(-120%);animation:sheen 6s ease-in-out 2.4s infinite}
+@keyframes sheen{0%,72%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
+/* light spreads from the exact point of the tap */
+.btn::after,.copy::after,.row::after,.link::after{content:"";position:absolute;left:var(--px,50%);top:var(--py,50%);width:12px;height:12px;margin:-6px;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.6),rgba(255,255,255,0) 70%);opacity:0;pointer-events:none}
+.btn::after{z-index:-1}
+.lit::after{animation:lit .7s ease-out}
+@keyframes lit{0%{opacity:.75;transform:scale(1)}100%{opacity:0;transform:scale(34)}}
+
+/* a finger leaves hover "stuck", so on touch screens hover is switched off and replaced below */
+@media (hover:none){
+  .btn-primary:hover{transform:none;background:var(--btn-bg)}
+  .btn-ghost:hover{border-color:var(--rim);color:var(--fg)}
+  .row:hover{background:transparent}
+  .link:hover .ic{background:var(--glass);border-color:var(--rim);color:var(--accent)}
+  .copy:hover{color:var(--muted);border-color:var(--rim)}
+  .faq summary:hover{color:inherit}
+  .work:hover .shot{border-color:var(--line);transform:none}
+  .niches:hover .track{animation-play-state:running}
+}
+.btn:active,.copy:active{transform:scale(.95)}
+.btn-ghost:active{border-color:var(--accent);color:var(--accent)}
+.faq summary:active{color:var(--accent)}
+.link:active .ic,.links li.is-focus .ic{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);transform:scale(1.08)}
+
+/* language switch: the glass thumb slides between the languages */
+.lang{position:relative;gap:0;border-radius:999px;background:rgba(6,14,16,.38);border-color:var(--rim);box-shadow:inset 0 1px 0 rgba(255,255,255,.16)}
+.lang button{position:relative;z-index:1;width:36px;min-width:0;padding:0;border-radius:999px;-webkit-tap-highlight-color:transparent}
+@media (max-width:520px){.lang button{width:32px;min-width:0;padding:0}}
+@supports selector(:has(*)){
+  .lang::before{content:"";position:absolute;top:2px;bottom:2px;left:2px;width:calc((100% - 4px)/3);border-radius:999px;background:rgba(255,255,255,.13);box-shadow:inset 0 1px 0 rgba(255,255,255,.4),0 4px 12px -6px #000;transition:transform .55s var(--spring)}
+  .lang:has(button:nth-child(2)[aria-pressed="true"])::before{transform:translateX(100%)}
+  .lang:has(button:nth-child(3)[aria-pressed="true"])::before{transform:translateX(200%)}
+  .lang button[aria-pressed="true"]{background:transparent}
+}
+
+/* calculator: the chosen row turns to glass, the tick pops, the total bumps */
+.row:has(input:checked){background:var(--glass);box-shadow:inset 0 1px 0 rgba(255,255,255,.13),inset 0 0 0 1px rgba(255,255,255,.05)}
+.row:has(input:checked) .mark{animation:pop .5s var(--spring)}
+@keyframes pop{0%{transform:scale(.55)}100%{transform:scale(1)}}
+.sum-total .num{transform-origin:100% 50%}
+.sum-total .num.bump{animation:bump .55s var(--spring)}
+@keyframes bump{0%{transform:scale(1)}35%{transform:scale(1.09)}100%{transform:scale(1)}}
+
+/* cards react to the cursor on a computer and to the middle of the screen on a phone */
+.shot{transition:border-color .3s,transform .5s var(--ease),box-shadow .5s}
+.d-pic::after{transition:transform .9s var(--ease)}
+.d-copy em{transition:transform .5s var(--spring)}
+.work.is-focus .shot{border-color:color-mix(in srgb,var(--c) 55%,var(--line));transform:translateY(-4px)}
+.work:hover .shot,.work.is-focus .shot{box-shadow:0 28px 54px -30px color-mix(in srgb,var(--pa,var(--accent)) 80%,transparent)}
+.work:hover .d-pic::after,.work.is-focus .d-pic::after{transform:translate(-8%,-10%) scale(1.14)}
+.work:hover .d-copy em,.work.is-focus .d-copy em{transform:scale(1.07)}
+.basics li{position:relative}
+.basics li::before{content:"";position:absolute;top:-1px;left:0;width:0;border-top:1px solid var(--accent);transition:width .7s var(--ease)}
+.basics h3{transition:color .3s}
+.basics li:hover::before,.basics li.is-focus::before{width:100%}
+.basics li:hover h3,.basics li.is-focus h3{color:var(--accent)}
+/* steps light up one after another as you reach them */
+.steps li::after{transition:width .8s var(--ease);transition-delay:calc(var(--n,0)*150ms)}
+.steps li::before{transition:text-shadow .6s;transition-delay:calc(var(--n,0)*150ms)}
+.steps li.is-on::after{width:100%}
+.steps li.is-on::before{text-shadow:0 0 22px color-mix(in srgb,var(--accent) 75%,transparent)}
+@media (max-width:520px){.steps li::after,.steps li::before{transition-delay:0s}}
+
+/* entrances: headings pull into focus; nothing keeps a fill that would break the blur behind glass */
+.load,.reveal.in,.reveal.in > .stagger > *{animation-fill-mode:backwards}
+.reveal.in h2{animation:focusin .9s var(--ease) backwards}
+@keyframes focusin{from{opacity:0;filter:blur(10px);transform:translateY(14px)}}
+.mock{animation:float 9s ease-in-out 3s infinite}
+@keyframes float{50%{transform:translateY(-8px)}}
 @media (prefers-reduced-motion:reduce){
   html{scroll-behavior:auto}
   *,*::before,*::after{animation:none!important;transition:none!important}
@@ -1136,6 +1258,7 @@ var whatsappMessages = {
     $('sumDays').textContent = fmt(t('term'), { d: days });
     $('sumMonthly').textContent = state.support ? fmt(t('monthly'), { p: money(SUPPORT.price) }) : '';
     tween(total, spread, instant);
+    if (!instant && !calm) { var te = $('sumTotal'); te.classList.remove('bump'); void te.offsetWidth; te.classList.add('bump'); }
 
     var msg = fmt(W.calc, {
       service: tx.name,
@@ -1150,6 +1273,7 @@ var whatsappMessages = {
 
   /* ---------- переключение языка без перезагрузки ---------- */
   var leadIndex = 0;
+  var onRender = null;
   function applyLang(){
     doc.documentElement.lang = LANGS[lang];
     doc.title = t('title');
@@ -1159,6 +1283,7 @@ var whatsappMessages = {
     all('.lang button').forEach(function(b){ b.setAttribute('aria-pressed', String(b.getAttribute('data-lang') === lang)); });
     $('toastText').textContent = t('leads')[leadIndex];
     renderNiches(); renderDemos(); renderRows(); renderGets(); update(true); refreshWa();
+    if (onRender) onRender();
   }
   function setLang(next){
     if (!LANGS[next] || next === lang) return;
@@ -1214,6 +1339,60 @@ var whatsappMessages = {
     all('.reveal').forEach(function(el){
       if (el.getBoundingClientRect().top > window.innerHeight) io.observe(el);
     });
+  }
+
+  /* light spreads from the point of the tap or click */
+  doc.addEventListener('pointerdown', function(e){
+    var el = e.target.closest ? e.target.closest('.btn,.row,.copy,.link') : null;
+    if (!el || el.classList.contains('is-included')) return;
+    var r = el.getBoundingClientRect();
+    el.style.setProperty('--px', (e.clientX - r.left) + 'px');
+    el.style.setProperty('--py', (e.clientY - r.top) + 'px');
+    el.classList.remove('lit'); void el.offsetWidth; el.classList.add('lit');
+  }, { passive:true });
+
+  /* glass: the header glow shows how far the page is scrolled; on a phone the highlight
+     on the panels moves with the scroll, on a computer it follows the cursor */
+  var touch = window.matchMedia && matchMedia('(hover: none)').matches;
+  var head = doc.querySelector('.top'), panes = all('.sum,.gets,.mock'), tick = 0;
+  function glow(){
+    tick = 0;
+    var vh = window.innerHeight, max = doc.documentElement.scrollHeight - vh;
+    head.style.setProperty('--px', (6 + (max > 0 ? window.pageYOffset / max : 0) * 88) + '%');
+    if (!touch) return;
+    panes.forEach(function(p){
+      var r = p.getBoundingClientRect();
+      if (r.bottom < 0 || r.top > vh) return;
+      var k = Math.max(0, Math.min(1, 1 - (r.top + r.height / 2) / vh));
+      p.style.setProperty('--px', (8 + k * 84) + '%');
+      p.style.setProperty('--py', (100 - k * 100) + '%');
+    });
+  }
+  window.addEventListener('scroll', function(){ if (!tick) tick = requestAnimationFrame(glow); }, { passive:true });
+  glow();
+  if (!touch) panes.forEach(function(p){
+    p.addEventListener('pointermove', function(e){
+      var r = p.getBoundingClientRect();
+      p.style.setProperty('--px', (e.clientX - r.left) + 'px');
+      p.style.setProperty('--py', (e.clientY - r.top) + 'px');
+    }, { passive:true });
+  });
+
+  if ('IntersectionObserver' in window) {
+    /* steps switch on as the reader reaches them */
+    var so = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){ if (en.isIntersecting) { en.target.classList.add('is-on'); so.unobserve(en.target); } });
+    }, { rootMargin:'0px 0px -26% 0px' });
+    all('.steps li').forEach(function(el){ so.observe(el); });
+
+    /* no hover on a phone: the card passing the middle of the screen gets the hover look */
+    if (touch) {
+      var fo = new IntersectionObserver(function(entries){
+        entries.forEach(function(en){ en.target.classList.toggle('is-focus', en.isIntersecting); });
+      }, { rootMargin:'-36% 0px -36% 0px' });
+      var watch = function(){ all('.work,.basics li,.links li').forEach(function(el){ fo.observe(el); }); };
+      watch(); onRender = watch;
+    }
   }
 
   /* hero: type the address, then cycle example leads */
