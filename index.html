@@ -354,48 +354,68 @@ footer .wrap{display:flex;flex-wrap:wrap;gap:8px 24px;justify-content:space-betw
    rim but no blur, because nothing detailed is ever behind them. Nothing moves on its own
    behind a bar, so an idle page costs nothing and scrolling stays smooth. */
 :root{
-  --glass:rgba(255,255,255,.07);
-  --rim:rgba(255,255,255,.1);
-  --edge:inset 1px 1px .5px -.5px rgba(255,255,255,.85),inset -1px -1px .5px -.5px rgba(255,255,255,.5),inset 3px 4px 7px -4px rgba(255,255,255,.4),inset -3px -4px 7px -4px rgba(255,255,255,.22),inset 0 0 18px rgba(255,255,255,.055);
+  --glass:rgba(255,255,255,.06);
+  --rim:rgba(255,255,255,.08);
+  /* soft light inside the glass, strongest at the top left and bottom right */
+  --edge:inset 2px 3px 7px -4px rgba(255,255,255,.42),inset -2px -3px 7px -4px rgba(255,255,255,.24),inset 0 0 18px rgba(255,255,255,.05);
+  /* the crisp specular line on the rim, as a gradient: bright corner, dark sides, bright opposite corner */
+  --spec:linear-gradient(135deg,rgba(255,255,255,.95),rgba(255,255,255,.22) 20%,rgba(255,255,255,.04) 44%,rgba(255,255,255,.04) 58%,rgba(255,255,255,.24) 80%,rgba(255,255,255,.75));
+  /* the same rim for shapes too small to carry a gradient ring */
+  --edge-s:inset 1px 1px .5px -.5px rgba(255,255,255,.8),inset -1px -1px .5px -.5px rgba(255,255,255,.45),inset 0 0 10px rgba(255,255,255,.06);
   --lift:0 14px 36px -16px rgba(0,0,0,.6),0 2px 5px rgba(0,0,0,.18);
   --clear:blur(7px) saturate(185%);
   --spring:cubic-bezier(.3,1.5,.5,1);
   --btn-bg:radial-gradient(120% 95% at 50% -35%,rgba(255,255,255,.6),transparent 62%),linear-gradient(180deg,color-mix(in srgb,var(--accent) 86%,#fff),var(--accent) 55%,color-mix(in srgb,var(--accent) 88%,#000));
 }
 a,button,summary,label{-webkit-tap-highlight-color:transparent}
-body::before{content:"";position:fixed;z-index:-1;inset:0;pointer-events:none;
+/* taller than the screen, so the phone's collapsing address bar never uncovers its edge */
+body::before{content:"";position:fixed;z-index:-1;top:0;left:0;right:0;height:120vh;height:calc(100lvh + 2px);pointer-events:none;
   background:
     radial-gradient(40vmax 40vmax at 14% 20%,color-mix(in srgb,var(--accent) 30%,transparent),transparent 70%),
     radial-gradient(36vmax 36vmax at 88% 40%,rgba(72,110,255,.3),transparent 70%),
     radial-gradient(26vmax 26vmax at 40% 62%,rgba(150,90,255,.15),transparent 70%),
-    radial-gradient(32vmax 32vmax at 62% 94%,color-mix(in srgb,var(--gold) 15%,transparent),transparent 70%)}
+    radial-gradient(32vmax 32vmax at 62% 92%,color-mix(in srgb,var(--gold) 15%,transparent),transparent 70%)}
 /* the hero has a wallpaper: ribbons of colour, so the glass above it has something to show and bend */
 .hero{position:relative}
 .hero::before{content:"";position:absolute;z-index:-1;inset:-96px 0 -40px;pointer-events:none;
   background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 760' preserveAspectRatio='xMaxYMin slice'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233FE0F0'/%3E%3Cstop offset='.55' stop-color='%232F6BFF'/%3E%3Cstop offset='1' stop-color='%236A3DFF'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%237B4DFF'/%3E%3Cstop offset='.6' stop-color='%232F8FFF'/%3E%3Cstop offset='1' stop-color='%2339C7DA'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23F3C544'/%3E%3Cstop offset='1' stop-color='%23FF6F61'/%3E%3C/linearGradient%3E%3Cfilter id='f' x='-30%25' y='-30%25' width='160%25' height='160%25'%3E%3CfeGaussianBlur stdDeviation='16'/%3E%3C/filter%3E%3Cfilter id='s' x='-30%25' y='-30%25' width='160%25' height='160%25'%3E%3CfeGaussianBlur stdDeviation='5'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M520 -80 C 700 150 960 20 1290 250' stroke='url(%23a)' stroke-width='130' opacity='.8' filter='url(%23f)'/%3E%3Cpath d='M610 820 C 760 520 1000 640 1300 400' stroke='url(%23b)' stroke-width='170' opacity='.62' filter='url(%23f)'/%3E%3Cpath d='M800 150 C 900 300 1050 280 1150 470' stroke='url(%23c)' stroke-width='30' opacity='.5' filter='url(%23s)'/%3E%3Cpath d='M540 -40 C 720 170 960 60 1280 280' stroke='%23BFF6FF' stroke-width='5' opacity='.5' filter='url(%23s)'/%3E%3C/g%3E%3C/svg%3E") right top/cover no-repeat;
   -webkit-mask-image:linear-gradient(#000 62%,transparent);mask-image:linear-gradient(#000 62%,transparent)}
-@media (max-width:860px){.hero::before{opacity:.62}}
+@media (max-width:860px){.hero::before{background:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 400 1000' preserveAspectRatio='none'%3E%3Cdefs%3E%3ClinearGradient id='a' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%233FE0F0'/%3E%3Cstop offset='.55' stop-color='%232F6BFF'/%3E%3Cstop offset='1' stop-color='%236A3DFF'/%3E%3C/linearGradient%3E%3ClinearGradient id='b' x1='0' y1='1' x2='1' y2='0'%3E%3Cstop offset='0' stop-color='%237B4DFF'/%3E%3Cstop offset='.6' stop-color='%232F8FFF'/%3E%3Cstop offset='1' stop-color='%2339C7DA'/%3E%3C/linearGradient%3E%3ClinearGradient id='c' x1='0' y1='0' x2='1' y2='1'%3E%3Cstop offset='0' stop-color='%23F3C544'/%3E%3Cstop offset='1' stop-color='%23FF6F61'/%3E%3C/linearGradient%3E%3Cfilter id='f' x='-40%25' y='-40%25' width='180%25' height='180%25'%3E%3CfeGaussianBlur stdDeviation='14 22'/%3E%3C/filter%3E%3Cfilter id='s' x='-40%25' y='-40%25' width='180%25' height='180%25'%3E%3CfeGaussianBlur stdDeviation='5 8'/%3E%3C/filter%3E%3C/defs%3E%3Cg fill='none' stroke-linecap='round'%3E%3Cpath d='M-70 70 C 90 -40 270 -10 480 90' stroke='url(%23a)' stroke-width='70' opacity='.85' filter='url(%23f)'/%3E%3Cpath d='M-90 640 C 80 500 250 700 500 560' stroke='url(%23b)' stroke-width='105' opacity='.6' filter='url(%23f)'/%3E%3Cpath d='M40 560 C 150 500 270 640 430 600' stroke='url(%23c)' stroke-width='22' opacity='.55' filter='url(%23s)'/%3E%3C/g%3E%3C/svg%3E") center/100% 100% no-repeat;-webkit-mask-image:linear-gradient(#000 78%,transparent);mask-image:linear-gradient(#000 78%,transparent)}}
 .stage::before{display:none}
 
 /* content dims as it slides under the header, the way the system fades a scroll edge */
-html::before{content:"";position:fixed;z-index:15;top:0;left:0;right:0;height:108px;pointer-events:none;opacity:0;transition:opacity .35s;
+html::before{content:"";position:fixed;z-index:15;top:0;left:0;right:0;height:96px;pointer-events:none;opacity:0;transition:opacity .35s;
   background:linear-gradient(color-mix(in srgb,var(--bg) 82%,transparent),color-mix(in srgb,var(--bg) 46%,transparent) 58%,transparent)}
 html.scrolled::before{opacity:1}
 
-/* glass: clear, lightly blurred, lit along the rim from the top left and the bottom right */
-.top,.sum,.toast,.mock,.hero-cta .btn-ghost{border:1px solid var(--rim);background-color:var(--glass);background-image:none;box-shadow:var(--edge),var(--lift);-webkit-backdrop-filter:var(--clear);backdrop-filter:var(--clear)}
+/* ONE GLASS. Every glass shape on the page is built from the same parts:
+   a clear tint, the soft inner light (--edge), the specular rim (--spec ring, or --edge-s on
+   small shapes) and a soft shadow underneath. Shapes that float over detailed content also
+   blur and bend it; shapes that sit on the plain page skip the blur, which would show nothing. */
+.top,.sum,.toast,.gets,.mock,.btn-ghost,.copy{border:1px solid var(--rim);background-color:var(--glass);background-image:none}
+.top,.sum,.toast,.gets{box-shadow:var(--edge),var(--lift)}
+.btn-ghost,.copy{box-shadow:var(--edge),0 10px 24px -14px rgba(0,0,0,.6)}
+.top::after,.sum::after,.toast::after,.gets::after,.mock::after,.btn-ghost::before,.copy::before{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1px;pointer-events:none;
+  background:var(--spec);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+.btn-ghost::before,.copy::before{inset:0}
+/* over content: blur and bend */
+.top,.sum,.toast,.hero-cta .btn-ghost{-webkit-backdrop-filter:var(--clear);backdrop-filter:var(--clear)}
 .top{background-color:color-mix(in srgb,var(--bg) 26%,transparent);transition:background-color .4s}
 /* like the system glass, the bar darkens when something light slides under it */
 .top.over-light{background-color:color-mix(in srgb,var(--bg) 74%,transparent)}
 .sum{background-color:color-mix(in srgb,var(--raised) 50%,transparent);border-radius:26px;-webkit-backdrop-filter:blur(12px) saturate(185%);backdrop-filter:blur(12px) saturate(185%)}
-.toast{background-color:color-mix(in srgb,var(--raised) 34%,transparent);border-radius:18px}
-.mock{background-color:color-mix(in srgb,var(--surface) 30%,transparent);border-radius:22px}
+.toast{z-index:1;background-color:color-mix(in srgb,var(--raised) 34%,transparent);border-radius:18px}
+/* the window keeps its glass on a layer of its own, so the notification on top of it can blur the window too */
+.mock{isolation:isolate;background:none;border-radius:22px;box-shadow:var(--lift)}
+.mock::before{content:"";position:absolute;inset:-1px;z-index:-1;border-radius:inherit;pointer-events:none;background:color-mix(in srgb,var(--surface) 30%,transparent);box-shadow:var(--edge);-webkit-backdrop-filter:var(--lens,var(--clear));backdrop-filter:var(--lens,var(--clear))}
+.gets{border-radius:24px}
 @media (max-width:640px){.sum{background-color:color-mix(in srgb,var(--raised) 62%,transparent);border-radius:24px}}
 @supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
-  .top,.sum,.toast,.mock{background-color:color-mix(in srgb,var(--raised) 96%,transparent)}
+  .top,.sum,.toast{background-color:color-mix(in srgb,var(--raised) 96%,transparent)}
+  .mock::before{background:color-mix(in srgb,var(--surface) 92%,transparent)}
 }
-/* panels with nothing detailed behind them are tinted glass without the blur */
-.gets{border:1px solid var(--rim);background:linear-gradient(var(--glass),var(--glass)),color-mix(in srgb,var(--surface) 55%,transparent);box-shadow:var(--edge),var(--lift);border-radius:24px}
+/* small glass: the badge on a demo card, contact icons, the chosen row */
+.d-badge{background:rgba(10,19,21,.42);color:#fff;box-shadow:var(--edge-s),0 4px 10px -6px rgba(0,0,0,.6);-webkit-backdrop-filter:blur(6px) saturate(180%);backdrop-filter:blur(6px) saturate(180%)}
 /* the hero window borrows the look of a desktop window */
 .mock-bar{border-bottom-color:rgba(255,255,255,.1)}
 .mock-bar i{width:10px;height:10px;box-shadow:inset 0 0 0 .5px rgba(0,0,0,.25)}
@@ -415,7 +435,7 @@ html.scrolled::before{opacity:1}
 .brand{overflow:hidden}
 .brand span{overflow:hidden;text-overflow:ellipsis}
 section{scroll-margin-top:84px}
-.gets{top:calc(96px + env(safe-area-inset-top,0px))}
+.gets{top:calc(104px + env(safe-area-inset-top,0px))}
 @media (max-width:900px){.gets{position:relative;top:auto}}
 @media (max-width:520px){.top .wrap{padding-inline:14px 8px;min-height:54px}}
 .brand b{flex:none}
@@ -425,8 +445,15 @@ section{scroll-margin-top:84px}
   .top .btn-sm{padding:0 12px;font-size:.86rem}
 }
 /* long words must never run under the price on a narrow phone */
-.row-name,.sum-what b{overflow-wrap:anywhere;-webkit-hyphens:auto;hyphens:auto}
-@media (max-width:350px){.sum-total .num{font-size:.95rem}.row-price,.packs .row-price{font-size:.8rem}}
+.row-name,.sum-what b{overflow-wrap:anywhere}
+/* on a phone prices use the text face, which is narrower, so names keep their line */
+@media (max-width:480px){
+  .row-price,.packs .row-price{font-family:var(--body);font-weight:600;font-size:.92rem;letter-spacing:0}
+  .packs .row-name{font-size:1.02rem}
+  .sum-what b{font-size:.96rem}
+  .sum-total .num{font-family:var(--body);font-weight:700;font-size:1.12rem;letter-spacing:0}
+}
+@media (max-width:350px){.sum-total .num{font-size:1rem}.row-price,.packs .row-price{font-size:.84rem}}
 
 /* softer corners everywhere, the way the system draws them */
 .row{border-radius:16px}
@@ -437,10 +464,9 @@ section{scroll-margin-top:84px}
 /* buttons: capsules that swell slightly under the finger and spring back */
 .btn,.copy,.row,.link{position:relative;overflow:hidden}
 .btn{isolation:isolate;text-align:center;border-radius:999px;transition:transform .45s var(--spring),background-color .2s,border-color .2s,color .2s,filter .2s}
-.btn-primary{background:var(--btn-bg);box-shadow:inset 0 1px 0 rgba(255,255,255,.55),inset 0 -1px 0 rgba(0,0,0,.18),0 12px 26px -14px color-mix(in srgb,var(--accent) 85%,transparent)}
-.btn-ghost{background:var(--glass);border-color:var(--rim);box-shadow:var(--edge),0 10px 24px -14px rgba(0,0,0,.6)}
-.copy{border-radius:999px;background:var(--glass);border-color:var(--rim);box-shadow:var(--edge);transition:transform .45s var(--spring),color .2s,border-color .2s}
-.link .ic{background:var(--glass);border-color:var(--rim);box-shadow:var(--edge);transition:background-color .25s,color .25s,border-color .25s,transform .45s var(--spring)}
+.btn-primary{background:var(--btn-bg);box-shadow:inset 1px 1px .5px -.5px rgba(255,255,255,.95),inset -1px -1px .5px -.5px rgba(255,255,255,.4),inset 0 -9px 12px -9px rgba(0,40,50,.35),0 12px 26px -14px color-mix(in srgb,var(--accent) 85%,transparent)}
+.copy{border-radius:999px;transition:transform .45s var(--spring),color .2s,border-color .2s}
+.link .ic{background:var(--glass);border-color:var(--rim);box-shadow:var(--edge-s);transition:background-color .25s,color .25s,border-color .25s,transform .45s var(--spring)}
 .hero-cta .btn-primary::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(105deg,transparent 36%,rgba(255,255,255,.55) 50%,transparent 64%);transform:translateX(-120%);animation:sheen 7s ease-in-out 2.4s infinite}
 @keyframes sheen{0%,74%{transform:translateX(-120%)}100%{transform:translateX(120%)}}
 /* light spreads from the exact point of the tap */
@@ -451,6 +477,8 @@ section{scroll-margin-top:84px}
 
 @media (hover:hover){
   .btn-primary:hover{background:var(--btn-bg);filter:brightness(1.08);transform:translateY(-1px)}
+  .btn-ghost:hover{border-color:var(--rim);color:var(--fg);background-color:rgba(255,255,255,.12)}
+  .copy:hover{color:var(--fg);border-color:var(--rim);background-color:rgba(255,255,255,.12)}
 }
 /* a finger leaves hover "stuck", so on touch screens hover is switched off and replaced below */
 @media (hover:none){
@@ -467,18 +495,20 @@ section{scroll-margin-top:84px}
   .lang button[aria-pressed="true"]:hover{color:var(--accent)}
   .textlink:hover{border-color:transparent}
 }
-.btn:active,.copy:active{transform:scale(1.04);filter:brightness(1.1)}
+.btn:active,.copy:active{transform:scale(1.04)}
+.btn-primary:active{filter:brightness(1.1)}
+.btn-ghost:active,.copy:active{background-color:rgba(255,255,255,.14)}
 .btn-ghost:active{color:var(--accent)}
 .textlink:active{opacity:.6}
 .faq summary:active{color:var(--accent)}
-.link:active .ic,.links li.is-focus .ic{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);transform:scale(1.08)}
+.link:active .ic{background:var(--accent);border-color:var(--accent);color:var(--accent-ink);transform:scale(1.08)}
 
 /* language switch: a glass thumb slides between the languages */
 .lang{position:relative;gap:0;padding:3px;border-radius:999px;background:rgba(0,0,0,.26);border-color:transparent;box-shadow:inset 0 1px 2px rgba(0,0,0,.45),inset 0 0 0 1px rgba(255,255,255,.07)}
 .lang button{position:relative;width:36px;min-width:0;padding:0;border-radius:999px}
 @media (max-width:520px){.lang button{width:33px;min-width:0;padding:0}}
 @supports selector(:has(*)){
-  .lang::before{content:"";position:absolute;z-index:2;pointer-events:none;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);border-radius:999px;background:rgba(255,255,255,.13);box-shadow:var(--edge),0 5px 12px -5px rgba(0,0,0,.7);-webkit-backdrop-filter:var(--lens,saturate(160%) brightness(1.15));backdrop-filter:var(--lens,saturate(160%) brightness(1.15));transition:transform .55s var(--spring);will-change:transform}
+  .lang::before{content:"";position:absolute;z-index:2;pointer-events:none;top:3px;bottom:3px;left:3px;width:calc((100% - 6px)/3);border-radius:999px;background:rgba(255,255,255,.1);box-shadow:var(--edge-s),0 5px 12px -5px rgba(0,0,0,.7);-webkit-backdrop-filter:var(--lens,saturate(160%) brightness(1.15));backdrop-filter:var(--lens,saturate(160%) brightness(1.15));transition:transform .55s var(--spring);will-change:transform}
   /* while it travels the thumb swells like a drop, then settles */
   .lang.moving::before{animation:blob .6s var(--ease)}
   .lang:has(button:nth-child(2)[aria-pressed="true"])::before{transform:translateX(100%)}
@@ -496,7 +526,7 @@ body.lang-go::after{animation:sweep .7s var(--ease)}
 @keyframes sweep{0%{opacity:1;transform:translateX(-110%)}100%{opacity:1;transform:translateX(110%)}}
 
 /* calculator: the chosen row turns to glass, the tick pops, the total bumps */
-.row:has(input:checked){background:var(--glass);box-shadow:var(--edge)}
+.row:has(input:checked){background:var(--glass);box-shadow:var(--edge-s),var(--edge)}
 .row:has(input:checked) .mark{animation:pop .5s var(--spring)}
 @keyframes pop{0%{transform:scale(.55)}100%{transform:scale(1)}}
 .sum-total .num{transform-origin:100% 50%}
@@ -1543,9 +1573,10 @@ var whatsappMessages = {
       size:function(el){ return [(el.clientWidth - 6) / 3, el.clientHeight - 6, 999]; },
       apply:function(el, css){ el.style.setProperty('--lens', css + ' brightness(1.12)'); } });
     if (!touch) {
-      lens(doc.querySelector('.mock'), 'lens-mock', { blur:2.4, bevel:26, bend:14 });
-      lens(doc.querySelector('.hero-cta .btn-ghost'), 'lens-ghost', { blur:1.2, bevel:22, bend:11 });
+      lens(doc.querySelector('.mock'), 'lens-mock', { blur:2.4, bevel:26, bend:14,
+        apply:function(el, css){ el.style.setProperty('--lens', css); } });
     }
+    lens(doc.querySelector('.hero-cta .btn-ghost'), 'lens-ghost', { blur:1.2, bevel:22, bend:11 });
   }
 
   if ('IntersectionObserver' in window) {
@@ -1560,7 +1591,7 @@ var whatsappMessages = {
       var fo = new IntersectionObserver(function(entries){
         entries.forEach(function(en){ en.target.classList.toggle('is-focus', en.isIntersecting); });
       }, { rootMargin:'-36% 0px -36% 0px' });
-      var watch = function(){ all('.work,.basics li,.links li').forEach(function(el){ fo.observe(el); }); };
+      var watch = function(){ all('.work,.basics li').forEach(function(el){ fo.observe(el); }); };
       watch(); hooks.push(watch);
     }
   }
