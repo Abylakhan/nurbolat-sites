@@ -1387,14 +1387,17 @@ var whatsappMessages = {
     var vh = window.innerHeight, max = doc.documentElement.scrollHeight - vh;
     head.style.setProperty('--px', (6 + (max > 0 ? window.pageYOffset / max : 0) * 88) + '%');
     /* the bar darkens while a light card passes under it */
-    var hr = head.getBoundingClientRect(), under = doc.elementsFromPoint ? doc.elementsFromPoint(window.innerWidth / 2, hr.top + hr.height / 2) : [], light = false;
-    for (var u = 0; u < under.length; u++) {
-      if (under[u].classList && under[u].classList.contains('demo-shot')) {
-        var c = getComputedStyle(under[u]).backgroundColor.match(/[\d.]+/g);
-        light = !!c && (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) > 140;
-        break;
+    var hr = head.getBoundingClientRect(), light = false;
+    if (doc.elementsFromPoint) [.14, .5, .86].forEach(function(fx){
+      var under = doc.elementsFromPoint(hr.left + hr.width * fx, hr.top + hr.height / 2);
+      for (var u = 0; u < under.length && !light; u++) {
+        if (under[u].classList && under[u].classList.contains('demo-shot')) {
+          var c = getComputedStyle(under[u]).backgroundColor.match(/[\d.]+/g);
+          light = !!c && (0.299 * c[0] + 0.587 * c[1] + 0.114 * c[2]) > 140;
+          break;
+        }
       }
-    }
+    });
     head.classList.toggle('over-light', light);
     if (!touch) return;
     panes.forEach(function(p){
