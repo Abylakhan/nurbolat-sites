@@ -15,7 +15,7 @@
 | Стоматология | https://abylakhan.github.io/dental-clinic-shymkent/ |
 | Салон красоты, барбершоп, ногти | https://abylakhan.github.io/nurbolat-sites/beauty.html |
 | Учебный центр | https://abylakhan.github.io/nurbolat-sites/edu.html |
-| Автосервис, детейлинг | https://abylakhan.github.io/nurbolat-sites/auto.html |
+| Авто (автосалон, СТО, детейлинг) | https://abylakhan.github.io/nurbolat-sites/auto.html |
 | Ремонт, строительство | https://abylakhan.github.io/nurbolat-sites/build.html |
 | Карго | https://abylakhan.github.io/nurbolat-sites/cargo.html |
 | Все работы и цены | https://abylakhan.github.io/nurbolat-sites/ |
