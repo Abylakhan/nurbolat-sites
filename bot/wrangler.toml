@@ -1,0 +1,17 @@
+# Deploy from this folder: npx wrangler deploy
+# Secrets: npx wrangler secret put BOT_TOKEN / WEBHOOK_SECRET
+name = "nurbolat-bot"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[ai]
+binding = "AI"
+
+# Create once with `npx wrangler kv namespace create HISTORY` and paste the id here.
+# [[kv_namespaces]]
+# binding = "HISTORY"
+# id = ""
+
+[vars]
+NOTIFY = "all"
+# ADMIN_CHAT_ID = ""
